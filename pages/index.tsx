@@ -1,9 +1,11 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { Fragment } from "react";
 import Head from "next/head";
+import { fetchPopularMovies } from "@/utils/api-utils";
+import MoviesGrid from "@/components/ui/MoviesGrid";
 
-export default function Home() {
+type HomeProps = {
+  movies: Array<{}>;
+};
+export default function Home({ movies }: HomeProps) {
   return (
     <div className="flex flex-col w-full h-screen ">
       <Head>
@@ -13,14 +15,17 @@ export default function Home() {
       <h1 className="text-white text-8xl font-extrabold py-2 ">
         New and trending
       </h1>
+      <MoviesGrid movies={movies} />
     </div>
   );
 }
 
-export function getStaticProps() {
-  const featuredPosts: any = [];
+export async function getStaticProps() {
+  const featuredPosts: Array<{}> = await fetchPopularMovies();
+  console.log("data is", featuredPosts[0]);
+
   return {
-    props: { posts: featuredPosts },
+    props: { movies: featuredPosts },
     revalidate: 1800,
   };
 }
