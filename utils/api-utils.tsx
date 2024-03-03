@@ -6,6 +6,17 @@ const configHeaders = {
 
 export const baseImageURL = "http://image.tmdb.org/t/p/original";
 
+export async function getAllGenres() {
+  const response = await fetch(
+    "https://api.themoviedb.org/3/genre/movie/list",
+    {
+      headers: configHeaders,
+    }
+  );
+  const data = await response.json();
+  return data.genres;
+}
+
 // Get Popular Movies ----------------------------------------------------------------------------------------------------------------------------
 export async function fetchPopularMovies() {
   const response = await fetch(
