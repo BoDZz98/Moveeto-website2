@@ -145,7 +145,7 @@ const genresData = [
     title: "Action",
     svg: (
       <Image
-        src={"/imgs/shooter.jpg"}
+        src={"/imgs/genres/shooter.jpg"}
         alt="Racing"
         className="w-9 h-9"
         width={100}
@@ -158,7 +158,7 @@ const genresData = [
     title: "Racing",
     svg: (
       <Image
-        src={"/imgs/racing.jpg"}
+        src={"/imgs/genres/racing.jpg"}
         alt="Racing"
         className="w-9 h-9"
         width={100}

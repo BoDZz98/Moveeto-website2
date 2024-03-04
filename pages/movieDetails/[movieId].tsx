@@ -1,17 +1,55 @@
-import { fetchPopularMovies } from "@/utils/api-utils";
+import Details from "@/components/movie-details/Details";
+import Images from "@/components/movie-details/Images";
+import {
+  baseImageURL,
+  fetchMovieDetails,
+  fetchPopularMovies,
+} from "@/utils/api-utils";
 import React from "react";
 
-const MovieDetails = (props: any) => {
+export type MovieObj = {
+  id: number;
+  title: string;
+  poster: string;
+  backdrop_path: string;
+  vote_average: number;
+  release_date: string;
+  runtime: string;
+  overview: string;
+  genres: Array<{ name: string }>;
+  images: Array<{ file_path: string }>;
+  cast: Array<{}>;
+  youtubeTrailerKey: string;
+};
+
+type MovieProps = {
+  movie: MovieObj;
+};
+
+const MovieDetails = (props: MovieProps) => {
   const { movie } = props;
-  return <div>{movie.id}</div>;
+  return (
+    <div className="pl-32 pr-48 w-full h-screen flex">
+      <div
+        className="absolute inset-0 bg-cover bg-center  opacity-20 "
+        style={{
+          backgroundImage: `url(${baseImageURL}${movie.backdrop_path})`,
+        }}
+      ></div>
+      <div className="absolute  inset-0 top-1/2  bg-gradient-to-b from-transparent to-gray-900"></div>
+      <Details movieData={movie} />
+      <Images youtubekey={movie.youtubeTrailerKey} movieImgs={movie.images} />
+    </div>
+  );
 };
 
 export default MovieDetails;
 
-export function getStaticProps(context: { params: { movieId: number } }) {
+export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
-  const movieData = { id: movieId };
+  const movieData = await fetchMovieDetails(movieId);
+  console.log("movieData :", movieData.images);
 
   return {
     props: { movie: movieData },

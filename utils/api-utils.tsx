@@ -1,3 +1,5 @@
+import { convertMinutesToTime } from "./time-utils";
+
 const configHeaders = {
   "Content-Type": "application/json",
   Authorization:
@@ -27,4 +29,41 @@ export async function fetchPopularMovies() {
   );
   const data = await response.json();
   return data.results;
+}
+
+// Get all details related to a movie ------------------------------------------------------------------------------------------------------
+export async function fetchMovieDetails(movieId: number) {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${movieId}?append_to_response=videos,images,credits,similar`,
+    {
+      headers: configHeaders,
+    }
+  );
+  const data = await response.json();
+
+  const { hours, minutes } = convertMinutesToTime(data.runtime);
+  const actors = data.credits.cast.slice(0, 20);
+  const similarMovies = data.similar.results;
+  const youtubeTrailer = data.videos.results.find(
+    (video: { type: string }) => video.type === "Trailer"
+  );
+  const youtubeTrailerKey = youtubeTrailer ? youtubeTrailer.key : "";
+  // console.log("trailer is", trailerKey);
+  const newMovieObject = {
+    id: data.id,
+    title: data.title,
+    poster: data.poster_path,
+    backdrop_path: data.backdrop_path,
+    vote_average: data.vote_average.toFixed(1),
+    release_date: data.release_date,
+    runtime: `${hours}h ${minutes} min`,
+    overview: data.overview,
+    genres: data.genres,
+    images: data.images.backdrops,
+    cast: actors,
+    youtubeTrailerKey,
+    similarMovies,
+  };
+
+  return newMovieObject;
 }

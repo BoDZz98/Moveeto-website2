@@ -2,6 +2,7 @@ import Head from "next/head";
 import { fetchPopularMovies, getAllGenres } from "@/utils/api-utils";
 import MoviesGrid from "@/components/ui/MoviesGrid";
 import Dropdown from "@/components/ui/Dropdown";
+import Breadcrumb from "@/components/movie-details/Breadcrumb";
 
 type HomeProps = {
   movies: Array<{}>;
@@ -23,7 +24,6 @@ export default function Home({ movies }: HomeProps) {
       <h1 className="text-white text-2xl font-semibold  ">{data.subTitle}</h1>
 
       <Dropdown />
-
       <MoviesGrid movies={movies} />
     </div>
   );
