@@ -1,6 +1,6 @@
 import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 import ReactPlayer from "react-player";
 type ImagesProps = {
   youtubekey: string;
@@ -11,14 +11,16 @@ const Images = ({ youtubekey, movieImgs }: ImagesProps) => {
   return (
     <div className="w-2/5  z-10">
       <div className="rounded-xl overflow-hidden mb-5 mt-12">
-        <ReactPlayer
-          url={`https://www.youtube.com/watch?v=${youtubekey}`}
-          style={{ maxWidth: "100%" }}
-          playing
-          loop
-          muted
-          controls
-        />
+        <Suspense fallback>
+          <ReactPlayer
+            url={`https://www.youtube.com/watch?v=${youtubekey}`}
+            style={{ maxWidth: "100%" }}
+            playing
+            loop
+            muted
+            controls
+          />
+        </Suspense>
       </div>
       <div className="w-full grid grid-cols-2 gap-5">
         {movieImgs.map((movie, index) => {

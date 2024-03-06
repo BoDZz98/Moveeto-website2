@@ -15,7 +15,7 @@ const data = {
 
 export default function Home({ movies }: HomeProps) {
   return (
-    <div className="flex flex-col gap-8 w-full h-screen ">
+    <div className="flex flex-col gap-8 w-full  ">
       <Head>
         <title>Moveeto</title>
         <meta name="description" content="Enjoy the latest movies" />

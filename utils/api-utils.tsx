@@ -1,4 +1,4 @@
-import { convertMinutesToTime } from "./time-utils";
+import { convertMinutesToTime, convertToShortForm } from "./functions-utils";
 
 const configHeaders = {
   "Content-Type": "application/json",
@@ -42,13 +42,12 @@ export async function fetchMovieDetails(movieId: number) {
   const data = await response.json();
 
   const { hours, minutes } = convertMinutesToTime(data.runtime);
-  const actors = data.credits.cast.slice(0, 20);
-  const similarMovies = data.similar.results;
+  const revenue = convertToShortForm(data.revenue);
   const youtubeTrailer = data.videos.results.find(
     (video: { type: string }) => video.type === "Trailer"
   );
   const youtubeTrailerKey = youtubeTrailer ? youtubeTrailer.key : "";
-  // console.log("trailer is", trailerKey);
+
   const newMovieObject = {
     id: data.id,
     title: data.title,
@@ -60,9 +59,12 @@ export async function fetchMovieDetails(movieId: number) {
     overview: data.overview,
     genres: data.genres,
     images: data.images.backdrops,
-    cast: actors,
+    production_companies: data.production_companies.slice(0, 5),
+    production_countries: data.production_countries.slice(0, 5),
+    cast: data.credits.cast.slice(0, 20),
+    similarMovies: data.similar.results,
+    revenue,
     youtubeTrailerKey,
-    similarMovies,
   };
 
   return newMovieObject;

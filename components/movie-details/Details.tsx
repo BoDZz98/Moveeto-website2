@@ -3,10 +3,9 @@ import React from "react";
 import AddToButtons from "./AddToButtons";
 import MyBreadcrumb from "./Breadcrumb";
 import Rating from "./Rating";
+import MovieDetails from "./MovieDetails";
 
-type DetailsProps = {
-  movieData: MovieObj;
-};
+type DetailsProps = { movieData: MovieObj };
 const Details = ({ movieData: movie }: DetailsProps) => {
   //movieData: movie -> renaming movieData to movie
   return (
@@ -17,6 +16,7 @@ const Details = ({ movieData: movie }: DetailsProps) => {
       <h1 className="text-white text-8xl font-extrabold ">{movie.title}</h1>
       <AddToButtons />
       <Rating />
+      <MovieDetails movieData={movie} />
     </div>
   );
 };

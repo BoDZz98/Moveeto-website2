@@ -20,6 +20,9 @@ export type MovieObj = {
   images: Array<{ file_path: string }>;
   cast: Array<{}>;
   youtubeTrailerKey: string;
+  revenue: string;
+  production_companies: Array<{ name: string }>;
+  production_countries: Array<{ name: string }>;
 };
 
 type MovieProps = {
@@ -29,7 +32,7 @@ type MovieProps = {
 const MovieDetails = (props: MovieProps) => {
   const { movie } = props;
   return (
-    <div className="pl-32 pr-48 w-full h-screen flex">
+    <div className="pl-32 pr-48 w-full h-fit flex ">
       <div
         className="absolute inset-0 bg-cover bg-center  opacity-20 "
         style={{
@@ -49,7 +52,7 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   const movieData = await fetchMovieDetails(movieId);
-  console.log("movieData :", movieData.images);
+  console.log("movieData :", movieData.revenue);
 
   return {
     props: { movie: movieData },

@@ -7,7 +7,7 @@ const SideBar = () => {
   const linkClass =
     "w-fit text-white text-3xl font-extrabold py-5 hover:text-gray-400";
   return (
-    <div className="flex flex-col  w-2/12">
+    <div className="flex flex-col  w-2/12 z-10">
       <Link href="/" className={linkClass}>
         <h1>Home</h1>
       </Link>
