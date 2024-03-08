@@ -22,11 +22,11 @@ const Rating = () => {
         ))}
       </div>
       <div className="flex">
-        <OneEmoji name="Exeptional" image="5" color="green-500" />
-        <OneEmoji name="Recommended" image="4" color="blue-500" />
-        <OneEmoji name="Meh" image="3" color="orange-300" />
-        <OneEmoji name="Bad" image="2" color="yellow-500" />
-        <OneEmoji name="Skip" image="1" color="red-500" />
+        <OneEmoji name="Exeptional" image="5" color="bg-green-500" />
+        <OneEmoji name="Recommended" image="4" color="bg-blue-500" />
+        <OneEmoji name="Meh" image="3" color="bg-orange-300" />
+        <OneEmoji name="Bad" image="2" color="bg-yellow-500" />
+        <OneEmoji name="Skip" image="1" color="bg-red-500" />
       </div>
       <div>
         <button className="bg-gray-800 rounded-lg text-gray-500 text-xl font-semibold w-fit flex gap-x-2 px-8 py-6 items-center hover:bg-white hover:text-black transition ease-in-out duration-300">

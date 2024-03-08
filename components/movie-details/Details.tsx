@@ -1,4 +1,4 @@
-import { MovieObj } from "@/pages/movieDetails/[movieId]";
+import { MovieObj } from "@/pages/movie/[movieId]";
 import React from "react";
 import AddToButtons from "./AddToButtons";
 import MyBreadcrumb from "./Breadcrumb";

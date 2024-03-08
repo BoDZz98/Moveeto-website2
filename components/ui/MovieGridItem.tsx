@@ -28,7 +28,7 @@ const MovieGridItem = ({ movie }: MovieGridItemProps) => {
         className="rounded-t-xl  w-full"
       />
       <div className="flex flex-col gap-y-3 p-4">
-        <Link href={`/movieDetails/${movie.id}`}>
+        <Link href={`/movie/${movie.id}`}>
           <h1 className="text-white text-4xl font-bold py-2 ">{movie.title}</h1>
         </Link>
 
@@ -108,7 +108,7 @@ const giftIcon = (
     />
   </svg>
 );
-const optionsIcon = (
+export const optionsIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="black"

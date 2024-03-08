@@ -1,3 +1,4 @@
+import Card from "@/components/movie-details/Card";
 import Details from "@/components/movie-details/Details";
 import Images from "@/components/movie-details/Images";
 import {
@@ -18,7 +19,7 @@ export type MovieObj = {
   overview: string;
   genres: Array<{ name: string }>;
   images: Array<{ file_path: string }>;
-  cast: Array<{}>;
+  cast: Array<{ name: string; profile_path: string; character: string }>;
   youtubeTrailerKey: string;
   revenue: string;
   production_companies: Array<{ name: string }>;
@@ -32,17 +33,15 @@ type MovieProps = {
 const MovieDetails = (props: MovieProps) => {
   const { movie } = props;
   return (
-    <div className="pl-32 pr-48 w-full h-fit flex ">
-      <div
-        className="absolute inset-0 bg-cover bg-center  opacity-20 "
-        style={{
-          backgroundImage: `url(${baseImageURL}${movie.backdrop_path})`,
-        }}
-      ></div>
-      <div className="absolute  inset-0 top-1/2  bg-gradient-to-b from-transparent to-gray-900"></div>
+    <Card backdrop_path={movie.backdrop_path}>
       <Details movieData={movie} />
-      <Images youtubekey={movie.youtubeTrailerKey} movieImgs={movie.images} />
-    </div>
+      <Images
+        id={movie.id}
+        cast={movie.cast}
+        movieImgs={movie.images}
+        youtubekey={movie.youtubeTrailerKey}
+      />
+    </Card>
   );
 };
 
@@ -52,7 +51,7 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   const movieData = await fetchMovieDetails(movieId);
-  console.log("movieData :", movieData.revenue);
+  console.log("movieData :", movieData.cast);
 
   return {
     props: { movie: movieData },

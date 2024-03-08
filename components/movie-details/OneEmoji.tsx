@@ -19,7 +19,7 @@ const OneEmoji = ({ name, image, color, trys }: OneEmojiProps) => {
         height={100}
       />
       <div className="flex gap-x-2 p-2 items-center rounded-full ring-gray-500 group-hover:ring-2">
-        <div className={`bg-${color} w-3 h-3 rounded-full`}></div>
+        <div className={`${color} w-3 h-3 rounded-full`}></div>
         <p>{name}</p>
       </div>
     </div>
