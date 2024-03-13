@@ -1,11 +1,16 @@
 import Head from "next/head";
-import { fetchPopularMovies, getAllGenres } from "@/utils/api-utils";
+import {
+  convertIdGenresToNames,
+  fetchPopularMovies,
+  getAllGenres,
+} from "@/utils/api-utils";
 import MoviesGrid from "@/components/ui/MoviesGrid";
 import Dropdown from "@/components/ui/Dropdown";
 import Breadcrumb from "@/components/movie-details/Breadcrumb";
+import { MovieObj } from "./movie/[movieId]";
 
 type HomeProps = {
-  movies: Array<{}>;
+  movies: Array<MovieObj>;
 };
 
 const data = {
@@ -30,24 +35,20 @@ export default function Home({ movies }: HomeProps) {
 }
 
 export async function getStaticProps() {
-  let popularMovies: Array<{ genre_ids: Array<number> }>;
-  popularMovies = await fetchPopularMovies();
+  let popularMovies: Array<{ genre_ids: Array<number> }> =
+    await fetchPopularMovies();
+
   const genresDetails = await getAllGenres();
-  // console.log("array length is", featuredPosts.length); //20
 
   popularMovies = popularMovies.map((movie) => {
-    const genresNames: Array<string> = [];
-    movie.genre_ids.map((movieGenres) => {
-      const genreObject = genresDetails.find(
-        (genre: { id: number }) => genre.id === movieGenres
-      );
-      genresNames.push(genreObject.name);
-    });
-    console.log(genresNames);
-
+    const genresNames = convertIdGenresToNames(
+      movie.genre_ids,
+      genresDetails,
+      3
+    );
     return { ...movie, genres: genresNames };
   });
-  console.log("data is", popularMovies[0]);
+  // console.log("data is", popularMovies[0]);
 
   return {
     props: { movies: popularMovies },

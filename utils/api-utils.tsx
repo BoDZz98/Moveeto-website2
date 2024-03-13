@@ -58,7 +58,7 @@ export async function fetchMovieDetails(movieId: number) {
     runtime: `${hours}h ${minutes} min`,
     overview: data.overview,
     genres: data.genres,
-    images: data.images.backdrops,
+    images: data.images.backdrops.slice(0, 21),
     production_companies: data.production_companies.slice(0, 5),
     production_countries: data.production_countries.slice(0, 5),
     cast: data.credits.cast.slice(0, 20),
@@ -68,4 +68,19 @@ export async function fetchMovieDetails(movieId: number) {
   };
 
   return newMovieObject;
+}
+
+export function convertIdGenresToNames(
+  genres: Array<number>,
+  genresDetails: Array<{ id: number; name: string }>,
+  limit: number
+) {
+  const genresNames: Array<string> = [];
+
+  genres.map((movieGenres, index) => {
+    if (index > limit) return;
+    const genreObject = genresDetails.find((genre) => genre.id === movieGenres);
+    genreObject && genresNames.push(genreObject.name);
+  });
+  return genresNames;
 }

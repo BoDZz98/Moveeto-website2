@@ -1,17 +1,19 @@
+import { MovieObj } from "@/pages/movie/[movieId]";
 import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 type MovieGridItemProps = {
-  movie: {
-    id?: number;
-    title?: string;
-    backdrop_path?: string;
-    vote_count?: number;
-    release_date?: string;
-    genres?: Array<string>;
-  };
+  movie: MovieObj;
+  /* movie: {
+    id: number;
+    title: string;
+    backdrop_path: string;
+    vote_count: number;
+    release_date: string;
+    genres: Array<string>;
+  }; */
 };
 
 const contClassName =
@@ -19,7 +21,7 @@ const contClassName =
 
 const MovieGridItem = ({ movie }: MovieGridItemProps) => {
   return (
-    <div className="rounded-xl  h-fit w-full bg-gray-800 flex flex-col group transition ease-in-out duration-1000">
+    <div className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition ease-in-out duration-1000">
       <Image
         src={baseImageURL + movie.backdrop_path}
         alt="movie img"
@@ -50,24 +52,25 @@ const MovieGridItem = ({ movie }: MovieGridItemProps) => {
             {optionsIcon}
           </div>
         </div>
-
-        <div className="w-full  justify-between border-b-2 border-b-gray-700 py-5 hidden group-hover:flex ">
-          <h1 className="text-gray-400">Release Date:</h1>
-          <h1 className="text-gray-300">{movie.release_date}</h1>
-        </div>
-        <div className="w-full relative justify-end border-b-2 border-b-gray-700 py-5 hidden group-hover:flex ">
-          <h1 className="text-gray-400 absolute left-0">genres:</h1>
-          {movie.genres &&
-            movie.genres.map((genre, index) => (
-              <h1 className="mr-1 underline text-gray-300">
-                {genre}
-                {index + 1 !== movie.genres?.length && ","}
-              </h1>
-            ))}
-        </div>
-        <div className=" justify-between w-full bg-gray-600 rounded-lg p-5 hidden group-hover:flex ">
-          <p>Show more like this</p>
-          {arrowRight}
+        <div className="absolute left-0 -bottom-56 p-4  rounded-b-xl w-full hidden group-hover:flex group-hover:flex-col bg-gray-800 z-10">
+          <div className=" w-full justify-between border-b-2 border-b-gray-700 py-5 hidden group-hover:flex ">
+            <h1 className="text-gray-400">Release Date:</h1>
+            <h1 className="text-gray-300">{movie.release_date}</h1>
+          </div>
+          <div className=" w-full relative justify-end border-b-2 border-b-gray-700 py-5 hidden group-hover:flex ">
+            <h1 className="text-gray-400 absolute left-0">genres:</h1>
+            {movie.genres &&
+              movie.genres.map((genre, index) => (
+                <h1 className="mr-1 underline text-gray-300">
+                  {typeof genre === "object" ? genre.name : genre}
+                  {index + 1 !== movie.genres?.length && ","}
+                </h1>
+              ))}
+          </div>
+          <div className=" justify-between w-full bg-gray-600 rounded-lg p-5 hidden group-hover:flex ">
+            <p>Show more like this</p>
+            {arrowRight}
+          </div>
         </div>
       </div>
     </div>

@@ -1,43 +1,29 @@
-import {
-  baseImageURL,
-  fetchMovieDetails,
-  fetchPopularMovies,
-} from "@/utils/api-utils";
+import { fetchMovieDetails, fetchPopularMovies } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
-import Image from "next/image";
 import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
+import ActorImage from "@/components/movie-details/ActorImage";
 
-const Screenshots = (props: { movie: MovieObj }) => {
+const Cast = (props: { movie: MovieObj }) => {
   const { movie } = props;
 
   return (
     <ScreenShotsCard
-      titlePage="Screenshots"
+      titlePage="Cast"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
       <div className="grid grid-cols-3 w-3/4 gap-5 ">
-        {movie.images.map(
-          (img) =>
-            img.file_path && (
-              <Image
-                id={img.file_path}
-                src={baseImageURL + img.file_path}
-                alt={img.file_path}
-                height={100}
-                width={200}
-                className="rounded w-full"
-              />
-            )
+        {movie.cast.map(
+          (actor) => actor.profile_path && <ActorImage actor={actor} />
         )}
       </div>
     </ScreenShotsCard>
   );
 };
 
-export default Screenshots;
+export default Cast;
 
 export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;

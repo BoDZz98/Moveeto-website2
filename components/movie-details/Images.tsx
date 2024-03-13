@@ -12,7 +12,7 @@ type ImagesProps = {
 
 const Images = ({ youtubekey, movieImgs, cast, id }: ImagesProps) => {
   return (
-    <div className="w-2/5 z-10">
+    <div className="w-2/5 z-10 ">
       <div className="rounded-xl overflow-hidden mb-5 mt-12">
         <Suspense fallback={<p>Loading</p>}>
           <ReactPlayer
@@ -25,12 +25,9 @@ const Images = ({ youtubekey, movieImgs, cast, id }: ImagesProps) => {
           />
         </Suspense>
       </div>
-      <ImagesGrid movieImgs={movieImgs} />
-      <Link href={`/movie/${id}/screenshots`}>
-        <h1 className="text-white text-5xl font-extrabold my-12 ">Cast</h1>
-      </Link>
+      <ImagesGrid movieImgs={movieImgs} movieId={id} />
       <h1 className="text-white text-5xl font-extrabold my-12 ">Cast</h1>
-      <ImagesGrid cast={cast} />
+      <ImagesGrid cast={cast} movieId={id} />
     </div>
   );
 };

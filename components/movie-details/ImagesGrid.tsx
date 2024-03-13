@@ -2,16 +2,21 @@ import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import React from "react";
 import { optionsIcon } from "../ui/MovieGridItem";
+import ActorImage from "./ActorImage";
+import { useRouter } from "next/router";
 
 type ImagesGridProps = {
+  movieId: number;
   movieImgs?: Array<{ file_path: string }>;
   cast?: Array<{ name: string; profile_path: string; character: string }>;
 };
-const ImagesGrid = ({ movieImgs, cast }: ImagesGridProps) => {
+const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
+  const router = useRouter();
+
   return (
     <div className="w-full grid grid-cols-2 gap-5">
       {movieImgs?.map((movie, index) => {
-        if (index > 4) return;
+        if (index > 2) return;
         return (
           <Image
             id={movie.file_path}
@@ -24,27 +29,17 @@ const ImagesGrid = ({ movieImgs, cast }: ImagesGridProps) => {
         );
       })}
       {cast?.map((actor, index) => {
-        if (index > 4) return;
-        return (
-          <div
-            id={actor.profile_path}
-            className=" flex flex-col  w-full rounded-lg bg-gray-800 "
-          >
-            <Image
-              src={baseImageURL + actor.profile_path}
-              className="rounded-lg w-full h-56 object-cover  "
-              alt={actor.profile_path}
-              width={200}
-              height={200}
-            />
-            <div className=" p-4">
-              <p className="font-semibold text-lg">{actor.character}</p>
-              <p className=" text-lg text-gray-500">{actor.name}</p>
-            </div>
-          </div>
-        );
+        if (index > 2) return;
+        return <ActorImage actor={actor} imgSize="h-56" />;
       })}
-      <div className="w-full rounded-lg bg-gray-800 flex flex-col justify-center items-center hover:bg-gray-400 group">
+      <div
+        className="w-full rounded-lg bg-gray-800 flex flex-col justify-center items-center hover:bg-gray-400 group"
+        onClick={() =>
+          movieImgs
+            ? router.push(`/movie/${movieId}/screenshots`)
+            : router.push(`/movie/${movieId}/cast`)
+        }
+      >
         {optionsIcon}
         <p className="text-gray-500 group-hover:text-black">View all</p>
       </div>
