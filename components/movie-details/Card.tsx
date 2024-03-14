@@ -11,7 +11,7 @@ const Card = ({ children, backdrop_path }: CardProps) => {
     backgroundImage: `url(${baseImageURL}${backdrop_path})`,
   };
   return (
-    <div className="pl-32 pr-48 w-full h-fit flex flex-col">
+    <div className="pl-32 2xl:pr-48 w-full   min-h-screen flex flex-col ">
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 "
         style={backgroundStyle}

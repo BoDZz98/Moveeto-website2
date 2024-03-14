@@ -1,12 +1,11 @@
-import { similarMovieObj } from "@/pages/movie/[movieId]";
 import React from "react";
 import MovieGridItem from "../ui/MovieGridItem";
 import { convertIdGenresToNames } from "@/utils/api-utils";
-import MoviesGrid from "../ui/MoviesGrid";
+import { MovieObj } from "@/pages/movie/[movieId]";
 
 type SimilarMoviesProps = {
   title: string;
-  movies: Array<similarMovieObj>;
+  movies: Array<MovieObj>;
   genresDetails: Array<{ id: number; name: string }>;
 };
 
@@ -16,9 +15,11 @@ const SimilarMovies = ({
   genresDetails,
 }: SimilarMoviesProps) => {
   return (
-    <div className="flex flex-col items-center  w-11/12">
-      <h1 className="text-white text-5xl font-bold my-8 ">Movies Like {title}</h1>
-      <div className="grid grid-cols-4 gap-6">
+    <div className="flex flex-col items-center  2xl:w-11/12">
+      <h1 className="text-white text-5xl font-bold my-8 ">
+        Movies Like {title}
+      </h1>
+      <div className="grid grid-cols-2 2xl:grid-cols-4  w-full gap-6">
         {movies.map((movie, index) => {
           if (index > 3) return;
           const genresNames = convertIdGenresToNames(

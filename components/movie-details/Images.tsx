@@ -12,8 +12,8 @@ type ImagesProps = {
 
 const Images = ({ youtubekey, movieImgs, cast, id }: ImagesProps) => {
   return (
-    <div className="w-2/5 z-10 ">
-      <div className="rounded-xl overflow-hidden mb-5 mt-12">
+    <div className="2xl:w-2/5 z-10 ">
+      <div className="rounded-xl overflow-hidden mb-5 mt-12  flex justify-center">
         <Suspense fallback={<p>Loading</p>}>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${youtubekey}`}

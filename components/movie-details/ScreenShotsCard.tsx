@@ -44,18 +44,20 @@ const ScreenShotsCard = ({
   return (
     <div>
       <Card backdrop_path={backdrop_path}>
-        <div className="h-fit w-full flex gap-x-5 z-10 ">
+        <div className="h-fit  flex gap-x-5 z-10 ">
           {arrowLeft}
 
           <div className="flex flex-col gap-y-5 w-full ">
             <MyBreadcrumb title={title} subTitle={pageTitle} />
-            <h1 className="text-white text-8xl font-extrabold ">{title}</h1>
-            <h1 className="text-gray-400 text-6xl font-extrabold ">
+            <h1 className="text-white text-5xl 2xl:text-8xl font-extrabold ">
+              {title}
+            </h1>
+            <h1 className="text-gray-400 text-4xl 2xl:text-6xl font-extrabold ">
               {pageTitle}
             </h1>
-            <div className="flex">
+            <div className="flex 2xl:flex-row flex-col gap-y-10 w-full ">
               {children}
-              <div className="flex flex-col gap-y-4 w-1/4 pl-10 ">
+              <div className="flex 2xl:flex-col gap-x-4 gap-y-4 order-first 2xl:pl-10 2xl:order-2 2xl:w-1/4">
                 <Link href={`/movie/${movieId}`} className={linkStyle}>
                   About
                 </Link>
@@ -83,6 +85,15 @@ const ScreenShotsCard = ({
                   onClick={() => setPageTitle("Similar Movies")}
                 >
                   Similar Movies
+                </Link>
+                <Link
+                  href={`/movie/${movieId}/comments`}
+                  className={
+                    pageTitle === "Comments" ? ActiveLinkStyle : linkStyle
+                  }
+                  onClick={() => setPageTitle("Comments")}
+                >
+                  Comments
                 </Link>
               </div>
             </div>

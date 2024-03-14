@@ -6,14 +6,6 @@ import React from "react";
 
 type MovieGridItemProps = {
   movie: MovieObj;
-  /* movie: {
-    id: number;
-    title: string;
-    backdrop_path: string;
-    vote_count: number;
-    release_date: string;
-    genres: Array<string>;
-  }; */
 };
 
 const contClassName =

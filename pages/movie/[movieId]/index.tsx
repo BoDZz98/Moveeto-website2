@@ -48,7 +48,7 @@ const MovieDetails = (props: MovieProps) => {
   const { movie, genresDetails } = props;
   return (
     <Card backdrop_path={movie.backdrop_path}>
-      <div className="flex ">
+      <div className="flex flex-col 2xl:flex-row ">
         <Details movieData={movie} />
         <Images
           id={movie.id}

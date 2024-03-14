@@ -18,7 +18,7 @@ const Screenshots = (props: { movie: MovieObj }) => {
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
-      <div className="grid grid-cols-3 w-3/4 gap-5 ">
+      <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 2xl:w-3/4 gap-5  w-full">
         {movie.images.map(
           (img) =>
             img.file_path && (
@@ -27,7 +27,7 @@ const Screenshots = (props: { movie: MovieObj }) => {
                 src={baseImageURL + img.file_path}
                 alt={img.file_path}
                 height={100}
-                width={200}
+                width={150}
                 className="rounded w-full"
               />
             )

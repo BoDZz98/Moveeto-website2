@@ -8,8 +8,8 @@ type MoviesGridProps = {
 
 const MoviesGrid = ({ movies }: MoviesGridProps) => {
   return (
-    <div className="flex gap-x-8">
-      <div className="flex flex-col gap-y-8 w-1/4 ">
+    <div className="gap-x-8 flex flex-col gap-y-8 xl:flex-row ">
+      <div className="flex flex-col gap-y-8  xl:w-1/4 xl:px-0">
         {movies.map(
           // 0, 5
           (movieData, index) =>
@@ -17,7 +17,7 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
             movieData.backdrop_path && <MovieGridItem movie={movieData} />
         )}
       </div>
-      <div className="flex flex-col gap-y-10 w-1/4 mt-8">
+      <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
         {movies.map(
           // 5, 10
           (movieData, index) =>
@@ -26,7 +26,7 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
             movieData.backdrop_path && <MovieGridItem movie={movieData} />
         )}
       </div>
-      <div className="flex flex-col gap-y-8 w-1/4 ">
+      <div className="flex flex-col gap-y-8  px-20 xl:w-1/4 xl:px-0">
         {movies.map(
           // 10, 15
           (movieData, index) =>
@@ -35,7 +35,7 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
             movieData.backdrop_path && <MovieGridItem movie={movieData} />
         )}
       </div>
-      <div className="flex flex-col gap-y-10 w-1/4 mt-8">
+      <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
         {movies.map(
           // 15, 20
           (movieData, index) =>

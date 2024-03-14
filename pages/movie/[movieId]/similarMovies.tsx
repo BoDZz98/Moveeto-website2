@@ -30,14 +30,26 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   let movieData = await fetchMovieDetails(movieId);
-  //   console.log("movieData :", movieData.similarMovies);
 
   const genresDetails = await getAllGenres();
 
-  movieData = movieData.similarMovies.genre_ids.map((genreId: number) => {
-    const genresNames = convertIdGenresToNames(genreId, genresDetails, 3);
-    return { ...movie, genres: genresNames };
-  });
+  const newSimilarMovies = movieData.similarMovies.map(
+    (similarMovie: MovieObj) => {
+      const genresNames = convertIdGenresToNames(
+        similarMovie.genre_ids,
+        genresDetails,
+        1
+      );
+      return {
+        ...similarMovie,
+        genres: genresNames,
+      };
+    }
+  );
+  movieData["similarMovies"] = newSimilarMovies;
+
+  // console.log("-----------------------------", movieData.similarMovies);
+
   return {
     props: { movie: movieData },
     revalidate: 600,
