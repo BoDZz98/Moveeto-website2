@@ -26,10 +26,10 @@ const Header = () => {
         </div>
 
         <div className=" flex w-2/12 justify-end items-center   sm:w-1/3 sm:gap-x-5 md:gap-x-10">
-          <Link href="/">
+          <Link href="/login">
             <h1 className="text-white text-2xl font-bold ">Login</h1>
           </Link>
-          <Link href="/">
+          <Link href="/signup">
             <h1 className="text-white text-2xl font-bold ">Signup</h1>
           </Link>
         </div>

@@ -1,3 +1,4 @@
+import Layout from "@/components/layout/layout";
 import Card from "@/components/movie-details/Card";
 import Details from "@/components/movie-details/Details";
 import Images from "@/components/movie-details/Images";
@@ -47,22 +48,24 @@ type MovieProps = {
 const MovieDetails = (props: MovieProps) => {
   const { movie, genresDetails } = props;
   return (
-    <Card backdrop_path={movie.backdrop_path}>
-      <div className="flex flex-col 2xl:flex-row ">
-        <Details movieData={movie} />
-        <Images
-          id={movie.id}
-          cast={movie.cast}
-          movieImgs={movie.images}
-          youtubekey={movie.youtubeTrailerKey}
+    <Layout>
+      <Card backdrop_path={movie.backdrop_path}>
+        <div className="flex flex-col 2xl:flex-row ">
+          <Details movieData={movie} />
+          <Images
+            id={movie.id}
+            cast={movie.cast}
+            movieImgs={movie.images}
+            youtubekey={movie.youtubeTrailerKey}
+          />
+        </div>
+        <SimilarMovies
+          title={movie.title}
+          movies={movie.similarMovies}
+          genresDetails={genresDetails}
         />
-      </div>
-      <SimilarMovies
-        title={movie.title}
-        movies={movie.similarMovies}
-        genresDetails={genresDetails}
-      />
-    </Card>
+      </Card>
+    </Layout>
   );
 };
 

@@ -8,6 +8,7 @@ import MoviesGrid from "@/components/ui/MoviesGrid";
 import Dropdown from "@/components/ui/Dropdown";
 import Breadcrumb from "@/components/movie-details/Breadcrumb";
 import { MovieObj } from "./movie/[movieId]";
+import Layout from "@/components/layout/layout";
 
 type HomeProps = {
   movies: Array<MovieObj>;
@@ -20,17 +21,19 @@ const data = {
 
 export default function Home({ movies }: HomeProps) {
   return (
-    <div className="flex flex-col gap-8 w-full  ">
-      <Head>
-        <title>Moveeto</title>
-        <meta name="description" content="Enjoy the latest movies" />
-      </Head>
-      <h1 className="text-white text-8xl font-extrabold  ">{data.title}</h1>
-      <h1 className="text-white text-2xl font-semibold  ">{data.subTitle}</h1>
+    <Layout>
+      <div className="flex flex-col gap-8 w-full  ">
+        <Head>
+          <title>Moveeto</title>
+          <meta name="description" content="Enjoy the latest movies" />
+        </Head>
+        <h1 className="text-white text-8xl font-extrabold  ">{data.title}</h1>
+        <h1 className="text-white text-2xl font-semibold  ">{data.subTitle}</h1>
 
-      <Dropdown />
-      <MoviesGrid movies={movies} />
-    </div>
+        <Dropdown />
+        <MoviesGrid movies={movies} />
+      </div>
+    </Layout>
   );
 }
 
