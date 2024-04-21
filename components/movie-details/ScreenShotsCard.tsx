@@ -3,6 +3,7 @@ import Card from "./Card";
 import MyBreadcrumb from "./Breadcrumb";
 import Link from "next/link";
 import Router from "next/router";
+import Layout from "../layout/layout";
 
 type ScreenShotsCardProps = {
   titlePage: string;
@@ -42,7 +43,7 @@ const ScreenShotsCard = ({
     </svg>
   );
   return (
-    <div>
+    <Layout>
       <Card backdrop_path={backdrop_path}>
         <div className="h-fit  flex gap-x-5 z-10 ">
           {arrowLeft}
@@ -100,7 +101,7 @@ const ScreenShotsCard = ({
           </div>
         </div>
       </Card>
-    </div>
+    </Layout>
   );
 };
 

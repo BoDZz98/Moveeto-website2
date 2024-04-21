@@ -6,7 +6,10 @@ const MovieDetails = ({ movieData: movie }: MovieDetailsProps) => {
     { title: "Release Date", value: movie.release_date },
     { title: "Genres", arrayData: movie.genres },
     { title: "Runtime", value: movie.runtime },
-    { title: "Production Companies", arrayData: movie.production_companies.slice(0,4) },
+    {
+      title: "Production Companies",
+      arrayData: movie.production_companies.slice(0, 4),
+    },
     { title: "Revenue", value: movie.revenue },
     { title: "Production Countries", arrayData: movie.production_countries },
   ];
@@ -20,7 +23,7 @@ const MovieDetails = ({ movieData: movie }: MovieDetailsProps) => {
             <span className="font-bold text-gray-500 mb-4">{item.title}</span>
             <p className="flex ">
               {item.arrayData?.map((genre, index) => (
-                <p>
+                <p id={index.toString()}>
                   {index > 0 ? ", " : ""}
                   {genre.name}
                 </p>

@@ -1,4 +1,9 @@
-import { convertMinutesToTime, convertToShortForm } from "./functions-utils";
+import {
+  convertMinutesToTime,
+  convertToShortForm,
+  getCurrentDate,
+  getDate,
+} from "./functions-utils";
 
 const configHeaders = {
   "Content-Type": "application/json",
@@ -83,4 +88,23 @@ export function convertIdGenresToNames(
     genreObject && genresNames.push(genreObject.name);
   });
   return genresNames;
+}
+
+export async function fetchMoviesByDate(time: string) {
+  const currentDate = getCurrentDate();
+  let prevDate = "";
+  time === "Past Month" && (prevDate = getDate(30, "prev"));
+  time === "This Weak" && (prevDate = getDate(7, "prev"));
+  time === "Next Weak" && (prevDate = getDate(7, "next"));
+
+  let url = "";
+  time === "Next Weak"
+    ? (url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=${currentDate}&primary_release_date.lte=${prevDate}&sort_by=popularity.desc`)
+    : (url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=${prevDate}&primary_release_date.lte=${currentDate}&sort_by=popularity.desc`);
+
+  const response = await fetch(url, {
+    headers: configHeaders,
+  });
+  const data = await response.json();
+  return data.results;
 }

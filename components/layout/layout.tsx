@@ -12,7 +12,7 @@ const Layout = ({ children, sideBarNotVisible }: LayoutProps) => {
       <Header />
       <div className="flex w-full">
         {!sideBarNotVisible && <SideBar />}
-        <div className="w-full h-fit ">{children}</div>
+        <div className="w-full h-fit mb-52">{children}</div>
       </div>
     </div>
   );
