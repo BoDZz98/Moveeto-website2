@@ -2,9 +2,11 @@ import Link from "next/link";
 import React from "react";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
-import { Col, Container, Row } from "react-bootstrap";
+import { signOut, useSession } from "next-auth/react";
 
 const Header = () => {
+  const { data: session, status } = useSession();
+
   return (
     <div className="mb-20 flex sm:flex-col items-start lg:flex-row z-10 opacity-60">
       {/*  */}
@@ -26,12 +28,21 @@ const Header = () => {
         </div>
 
         <div className=" flex w-2/12 justify-end items-center   sm:w-1/3 sm:gap-x-5 md:gap-x-10">
-          <Link href="/login">
-            <h1 className="text-white text-2xl font-bold ">Login</h1>
-          </Link>
-          <Link href="/signup">
-            <h1 className="text-white text-2xl font-bold ">Signup</h1>
-          </Link>
+          {status === "unauthenticated" && (
+            <>
+              <Link href="/login">
+                <h1 className="text-white text-2xl font-bold ">Login</h1>
+              </Link>
+              <Link href="/signup">
+                <h1 className="text-white text-2xl font-bold ">Signup</h1>
+              </Link>
+            </>
+          )}
+          {status === "authenticated" && (
+            <button onClick={() => signOut()}>
+              <h1 className="text-white text-2xl font-bold ">Logout</h1>
+            </button>
+          )}
         </div>
       </div>
     </div>

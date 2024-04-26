@@ -4,9 +4,14 @@ import siginup from "@/pages/signup";
 
 type LoginFormProps = {
   signingUp?: boolean;
+  buttonTitle: string;
   submitHandler: (email: string, pass: string, userName: string) => void;
 };
-const LoginForm = ({ signingUp, submitHandler }: LoginFormProps) => {
+const LoginForm = ({
+  signingUp,
+  buttonTitle,
+  submitHandler,
+}: LoginFormProps) => {
   const [inputs, setInputs] = useState({
     username: { value: "", isValid: true },
     email: { value: "", isValid: true },
@@ -86,7 +91,8 @@ const LoginForm = ({ signingUp, submitHandler }: LoginFormProps) => {
         className="bg-white rounded-lg p-4 text-black text-xl font-bold hover:bg-gray-400"
         type="submit"
       >
-        {signingUp ? "Sign up" : "Log in"}
+        {buttonTitle}
+        {/* {signingUp ? "Sign up" : "Log in"} */}
       </button>
     </form>
   );

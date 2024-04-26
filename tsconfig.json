@@ -14,8 +14,15 @@
     "incremental": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "allowSyntheticDefaultImports": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "pages/api/auth/[...nextauth].js",
+    "pages/api/register/signin.js"
+, "pages/login.tsx"  ],
   "exclude": ["node_modules"]
 }
