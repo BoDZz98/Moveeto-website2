@@ -5,17 +5,18 @@ import User from "@/models/userModel";
 import bcrypt from "bcrypt";
 
 // min 25 protected routes -> https://www.youtube.com/watch?v=yfQkDwJAirs&t=1242s
-
+// ERCGFMYqm2Tuq(@
 async function login(credentials) {
   try {
     connectDB();
     const user = await User.findOne({ email: credentials.email });
-    if (!user) throw new Error("wrong cred");
+    if (!user) throw new Error("Invalid Credintials");
     const isCorrect = await bcrypt.compare(credentials.password, user.password);
-    if (!isCorrect) throw new Error("wrong cred");
+    if (!isCorrect) throw new Error("Invalid Credintials");
     return user;
   } catch (error) {
-    console.log("error while logging in", error);
+    console.log("error while logging in");
+    return;
   }
 }
 
@@ -30,11 +31,12 @@ export const authOptions = {
     CredentialsProvider({
       async authorize(credentials, req) {
         const user = await login(credentials);
-        console.log({ credentials });
+        // console.log({ credentials });
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return { email: user.email };
         } else {
+          throw new Error("Invalid Credentials");
           return null;
         }
       },

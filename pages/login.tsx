@@ -3,7 +3,7 @@ import Card from "@/components/movie-details/Card";
 import LoginForm from "@/components/ui/LoginForm";
 import { fetchPopularMovies } from "@/utils/api-utils";
 import { PagesOptions, SessionOptions, getServerSession } from "next-auth";
-import { signIn } from "next-auth/react";
+import { SignInResponse, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
@@ -17,16 +17,22 @@ type loginProps = {
 const login = ({ backgroundImg }: loginProps) => {
   const router = useRouter();
   const [title, setTitle] = useState("Log in");
+  const [error, setError] = useState("");
+
   async function loginHandler(email: string, password: string) {
     setTitle("logging in");
+
     // This function will trigger our api route [...nextauth].js
-    const res = await signIn("credentials", {
+    const result = await signIn("credentials", {
       email,
       password,
       redirect: false, // we don't want to be redirected to an error page when we through an error
     });
-    if (res?.error) {
-      console.log("invalid credintials");
+    console.log(result);
+
+    if (result!.error) {
+      setError(result!.error);
+      setTitle("Log in");
       return;
     } else {
       router.replace("/");
@@ -39,13 +45,11 @@ const login = ({ backgroundImg }: loginProps) => {
         <div className=" py-48 flex items-center justify-center ">
           <div className="w-full xl:w-2/3 2xl:w-1/2 z-10 flex flex-col items-center gap-y-6  ">
             <p className="text-5xl font-bold">Login</p>
-            <LoginForm submitHandler={loginHandler} buttonTitle={title} />
-            {/* <button
-              className="bg-white w-1/2 rounded-lg p-4 text-black text-xl font-bold hover:bg-gray-400"
-              type="submit"
-            >
-              Log in
-            </button> */}
+            <LoginForm
+              submitHandler={loginHandler}
+              buttonTitle={title}
+              errorMessage={error}
+            />
             <Link
               href="/signup"
               className="text-center text-white underline hover:text-gray-500 "
@@ -64,7 +68,6 @@ interface Context {
   req: NextApiRequest;
   res: NextApiResponse;
 }
-
 
 export async function getServerSideProps(context: Context) {
   const session = await getServerSession(context.req, context.res, authOptions);

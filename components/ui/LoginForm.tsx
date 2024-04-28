@@ -5,11 +5,13 @@ import siginup from "@/pages/signup";
 type LoginFormProps = {
   signingUp?: boolean;
   buttonTitle: string;
+  errorMessage: string;
   submitHandler: (email: string, pass: string, userName: string) => void;
 };
 const LoginForm = ({
   signingUp,
   buttonTitle,
+  errorMessage,
   submitHandler,
 }: LoginFormProps) => {
   const [inputs, setInputs] = useState({
@@ -37,6 +39,7 @@ const LoginForm = ({
       (signingUp && usernameIsValid && emailIsValid && passwordIsValid)
     ) {
       // If all is good
+
       submitHandler(
         inputs.email.value,
         inputs.password.value,
@@ -87,12 +90,18 @@ const LoginForm = ({
         hasError={!inputs.password.isValid}
         setValue={(value: string) => changeInputHandler("password", value)}
       />
+      <p
+        className={`text-red-500 text-xl font-semibold text-center ${
+          errorMessage !== "" ? "block" : "hidden"
+        } `}
+      >
+        {errorMessage}
+      </p>
       <button
         className="bg-white rounded-lg p-4 text-black text-xl font-bold hover:bg-gray-400"
         type="submit"
       >
         {buttonTitle}
-        {/* {signingUp ? "Sign up" : "Log in"} */}
       </button>
     </form>
   );

@@ -16,12 +16,15 @@ type loginProps = {
 const siginup = ({ backgroundImg }: loginProps) => {
   const router = useRouter();
   const [title, setTitle] = useState("signup");
+  const [error, setError] = useState("");
 
   async function signupHandler(
     email: string,
     password: string,
     username: string
   ) {
+    console.log("aaaaaaaaa");
+
     try {
       setTitle("signing up");
       const res = await fetch("/api/auth/signin", {
@@ -33,9 +36,9 @@ const siginup = ({ backgroundImg }: loginProps) => {
       });
       if (res.ok) {
         router.replace("/login");
-        // console.log(res.json());
       } else {
-        console.log("sth wwent wrong");
+        const data = await res.json();
+        setError(data.message);
       }
     } catch (error) {}
   }
@@ -48,6 +51,7 @@ const siginup = ({ backgroundImg }: loginProps) => {
             <LoginForm
               submitHandler={signupHandler}
               buttonTitle={title}
+              errorMessage={error}
               signingUp
             />
             <Link
