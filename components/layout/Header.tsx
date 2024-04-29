@@ -39,9 +39,14 @@ const Header = () => {
             </>
           )}
           {status === "authenticated" && (
-            <button onClick={() => signOut()}>
-              <h1 className="text-white text-2xl font-bold ">Logout</h1>
-            </button>
+            <>
+              <Link href="/profile/overview">
+                <h1 className="text-white text-2xl font-bold ">My Library</h1>
+              </Link>
+              <button onClick={() => signOut()}>
+                <h1 className="text-white text-2xl font-bold ">Logout</h1>
+              </button>
+            </>
           )}
         </div>
       </div>
