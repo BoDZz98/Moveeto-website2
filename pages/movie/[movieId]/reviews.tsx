@@ -8,7 +8,7 @@ const MovieComments = (props: { movie: MovieObj }) => {
   const { movie } = props;
   return (
     <ScreenShotsCard
-      titlePage="Comments"
+      titlePage="Reviews"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}

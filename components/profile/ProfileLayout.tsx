@@ -27,7 +27,7 @@ const ProfileLayout = ({ pageTitle, children }: ProfileLayoutProps) => {
             Overview
           </h1>
         </Link>
-        <Link href="/profile/overview" onClick={() => setTitle("Favorite")}>
+        <Link href="/profile/favorite" onClick={() => setTitle("Favorite")}>
           <h1 className={title === "Favorite" ? activeLinkStyle : linkStyle}>
             Favorite
           </h1>
@@ -37,12 +37,12 @@ const ProfileLayout = ({ pageTitle, children }: ProfileLayoutProps) => {
             Wishlist
           </h1>
         </Link>
-        <Link href="/profile/overview" onClick={() => setTitle("Reviews")}>
+        <Link href="/profile/reviews" onClick={() => setTitle("Reviews")}>
           <h1 className={title === "Reviews" ? activeLinkStyle : linkStyle}>
             Reviews
           </h1>
         </Link>
-        <Link href="/profile/overview" onClick={() => setTitle("Collections")}>
+        <Link href="/profile/collections" onClick={() => setTitle("Collections")}>
           <h1 className={title === "Collections" ? activeLinkStyle : linkStyle}>
             Collections
           </h1>

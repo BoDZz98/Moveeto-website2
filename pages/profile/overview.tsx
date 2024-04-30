@@ -1,6 +1,5 @@
 import Layout from "@/components/layout/layout";
-import Carouselll from "@/components/profile/Cor";
-import EmptyMovieCard from "@/components/profile/EmptyMovieCard";
+import Carousel from "@/components/profile/MyCarousel";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import React from "react";
 
@@ -8,16 +7,14 @@ const overview = () => {
   return (
     <Layout>
       <ProfileLayout pageTitle="Overview">
-        <div className="">
+        <div className="relative  w-full h-[400px]">
           <h1 className="text-4xl mb-8">Favourite games</h1>
-          {/* <div className="flex gap-x-10 relative ">
-            {leftArrow}
-            <EmptyMovieCard />
-            <EmptyMovieCard />
-            <EmptyMovieCard />
-            {rightArrow}
-          </div> */}
-          <Carouselll />
+          <div className="absolute w-full ">
+            <Carousel />
+          </div>
+        </div>
+        <div>
+          <p>assssss</p>
         </div>
       </ProfileLayout>
     </Layout>

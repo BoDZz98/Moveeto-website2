@@ -88,13 +88,13 @@ const ScreenShotsCard = ({
                   Similar Movies
                 </Link>
                 <Link
-                  href={`/movie/${movieId}/comments`}
+                  href={`/movie/${movieId}/reviews`}
                   className={
-                    pageTitle === "Comments" ? ActiveLinkStyle : linkStyle
+                    pageTitle === "Reviews" ? ActiveLinkStyle : linkStyle
                   }
-                  onClick={() => setPageTitle("Comments")}
+                  onClick={() => setPageTitle("Reviews")}
                 >
-                  Comments
+                  Reviews
                 </Link>
               </div>
             </div>
