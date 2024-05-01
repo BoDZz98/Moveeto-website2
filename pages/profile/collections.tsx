@@ -1,41 +1,74 @@
 import Layout from "@/components/layout/layout";
-import ManageCollection from "@/components/profile/ManageCollection";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import MyModalCard from "@/components/ui/MyModalCard";
-import Image from "next/image";
-import React, { useState } from "react";
+import { connectDB } from "@/utils/db-util";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
+import { GetServerSidePropsContext } from "next";
+import User from "@/models/userModel";
+import EmptyPage from "@/components/profile/EmptyPage";
+import { useState } from "react";
+import ManageCollection from "@/components/profile/ManageCollection";
 
-const collections = () => {
+type collectionObj = {
+  name: string;
+  description: string;
+  movies: Array<{}>;
+};
+
+type collectionsProps = {
+  collections: Array<collectionObj>;
+};
+const collections = ({ collections }: collectionsProps) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
+
   return (
     <Layout>
       <ProfileLayout pageTitle="Collections">
-        <div className="flex flex-col gap-y-5 items-center justify-center">
-          <Image
-            src={`/imgs/sleeping.png`}
-            alt="Racing"
-            className="w-32 h-32  "
-            width={50}
-            height={50}
-          />
-          <p className="text-gray-500 font-semibold text-lg">
-            No collections yet
-          </p>
-          <button
-            className="bg-white text-black text-xl font-semibold rounded py-4 xl:px-16 px-8 hover:bg-gray-400 transition ease-in-out delay-100"
-            onClick={() => {
-              setModalIsVisible(true);
-            }}
-          >
-            Start a new collection
-          </button>
-          {modalIsVisible && (
-            <ManageCollection onClose={() => setModalIsVisible(false)} title='Start a new collection'/>
-          )}
+        {collections.length === 0 && <EmptyPage collectionPage />}
+        <div>
+          <div className="flex justify-end">
+            <p
+              className="underline hover:cursor-pointer hover:text-gray-300"
+              onClick={() => {
+                setModalIsVisible(true);
+              }}
+            >
+              + Start a new collection
+            </p>
+          </div>
+          {collections.map((collection) => (
+            <div className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group">
+              <p className="underline text-3xl font-bold group-hover:text-gray-300">
+                {collection.name}
+              </p>
+              <p className="text-xl text-gray-300">
+                Movies: {collection.movies.length}
+              </p>
+            </div>
+          ))}
         </div>
+        {modalIsVisible && (
+          <ManageCollection
+            onClose={() => setModalIsVisible(false)}
+            title="Start a new collection"
+          />
+        )}
       </ProfileLayout>
     </Layout>
   );
 };
 
 export default collections;
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+  await connectDB();
+  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  const email = session?.user?.email;
+  const user = await User.findOne({ email });
+
+  return {
+    props: {
+      collections: JSON.parse(JSON.stringify(user.collections)),
+    },
+  };
+}

@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { connectDB } from "@/utils/connect";
+import { connectDB } from "@/utils/db-util";
 import type { NextApiRequest, NextApiResponse } from "next";
 import User from "@/models/userModel";
 import bcrypt from "bcrypt";
@@ -37,6 +37,7 @@ export default async function handler(
       name: username,
       email,
       password: hashedPassword,
+      collections: [],
     });
     res.status(201).json({ message: "user created!" });
   } catch (error) {

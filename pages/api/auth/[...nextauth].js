@@ -1,4 +1,4 @@
-import { connectDB } from "@/utils/connect";
+import { connectDB } from "@/utils/db-util";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/userModel";
