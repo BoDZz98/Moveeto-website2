@@ -6,7 +6,7 @@ import bcrypt from "bcrypt";
 
 // min 25 protected routes -> https://www.youtube.com/watch?v=yfQkDwJAirs&t=1242s
 // ERCGFMYqm2Tuq(@
-async function login(credentials) {
+async function login(credentials: Record<string, string>) {
   try {
     connectDB();
     const user = await User.findOne({ email: credentials.email });
@@ -20,7 +20,7 @@ async function login(credentials) {
   }
 }
 
-export const authOptions = {
+export default NextAuth({
   pages: {
     // This is the url that the user will be directed to if he tried to access a certain path that req auth, ahd he is not auth
     signIn: "/login",
@@ -29,7 +29,7 @@ export const authOptions = {
   // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      async authorize(credentials, req) {
+      authorize: async (credentials: Record<string, string>) => {
         const user = await login(credentials);
         // console.log({ credentials });
         if (user) {
@@ -64,8 +64,8 @@ export const authOptions = {
       return session;
     }, */
   },
-};
-export default NextAuth(authOptions);
+});
+// export default NextAuth(authOptions);
 
 /* interface AuthOptions {
   providers: Provider[];

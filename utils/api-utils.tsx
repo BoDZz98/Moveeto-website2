@@ -80,12 +80,12 @@ export function convertIdGenresToNames(
   genresDetails: Array<{ id: number; name: string }>,
   limit: number
 ) {
-  const genresNames: Array<string> = [];
+  const genresNames: Array<{ name: string }> = [];
 
   genres.map((movieGenres, index) => {
     if (index > limit) return;
     const genreObject = genresDetails.find((genre) => genre.id === movieGenres);
-    genreObject && genresNames.push(genreObject.name);
+    genreObject && genresNames.push({ name: genreObject.name });
   });
   return genresNames;
 }

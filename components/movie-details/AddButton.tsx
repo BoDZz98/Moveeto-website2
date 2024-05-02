@@ -6,6 +6,7 @@ type AddButtonProps = {
   icon: ReactNode;
   contStyle?: string;
   textStyle?: string;
+  clickHandler: () => void;
 };
 const AddButton = ({
   title,
@@ -13,9 +14,11 @@ const AddButton = ({
   icon,
   contStyle,
   textStyle,
+  clickHandler,
 }: AddButtonProps) => {
   return (
     <button
+      onClick={() => clickHandler()}
       className={`relative flex flex-col justify-center rounded w-40 px-4 py-2  ${contStyle}`}
     >
       <div className="absolute right-0 ">{icon}</div>

@@ -9,17 +9,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   await connectDB();
-  const { title, description } = await req.body;
 
   const session: Session | null = await getServerSession(req, res, authOptions);
   const email = session?.user?.email;
-  console.log(email);
-
   try {
     const user = await User.findOne({ email });
-    user.collections.push({ name: title, description, movies: [] });
+    user.collections.push();
     user.save();
-    res.status(201).json({ message: "collection created!" });
+    res.status(201).json({ message: "user created!" });
 
     //   console.log(user);
   } catch (error) {

@@ -2,7 +2,7 @@ import Layout from "@/components/layout/layout";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import { connectDB } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]";
+import authOptions from "../api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next";
 import User from "@/models/userModel";
 import EmptyPage from "@/components/profile/EmptyPage";
@@ -62,7 +62,7 @@ export default collections;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();
-  const session = await getServerSession(ctx.req, ctx.res, authOptions);
+  const session: any = await getServerSession(ctx.req, ctx.res, authOptions);
   const email = session?.user?.email;
   const user = await User.findOne({ email });
 

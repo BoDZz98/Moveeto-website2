@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
+const movieSchema = new Schema({
+  movieId: String,
+  name: String,
+  date: String,
+  image: String,
+  genres: [String],
+});
+
 const collectionsSchema = new Schema({
   name: {
     type: String,
@@ -24,6 +32,8 @@ const userSchema = new Schema(
       required: [true, "Please provide your password"],
     },
     collections: [collectionsSchema], // array of objects with collection
+    favMovies: [movieSchema],
+    wishlistMovies: [movieSchema],
   },
   { timestamps: true }
 );

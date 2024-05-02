@@ -8,6 +8,7 @@ import {
   fetchPopularMovies,
   getAllGenres,
 } from "@/utils/api-utils";
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import React from "react";
 
 /* export type similarMovieObj = {
@@ -31,12 +32,12 @@ export type MovieObj = {
   youtubeTrailerKey: string;
   revenue: string;
   vote_count: number;
-  genres: Array<{ name: string }> | Array<string>;
+  genres: Array<{ name: string }>;
   images: Array<{ file_path: string }>;
   cast: Array<{ name: string; profile_path: string; character: string }>;
   production_companies: Array<{ name: string }>;
   production_countries: Array<{ name: string }>;
-  similarMovies: Array<MovieObj>;
+  similarMovies?: Array<MovieObj>;
   genre_ids: Array<number>;
 };
 
@@ -50,20 +51,22 @@ const MovieDetails = (props: MovieProps) => {
   return (
     <Layout>
       <Card backdrop_path={movie.backdrop_path}>
-        <div className="flex flex-col 2xl:flex-row ">
-          <Details movieData={movie} />
-          <Images
-            id={movie.id}
-            cast={movie.cast}
-            movieImgs={movie.images}
-            youtubekey={movie.youtubeTrailerKey}
+        <MovieDetailsCtx.Provider value={{ movieData: movie }}>
+          <div className="flex flex-col 2xl:flex-row ">
+            <Details movieData={movie} />
+            <Images
+              id={movie.id}
+              cast={movie.cast}
+              movieImgs={movie.images}
+              youtubekey={movie.youtubeTrailerKey}
+            />
+          </div>
+          <SimilarMovies
+            title={movie.title}
+            movies={movie.similarMovies!}
+            genresDetails={genresDetails}
           />
-        </div>
-        <SimilarMovies
-          title={movie.title}
-          movies={movie.similarMovies}
-          genresDetails={genresDetails}
-        />
+        </MovieDetailsCtx.Provider>
       </Card>
     </Layout>
   );

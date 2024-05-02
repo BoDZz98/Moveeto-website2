@@ -2,12 +2,12 @@ import Layout from "@/components/layout/layout";
 import Card from "@/components/movie-details/Card";
 import LoginForm from "@/components/ui/LoginForm";
 import { fetchPopularMovies } from "@/utils/api-utils";
-import { PagesOptions, SessionOptions, getServerSession } from "next-auth";
-import { SignInResponse, signIn } from "next-auth/react";
+import { Session, getServerSession } from "next-auth";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { authOptions } from "./api/auth/[...nextauth]";
+import authOptions from "./api/auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
 
 type loginProps = {
@@ -70,7 +70,11 @@ interface Context {
 }
 
 export async function getServerSideProps(context: Context) {
-  const session = await getServerSession(context.req, context.res, authOptions);
+  const session: Session | null = await getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
   let popularMovies: Array<{ backdrop_path: string }> =
     await fetchPopularMovies();
   const randomNumber = Math.floor(Math.random() * popularMovies.length);
