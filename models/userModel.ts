@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 const movieSchema = new Schema({
-  movieId: String,
-  name: String,
-  date: String,
-  image: String,
+  title: String,
+  release_date: String,
+  backdrop_path: String,
   genres: [String],
 });
 

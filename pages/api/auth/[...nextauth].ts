@@ -33,8 +33,11 @@ export default NextAuth({
         const user = await login(credentials);
         // console.log({ credentials });
         if (user) {
+          // console.log("user is", user);
+
           // Any object returned will be saved in `user` property of the JWT
-          return { email: user.email };
+          return user;
+          return { email: user.email, favMovies: user.favMovies };
         } else {
           throw new Error("Invalid Credentials");
           return null;
@@ -43,26 +46,26 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
+  // the collbacks are called in the following order
   callbacks: {
-    /*  async jwt({ token, user }) {
-      if (user) {
-        token.username = user.name;
-        token.email = user.email;
-        token.id = user.id;
+    jwt: async ({ token, user, trigger, session }: any) => {
+      user && (token.user = user);
+
+      if (trigger === "update" && session?.movie) {
+        token.user[session.list].push(session.movie);
+
+        // token.name = session.name;
       }
-      console.log("token is", token);
 
       return token;
     },
-    async session({ session, token }) {
-      if (session) {
-        session.user.username = token.username;
-        session.user.email = token.email;
-        session.user.id = token.id;
-      }
-      // console.log("session is", session);
+    session: async ({ session, token }: any) => {
+      session.user = token.user;
+      // This session contain the user data retrived from the modal
+      // console.log("session is");
+
       return session;
-    }, */
+    },
   },
 });
 // export default NextAuth(authOptions);
