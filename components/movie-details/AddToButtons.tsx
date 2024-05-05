@@ -1,39 +1,32 @@
-import React, { use, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AddButton from "./AddButton";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 const AddToButtons = () => {
   // ---------------------------------------
   const [isFav, setIsFav] = useState(false);
   const [isWishlist, setIsWishlist] = useState(false);
-  const [user, setUser] = useState({ collections: [] });
 
   // movie data from ctx ------------------------------------------
   const { backdrop_path, genres, title, release_date } =
     useContext(MovieDetailsCtx).movieData;
   // Getting user data from the stored session -------------------
-  const { data: session, status, update } = useSession();
-  let movieIsFav: boolean = false;
-  let movieIsWishlist: boolean = false;
-
-  let userData: any = undefined;
-  if (session) {
-    userData = session.user;
-    // console.log("userData", userData);
-
-    movieIsFav = !!userData.favMovies.find(
-      (movieOb: { title: string }) => movieOb.title === title
-    );
-    movieIsWishlist = !!userData.wishlistMovies.find(
-      (movieOb: { title: string }) => movieOb.title === title
-    );
-  }
+  const { data: session, update } = useSession();
   useEffect(() => {
-    setIsFav(movieIsFav);
-    setIsWishlist(movieIsWishlist);
-    setUser(userData);
-  }, [movieIsFav, movieIsWishlist, userData]);
+    if (session) {
+      const userData: any = session.user;
+      // console.log("userDatass", userData);
+      const movieIsFav = !!userData.favMovies.find(
+        (movieOb: { title: string }) => movieOb.title === title
+      );
+      const movieIsWishlist = !!userData.wishlistMovies.find(
+        (movieOb: { title: string }) => movieOb.title === title
+      );
+      setIsFav(movieIsFav);
+      setIsWishlist(movieIsWishlist);
+    }
+  }, []);
 
   async function BtnHandler(button: string) {
     const res = await fetch("/api/addMovies", {
@@ -107,7 +100,6 @@ const AddToButtons = () => {
       clickHandler: () => console.log("c clicked"),
     },
   ];
-  // console.log("usrdata is", user);
 
   return (
     <div className="flex gap-x-4 ">
@@ -115,7 +107,7 @@ const AddToButtons = () => {
         // <p>s</p>
         <AddButton
           {...item}
-          userCollections={user.collections.splice(0, 5)}
+          userCollections={session ? session.user!.userCollections : []}
           key={item.title}
         />
       ))}

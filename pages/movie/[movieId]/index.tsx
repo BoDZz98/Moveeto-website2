@@ -9,7 +9,7 @@ import {
   getAllGenres,
 } from "@/utils/api-utils";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import { useSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import React from "react";
 
 /* export type similarMovieObj = {
@@ -48,13 +48,12 @@ type MovieProps = {
 };
 
 const MovieDetails = (props: MovieProps) => {
-  const { data: session, status } = useSession();
-
-  let userData: any = undefined;
-  if (session) {
-    userData = session.user;
-    console.log("userData", userData);
-  }
+  // const session = await getSession();
+  // let userData: any = undefined;
+  // if (session) {
+  //   userData = session.user;
+  //   console.log("userDatas", userData);
+  // }
   const { movie, genresDetails } = props;
   return (
     <Layout>

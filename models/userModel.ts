@@ -8,14 +8,14 @@ const movieSchema = new Schema({
   genres: [String],
 });
 
-const collectionsSchema = new Schema({
+const userCollectionsSchema = new Schema({
   name: {
     type: String,
     // sparse: true,
     unique: [true, "Collection name already exists"],
   },
   description: String,
-  movies: [{ movieId: { type: String }, movieName: { type: String } }],
+  movies: [movieSchema],
 });
 
 const userSchema = new Schema(
@@ -30,7 +30,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please provide your password"],
     },
-    collections: [collectionsSchema], // array of objects with collection
+    userCollections: [userCollectionsSchema], // array of objects with collection
     favMovies: [movieSchema],
     wishlistMovies: [movieSchema],
   },
@@ -38,6 +38,28 @@ const userSchema = new Schema(
 );
 // module.exports
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+const User = mongoose.models?.User || mongoose.model("User", userSchema);
 
 export default User;
+
+type movieObj = {
+  title: String;
+  release_date: String;
+  backdrop_path: String;
+  genres: Array<String>;
+};
+
+export type collectionObj = {
+  name: string;
+  description: string;
+  movies: Array<movieObj>;
+};
+
+export type userObj = {
+  name: string;
+  email: string;
+  userCollections: Array<collectionObj>;
+  favMovies: Array<movieObj>;
+  wishlistMovies: Array<movieObj>;
+  save: () => {}; // to prevent compiler error -> ( save() is not a property of userObj)
+};

@@ -37,7 +37,6 @@ export default NextAuth({
 
           // Any object returned will be saved in `user` property of the JWT
           return user;
-          return { email: user.email, favMovies: user.favMovies };
         } else {
           throw new Error("Invalid Credentials");
           return null;
@@ -67,7 +66,7 @@ export default NextAuth({
     session: async ({ session, token }: any) => {
       session.user = token.user;
       // This session contain the user data retrived from the modal
-      console.log("session is", session.user);
+      // console.log("session is", session.user);
 
       return session;
     },

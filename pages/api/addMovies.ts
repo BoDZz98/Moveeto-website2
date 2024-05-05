@@ -1,9 +1,8 @@
-import User from "@/models/userModel";
+import User, { collectionObj, userObj } from "@/models/userModel";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session, getServerSession } from "next-auth";
 import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
-import { getSession, useSession } from "next-auth/react";
 
 type MovieObj = {
   title: String;
@@ -11,7 +10,11 @@ type MovieObj = {
   backdrop_path: String;
   genres: any;
 };
-
+type reqData = {
+  button: string;
+  movie: MovieObj;
+  collectionName: string;
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -20,33 +23,67 @@ export default async function handler(
 
   const session: Session | null = await getServerSession(req, res, authOptions);
   const email = session?.user?.email;
-  // console.log("session is", session);
+  const user: userObj | null = await User.findOne({ email });
+  const { button: list, movie, collectionName }: reqData = await req.body;
 
-  try {
-    const { button: list, movie }: { button: string; movie: MovieObj } =
-      await req.body;
-
-    const user = await User.findOne({ email });
-    const movieIndex: number = user[list].findIndex(
-      (movieObj: MovieObj) => movieObj.title === movie.title
-    );
-
-    if (movieIndex !== -1) {
-      // The movie is in the user's favorite movies, so we should remove it
-      user[list].splice(movieIndex, 1);
-      user.save();
-      res.status(202).json({});
-    } else {
-      movie["genres"] = movie.genres.map(
-        (genre: { name: string }) => genre.name
+  // Adding movies to fav and wishlist --------------------------------------------------
+  if ((list === "favMovies" || list === "wishlistMovies") && user) {
+    try {
+      const movieIndex: number = user[list].findIndex(
+        (movieObj: MovieObj) => movieObj.title === movie.title
       );
-      user[list].push(movie);
-      user.save();
-      res.status(201).json({});
+
+      if (movieIndex !== -1) {
+        // The movie is in the user's favorite movies, so we should remove it
+        user[list].splice(movieIndex, 1);
+        user.save();
+        res.status(202).json({});
+      } else {
+        movie["genres"] = movie.genres.map(
+          (genre: { name: string }) => genre.name
+        );
+        user[list].push(movie);
+        user.save();
+        res.status(201).json({});
+      }
+    } catch (error) {
+      // typeof movie.genres === "object" &&}
+      console.log("error while add/remove movie in fav/wishlist", error);
+      res
+        .status(500)
+        .json({ message: "error while add/remove movie in fav/wishlist" });
     }
-    // typeof movie.genres === "object" &&
-  } catch (error) {
-    console.log("error while add/remove movie", error);
-    res.status(500).json({ message: "error while creating collection" });
+  }
+  // Adding movies to user Collections --------------------------------------------------
+  if (collectionName && user) {
+    try {
+      const collection: collectionObj | undefined = user.userCollections.find(
+        (collection) => collection.name === collectionName
+      );
+
+      const movieIndex: number = collection!.movies.findIndex(
+        (m) => m.title === movie.title
+      );
+
+      if (movieIndex !== -1) {
+        // The movie is in the user's favorite movies, so we should remove it
+        collection?.movies.splice(movieIndex, 1);
+        user.save();
+        res.status(202).json({ collections: user.userCollections });
+      } else {
+        movie["genres"] = movie.genres.map(
+          (genre: { name: string }) => genre.name
+        );
+        user.userCollections;
+        collection?.movies.push(movie);
+        user.save();
+        res.status(201).json({ collections: user.userCollections });
+      }
+    } catch (error) {
+      console.log("error while add/remove movie in collection", error);
+      res
+        .status(500)
+        .json({ message: "error while add/remove movie in collection" });
+    }
   }
 }
