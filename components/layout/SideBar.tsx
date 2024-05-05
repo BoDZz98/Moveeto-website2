@@ -19,6 +19,7 @@ const SideBar = () => {
       </h1>
       {newReleasesdData.map((item) => (
         <ChildLinkItem
+          key={item.title}
           goTo={item.link}
           icon={item.svg}
           text={item.title}
@@ -28,6 +29,7 @@ const SideBar = () => {
       <h1 className="w-fit text-white text-3xl font-extrabold py-4 ">Top</h1>
       {topData.map((item) => (
         <ChildLinkItem
+          key={item.title}
           goTo={item.link}
           icon={item.svg}
           text={item.title}
@@ -36,7 +38,12 @@ const SideBar = () => {
       ))}
       <h1 className="w-fit text-white text-3xl font-extrabold py-4 ">Genres</h1>
       {genresData.map((item) => (
-        <ChildLinkItem goTo={item.link} icon={item.svg} text={item.title} />
+        <ChildLinkItem
+          key={item.title}
+          goTo={item.link}
+          icon={item.svg}
+          text={item.title}
+        />
       ))}
     </div>
   );

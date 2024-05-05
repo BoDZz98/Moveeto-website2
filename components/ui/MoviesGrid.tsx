@@ -14,7 +14,9 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
           // 0, 5
           (movieData, index) =>
             index < 5 &&
-            movieData.backdrop_path && <MovieGridItem movie={movieData} />
+            movieData.backdrop_path && (
+              <MovieGridItem movie={movieData} key={movieData.title} />
+            )
         )}
       </div>
       <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
@@ -23,7 +25,9 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
           (movieData, index) =>
             index >= 5 &&
             index < 10 &&
-            movieData.backdrop_path && <MovieGridItem movie={movieData} />
+            movieData.backdrop_path && (
+              <MovieGridItem movie={movieData} key={movieData.title} />
+            )
         )}
       </div>
       <div className="flex flex-col gap-y-8  px-20 xl:w-1/4 xl:px-0">
@@ -32,7 +36,9 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
           (movieData, index) =>
             index >= 10 &&
             index < 15 &&
-            movieData.backdrop_path && <MovieGridItem movie={movieData} />
+            movieData.backdrop_path && (
+              <MovieGridItem movie={movieData} key={movieData.title} />
+            )
         )}
       </div>
       <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
@@ -41,7 +47,9 @@ const MoviesGrid = ({ movies }: MoviesGridProps) => {
           (movieData, index) =>
             index >= 15 &&
             index < 20 &&
-            movieData.backdrop_path && <MovieGridItem movie={movieData} />
+            movieData.backdrop_path && (
+              <MovieGridItem movie={movieData} key={movieData.title} />
+            )
         )}
       </div>
     </div>

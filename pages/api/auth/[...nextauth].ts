@@ -50,11 +50,16 @@ export default NextAuth({
   callbacks: {
     jwt: async ({ token, user, trigger, session }: any) => {
       user && (token.user = user);
-
+      // Updating the tokon/session and use it as a state managment instead of redux
       if (trigger === "update" && session?.movie) {
-        token.user[session.list].push(session.movie);
-
-        // token.name = session.name;
+        if (session?.operation === "add") {
+          token.user[session.list].push(session.movie);
+        } else {
+          const index = token.user[session.list].findIndex(
+            (obj: any) => obj.title === session.movie
+          );
+          index !== -1 && token.user[session.list].splice(index, 1);
+        }
       }
 
       return token;
@@ -62,7 +67,7 @@ export default NextAuth({
     session: async ({ session, token }: any) => {
       session.user = token.user;
       // This session contain the user data retrived from the modal
-      // console.log("session is");
+      console.log("session is", session.user);
 
       return session;
     },

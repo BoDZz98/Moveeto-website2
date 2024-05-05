@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { Session, getServerSession } from "next-auth";
 import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
 type MovieObj = {
   title: String;
@@ -20,14 +20,8 @@ export default async function handler(
 
   const session: Session | null = await getServerSession(req, res, authOptions);
   const email = session?.user?.email;
-  // console.log(session);
-  // const session = await getSession();
+  // console.log("session is", session);
 
-  // if (session) {
-  //   const userData = session.user;
-  //   console.log("User data:", userData);
-  // }
-  // return;
   try {
     const { button: list, movie }: { button: string; movie: MovieObj } =
       await req.body;

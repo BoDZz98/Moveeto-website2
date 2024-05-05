@@ -12,13 +12,13 @@ const Rating = () => {
     <div className="flex flex-col  gap-y-8">
       <div className="flex ">
         {data.map((item, index) => (
-          <>
-            <div className={`flex flex-col `} id={item.title}>
+          <div key={item.title}>
+            <div className={`flex flex-col `}>
               <p className="font-bold text-3xl">{item.title}</p>
               <p className="underline text-gray-500">{item?.subTitle}</p>
             </div>
             {index + 1 !== data.length && <div className="border mx-16"></div>}
-          </>
+          </div>
         ))}
       </div>
       <div className="flex">

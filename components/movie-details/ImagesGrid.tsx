@@ -19,7 +19,7 @@ const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
         if (index > 2) return;
         return (
           <Image
-            id={movie.file_path}
+            key={movie.file_path}
             src={baseImageURL + movie.file_path}
             className="w-full rounded-lg"
             alt={movie.file_path}
@@ -30,7 +30,7 @@ const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
       })}
       {cast?.map((actor, index) => {
         if (index > 2) return;
-        return <ActorImage actor={actor} imgSize="h-56" />;
+        return <ActorImage actor={actor} imgSize="h-56" key={index} />;
       })}
       <div
         className="w-full rounded-lg bg-gray-800 flex flex-col justify-center items-center hover:bg-gray-400 group"

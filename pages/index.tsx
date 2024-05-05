@@ -5,6 +5,7 @@ import {
 } from "@/utils/api-utils";
 import { MovieObj } from "./movie/[movieId]";
 import HomeCard from "@/components/ui/HomeCard";
+import { useSession } from "next-auth/react";
 
 type HomeProps = {
   movies: Array<MovieObj>;
@@ -16,6 +17,13 @@ const data = {
 };
 
 export default function Home({ movies }: HomeProps) {
+  const { data: session, status } = useSession();
+
+  let userData: any = undefined;
+  if (session) {
+    userData = session.user;
+    console.log("userData", userData);
+  }
   return (
     <HomeCard title={data.title} subTitle={data.subTitle} movies={movies} />
   );

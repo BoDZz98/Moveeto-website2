@@ -28,7 +28,8 @@ const SimilarMovies = ({
             1
           );
           movie["genres"] = genresNames;
-          if (movie.backdrop_path) return <MovieGridItem movie={movie} />;
+          if (movie.backdrop_path)
+            return <MovieGridItem movie={movie} key={movie.title} />;
         })}
       </div>
     </div>

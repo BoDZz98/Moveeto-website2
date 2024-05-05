@@ -18,17 +18,17 @@ const MovieDetails = ({ movieData: movie }: MovieDetailsProps) => {
       <h1 className="text-white text-4xl font-extrabold  ">About</h1>
       <p className="text-lg">{movie.overview}</p>
       <div className="grid grid-cols-2 gap-y-8 ">
-        {data.map((item) => (
-          <div className="flex flex-col ">
+        {data.map((item, index) => (
+          <div className="flex flex-col " key={index}>
             <span className="font-bold text-gray-500 mb-4">{item.title}</span>
-            <p className="flex ">
+            <div className="flex ">
               {item.arrayData?.map((genre, index) => (
-                <p id={index.toString()}>
+                <p key={genre.name}>
                   {index > 0 ? ", " : ""}
                   {genre.name}
                 </p>
               ))}
-            </p>
+            </div>
             <span>{item.value}</span>
           </div>
         ))}

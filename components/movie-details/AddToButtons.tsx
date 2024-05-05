@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import AddButton from "./AddButton";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { getSession, useSession } from "next-auth/react";
@@ -7,6 +7,7 @@ const AddToButtons = () => {
   // ---------------------------------------
   const [isFav, setIsFav] = useState(false);
   const [isWishlist, setIsWishlist] = useState(false);
+  const [user, setUser] = useState({ collections: [] });
 
   // movie data from ctx ------------------------------------------
   const { backdrop_path, genres, title, release_date } =
@@ -16,8 +17,11 @@ const AddToButtons = () => {
   let movieIsFav: boolean = false;
   let movieIsWishlist: boolean = false;
 
+  let userData: any = undefined;
   if (session) {
-    const userData: any = session.user;
+    userData = session.user;
+    // console.log("userData", userData);
+
     movieIsFav = !!userData.favMovies.find(
       (movieOb: { title: string }) => movieOb.title === title
     );
@@ -28,7 +32,8 @@ const AddToButtons = () => {
   useEffect(() => {
     setIsFav(movieIsFav);
     setIsWishlist(movieIsWishlist);
-  }, [movieIsFav, movieIsWishlist]);
+    setUser(userData);
+  }, [movieIsFav, movieIsWishlist, userData]);
 
   async function BtnHandler(button: string) {
     const res = await fetch("/api/addMovies", {
@@ -47,9 +52,15 @@ const AddToButtons = () => {
       update({
         movie: { backdrop_path, genres, title, release_date },
         list: button,
+        operation: "add",
       });
     } else {
       button === "favMovies" ? setIsFav(false) : setIsWishlist(false);
+      update({
+        movie: title,
+        list: button,
+        operation: "remove",
+      });
     }
   }
   const buttonsData = [
@@ -96,11 +107,17 @@ const AddToButtons = () => {
       clickHandler: () => console.log("c clicked"),
     },
   ];
+  // console.log("usrdata is", user);
 
   return (
     <div className="flex gap-x-4 ">
       {buttonsData.map((item) => (
-        <AddButton {...item} />
+        // <p>s</p>
+        <AddButton
+          {...item}
+          userCollections={user.collections.splice(0, 5)}
+          key={item.title}
+        />
       ))}
     </div>
   );

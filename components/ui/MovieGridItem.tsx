@@ -53,8 +53,8 @@ const MovieGridItem = ({ movie }: MovieGridItemProps) => {
             <h1 className="text-gray-400 absolute left-0">genres:</h1>
             {movie.genres &&
               movie.genres.map((genre, index) => (
-                <h1 className="mr-1 underline text-gray-300">
-                  {typeof genre === "object" ? genre.name : genre}
+                <h1 className="mr-1 underline text-gray-300" key={genre.name}>
+                  {genre.name}
                   {index + 1 !== movie.genres?.length && ","}
                 </h1>
               ))}
