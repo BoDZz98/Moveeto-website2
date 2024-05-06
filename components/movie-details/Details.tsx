@@ -1,22 +1,21 @@
-import { MovieObj } from "@/pages/movie/[movieId]";
 import React from "react";
 import AddToButtons from "./AddToButtons";
 import MyBreadcrumb from "./Breadcrumb";
 import Rating from "./Rating";
 import MovieDetails from "./MovieDetails";
 
-type DetailsProps = { movieData: MovieObj };
-const Details = ({ movieData: movie }: DetailsProps) => {
+type DetailsProps = { movieTitle: string };
+const Details = ({ movieTitle }: DetailsProps) => {
   //movieData: movie -> renaming movieData to movie
   return (
     <div className="flex flex-col gap-y-8 2xl:w-1/2 z-10">
       <div className="opacity-100 z-10">
-        <MyBreadcrumb title={movie.title} />
+        <MyBreadcrumb title={movieTitle} />
       </div>
-      <h1 className="text-white text-8xl font-extrabold ">{movie.title}</h1>
+      <h1 className="text-white text-8xl font-extrabold ">{movieTitle}</h1>
       <AddToButtons />
       <Rating />
-      <MovieDetails movieData={movie} />
+      <MovieDetails />
     </div>
   );
 };

@@ -1,22 +1,18 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useContext } from "react";
 import ReactPlayer from "react-player";
 import ImagesGrid from "./ImagesGrid";
 import Link from "next/link";
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
-type ImagesProps = {
-  id: number;
-  youtubekey: string;
-  movieImgs: Array<{ file_path: string }>;
-  cast: Array<{ name: string; profile_path: string; character: string }>;
-};
-
-const Images = ({ youtubekey, movieImgs, cast, id }: ImagesProps) => {
+const Images = () => {
+  const { youtubeTrailerKey, images, id, cast } =
+    useContext(MovieDetailsCtx).movieData;
   return (
     <div className="2xl:w-2/5 z-10 ">
       <div className="rounded-xl overflow-hidden mb-5 mt-12  flex justify-center">
         <Suspense fallback={<p>Loading</p>}>
           <ReactPlayer
-            url={`https://www.youtube.com/watch?v=${youtubekey}`}
+            url={`https://www.youtube.com/watch?v=${youtubeTrailerKey}`}
             style={{ maxWidth: "100%" }}
             playing
             loop
@@ -25,7 +21,7 @@ const Images = ({ youtubekey, movieImgs, cast, id }: ImagesProps) => {
           />
         </Suspense>
       </div>
-      <ImagesGrid movieImgs={movieImgs} movieId={id} />
+      <ImagesGrid movieImgs={images} movieId={id} />
       <h1 className="text-white text-5xl font-extrabold my-12 ">Cast</h1>
       <ImagesGrid cast={cast} movieId={id} />
     </div>

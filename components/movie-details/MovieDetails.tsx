@@ -1,22 +1,30 @@
-import { MovieObj } from "@/pages/movie/[movieId]";
-import React from "react";
-type MovieDetailsProps = { movieData: MovieObj };
-const MovieDetails = ({ movieData: movie }: MovieDetailsProps) => {
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
+import React, { useContext } from "react";
+const MovieDetails = () => {
+  const {
+    runtime,
+    genres,
+    production_companies,
+    release_date,
+    revenue,
+    production_countries,
+    overview,
+  } = useContext(MovieDetailsCtx).movieData;
   const data = [
-    { title: "Release Date", value: movie.release_date },
-    { title: "Genres", arrayData: movie.genres },
-    { title: "Runtime", value: movie.runtime },
+    { title: "Release Date", value: release_date },
+    { title: "Genres", arrayData: genres },
+    { title: "Runtime", value: runtime },
     {
       title: "Production Companies",
-      arrayData: movie.production_companies.slice(0, 4),
+      arrayData: production_companies.slice(0, 4),
     },
-    { title: "Revenue", value: movie.revenue },
-    { title: "Production Countries", arrayData: movie.production_countries },
+    { title: "Revenue", value: revenue },
+    { title: "Production Countries", arrayData: production_countries },
   ];
   return (
     <div className="flex flex-col gap-y-5">
       <h1 className="text-white text-4xl font-extrabold  ">About</h1>
-      <p className="text-lg">{movie.overview}</p>
+      <p className="text-lg">{overview}</p>
       <div className="grid grid-cols-2 gap-y-8 ">
         {data.map((item, index) => (
           <div className="flex flex-col " key={index}>

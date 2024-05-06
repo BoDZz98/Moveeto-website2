@@ -2,11 +2,12 @@ import Link from "next/link";
 import React from "react";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { data: session, status } = useSession();
-
+  const router = useRouter();
   return (
     <div className="mb-20 flex sm:flex-col items-start lg:flex-row z-10 opacity-60">
       {/*  */}
@@ -43,10 +44,16 @@ const Header = () => {
               <Link href="/profile/overview">
                 <h1 className="text-white text-2xl font-bold ">My Library</h1>
               </Link>
-              <button onClick={() => signOut()}>
+              <button
+                onClick={async () => {
+                  console.log("any");
+
+                  router.replace("/any");
+                }}
+              >
                 <h1 className="text-white text-2xl font-bold ">Logout</h1>
               </button>
-            </>
+            </> // await signOut();
           )}
         </div>
       </div>

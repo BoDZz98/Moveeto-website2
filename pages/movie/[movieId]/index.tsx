@@ -48,25 +48,14 @@ type MovieProps = {
 };
 
 const MovieDetails = (props: MovieProps) => {
-  // const session = await getSession();
-  // let userData: any = undefined;
-  // if (session) {
-  //   userData = session.user;
-  //   console.log("userDatas", userData);
-  // }
   const { movie, genresDetails } = props;
   return (
     <Layout>
       <Card backdrop_path={movie.backdrop_path}>
         <MovieDetailsCtx.Provider value={{ movieData: movie }}>
           <div className="flex flex-col 2xl:flex-row ">
-            <Details movieData={movie} />
-            <Images
-              id={movie.id}
-              cast={movie.cast}
-              movieImgs={movie.images}
-              youtubekey={movie.youtubeTrailerKey}
-            />
+            <Details movieTitle={movie.title} />
+            <Images />
           </div>
           <SimilarMovies
             title={movie.title}
