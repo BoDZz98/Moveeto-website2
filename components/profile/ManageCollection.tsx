@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import MyModalCard from "../ui/MyModalCard";
 import { Label, TextInput, Textarea } from "flowbite-react";
+import Router, { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 type ManageCollectionProps = {
   title: string;
   onClose: () => void;
 };
 const ManageCollection = ({ title, onClose }: ManageCollectionProps) => {
+  const router = useRouter();
+  const { update } = useSession();
   const [inputs, setInputs] = useState({
     title: { value: "", isValid: true },
     description: { value: "", isValid: true },
@@ -37,6 +41,11 @@ const ManageCollection = ({ title, onClose }: ManageCollectionProps) => {
           "Content-Type": "application/json",
         },
       });
+      if (res.ok) {
+        router.push("/profile/collections");
+        onClose();
+        update();
+      }
     } else {
       // If sth wrong with the inputs field
       setInputs((prev) => {

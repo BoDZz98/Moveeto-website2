@@ -10,49 +10,58 @@ type AddButtonProps = {
   icon: ReactNode;
   contStyle?: string;
   textStyle?: string;
-  userCollections: Array<collectionObj>;
-  clickHandler: () => void;
+  clickHandler?: () => void;
 };
-const AddButton = ({
-  title,
-  subTitle,
-  icon,
-  contStyle,
-  textStyle,
-  userCollections,
-  clickHandler,
-}: AddButtonProps) => {
-  const {
-    title: movieTitle,
-    backdrop_path,
-    genres,
-    release_date,
-  } = useContext(MovieDetailsCtx).movieData;
+
+const AddButton = (props: AddButtonProps) => {
+  const { title, backdrop_path, genres, release_date } =
+    useContext(MovieDetailsCtx).movieData;
+  const { data: session, update } = useSession();
+  const [userCollections, setuserCollections] = useState<Array<collectionObj>>(
+    []
+  );
+
+  useEffect(() => {
+    if (session && props.title === "Collection")
+      setuserCollections(session.user!.userCollections);
+  }, [session]);
+
   async function addMovieHandler(collectionName: string) {
     const res = await fetch("/api/addMovies", {
       method: "POST",
       body: JSON.stringify({
         collectionName,
-        movie: { title: movieTitle, backdrop_path, genres, release_date },
+        movie: { title, backdrop_path, genres, release_date },
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.json();
-    const collections = data.collections;
-    console.log("collections is", collections);
+    if (res.ok) {
+      update(/* {
+        movie: { backdrop_path, genres, title, release_date },
+        collectionName,
+        operation: "add",
+      } */);
+    }
+    // if (res.status === 202) {
+    //   update({
+    //     movie: title,
+    //     collectionName,
+    //     operation: "remove",
+    //   });
+    // }
   }
   return (
     <>
-      {title !== "Collection" ? (
+      {props.title !== "Collection" ? (
         <button
-          onClick={clickHandler}
-          className={`relative flex flex-col justify-center rounded w-40 px-4 py-2  ${contStyle}`}
+          onClick={props.clickHandler}
+          className={`relative flex flex-col justify-center rounded w-40 px-4 py-2  ${props.contStyle}`}
         >
-          <div className="absolute right-0 ">{icon}</div>
-          <p className="text-sm text-gray-500">{subTitle}</p>
-          <p className={`font-semibold ${textStyle}`}>{title}</p>
+          <div className="absolute right-0 ">{props.icon}</div>
+          <p className="text-sm text-gray-500">{props.subTitle}</p>
+          <p className={`font-semibold ${props.textStyle}`}>{props.title}</p>
         </button>
       ) : (
         <Dropdown
@@ -60,11 +69,13 @@ const AddButton = ({
           dismissOnClick={false}
           renderTrigger={() => (
             <button
-              className={`relative flex flex-col justify-center rounded w-40 px-4 py-2  ${contStyle}`}
+              className={`relative flex flex-col justify-center rounded w-40 px-4 py-2  ${props.contStyle}`}
             >
-              <div className="absolute right-0 ">{icon}</div>
-              <p className="text-sm text-gray-500">{subTitle}</p>
-              <p className={`font-semibold ${textStyle}`}>{title}</p>
+              <div className="absolute right-0 ">{props.icon}</div>
+              <p className="text-sm text-gray-500">{props.subTitle}</p>
+              <p className={`font-semibold ${props.textStyle}`}>
+                {props.title}
+              </p>
             </button>
           )}
         >
@@ -77,7 +88,7 @@ const AddButton = ({
               >
                 {collection.name}
                 {collection.movies.map((m) => {
-                  if (m.title === movieTitle) return checkIcon;
+                  if (m.title === title) return checkIcon;
                 })}
               </Dropdown.Item>
             ))

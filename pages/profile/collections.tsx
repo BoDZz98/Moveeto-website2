@@ -32,8 +32,11 @@ const collections = ({ collections }: collectionsProps) => {
             </p>
           </div>
           {collections.length !== 0 &&
-            collections.map((collection) => (
-              <div className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group">
+            collections.map((collection, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group"
+              >
                 <p className="underline text-3xl font-bold group-hover:text-gray-300">
                   {collection.name}
                 </p>
@@ -63,12 +66,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const user: userObj | null = await User.findOne({ email });
   let userCollections: Array<collectionObj> = [];
   if (user) {
-    // console.log(user);
-
     userCollections = JSON.parse(JSON.stringify(user.userCollections));
-    // JSON.parse(JSON.stringify(user.userCollections));
-
-    console.log("length is", userCollections);
   }
 
   return {

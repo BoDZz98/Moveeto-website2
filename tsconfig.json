@@ -21,8 +21,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
+    "types/**/*.ts",
     "pages/api/auth/[...nextauth].ts",
-    "pages/api/register/signin.js"
-, "pages/login.tsx"  ],
+    "pages/api/register/signin.js",
+    "pages/login.tsx"
+  ],
   "exclude": ["node_modules"]
 }
