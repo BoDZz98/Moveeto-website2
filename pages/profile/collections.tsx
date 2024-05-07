@@ -14,7 +14,6 @@ type collectionsProps = {
 };
 const collections = ({ collections }: collectionsProps) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
-  // console.log(collections);
 
   return (
     <Layout>

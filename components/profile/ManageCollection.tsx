@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MyModalCard from "../ui/MyModalCard";
-import { Label, TextInput, Textarea } from "flowbite-react";
-import Router, { useRouter } from "next/router";
+import { Label, Textarea } from "flowbite-react";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 type ManageCollectionProps = {

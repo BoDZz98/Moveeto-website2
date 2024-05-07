@@ -3,7 +3,7 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { status } = useSession();
@@ -44,7 +44,16 @@ const Header = () => {
               <Link href="/profile/overview">
                 <h1 className="text-white text-2xl font-bold ">My Library</h1>
               </Link>
-              <Link href="/" onClick={() => signOut()}>
+              <Link
+                href="/"
+                onClick={async () => {
+                  const data = await signOut({
+                    redirect: false,
+                    callbackUrl: "/",
+                  });
+                  router.push(data.url);
+                }}
+              >
                 <h1 className="text-white text-2xl font-bold ">Logout</h1>
               </Link>
             </>
