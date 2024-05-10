@@ -4,8 +4,8 @@ type OneEmojiProps = {
   name: string;
   image: string;
   color: string;
-  isClicked: boolean;
-  onPress: (value: string) => void;
+  isClicked?: boolean;
+  onPress?: (value: string) => void;
 };
 const OneEmoji = ({
   name,
@@ -22,7 +22,7 @@ const OneEmoji = ({
     <div
       className="flex flex-col gap-y-10 items-center mr-10 w-28 group"
       onClick={() => {
-        onPress(image);
+        onPress && onPress(image);
       }}
     >
       <Image

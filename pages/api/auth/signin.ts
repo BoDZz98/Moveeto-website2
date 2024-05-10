@@ -42,5 +42,6 @@ export default async function handler(
     res.status(201).json({ message: "user created!" });
   } catch (error) {
     console.log("error in api/register/route", error);
+    res.status(500).json({ message: "Error" });
   }
 }

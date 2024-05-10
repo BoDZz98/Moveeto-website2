@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import MyModalCard from "../ui/MyModalCard";
 import { Label, Textarea } from "flowbite-react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import OneEmoji from "../movie-details/OneEmoji";
 import { ratingData } from "../movie-details/Rating";
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
 type ManageRatingProps = {
   title: string;
   onClose: () => void;
 };
 const ManageRating = ({ title, onClose }: ManageRatingProps) => {
-  const router = useRouter();
-  const { update } = useSession();
+  // const { update } = useSession();
+  const { title: movieName, id: movieId } =
+    useContext(MovieDetailsCtx).movieData;
 
   const [inputs, setInputs] = useState({
     rating: { value: "", isValid: true },
@@ -35,21 +35,24 @@ const ManageRating = ({ title, onClose }: ManageRatingProps) => {
 
     if (ratingIsValid && descriptionIsValid) {
       // If all is good
-      //   const res = await fetch("/api/collections", {
-      //     method: "POST",
-      //     body: JSON.stringify({
-      //       title: inputs.title.value,
-      //       description: inputs.description.value,
-      //     }),
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   });
-      //   if (res.ok) {
-      //     router.push("/profile/collections");
-      //     onClose();
-      //     update();
-      //   }
+      const res = await fetch("/api/reviews", {
+        method: "POST",
+        body: JSON.stringify({
+          newReview: {
+            movieId,
+            movieName,
+            rating: inputs.rating.value,
+            description: inputs.description.value,
+          },
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.ok) {
+        onClose();
+        // update();
+      }
     } else {
       // If sth wrong with the inputs field
       setInputs((prev) => {
@@ -69,8 +72,8 @@ const ManageRating = ({ title, onClose }: ManageRatingProps) => {
 
   return (
     <MyModalCard closeHandler={onClose} modalTitle={title}>
-      <form className="flex flex-col gap-4" onSubmit={onSubmitForm}>
-        <div className="flex my-6">
+      <form className="flex flex-col gap-4 z-40" onSubmit={onSubmitForm}>
+        <div className="flex my-6 justify-center">
           {ratingData.map((obj, index) => (
             <OneEmoji
               {...obj}
@@ -81,6 +84,11 @@ const ManageRating = ({ title, onClose }: ManageRatingProps) => {
             />
           ))}
         </div>
+        {!inputs.rating.isValid && (
+          <p className="text-red-500 text-lg place-self-center">
+            Rating is required
+          </p>
+        )}
         <Label
           htmlFor="description"
           value="Description"

@@ -3,9 +3,19 @@ import React from "react";
 import { MovieObj } from ".";
 import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
 import Image from "next/image";
+import GameReview from "@/components/movie-details/GameReview";
+import { connectDB } from "@/utils/db-util";
+import { getServerSession } from "next-auth";
+import { GetServerSidePropsContext } from "next";
+import authOptions from "../../api/auth/[...nextauth]";
+import Review, { reviewObj } from "@/models/reviewsModel";
 
-const MovieComments = (props: { movie: MovieObj }) => {
-  const { movie } = props;
+type MovieCommentsProps = {
+  movie: MovieObj;
+  reviews: Array<reviewObj>;
+};
+
+const MovieComments = ({ movie, reviews }: MovieCommentsProps) => {
   return (
     <ScreenShotsCard
       titlePage="Reviews"
@@ -14,41 +24,21 @@ const MovieComments = (props: { movie: MovieObj }) => {
       movieId={movie.id}
     >
       <div className="w-3/4  flex flex-col  p-10 ">
-        <div className="flex flex-col gap-y-5 bg-gray-900 bg-opacity-70 p-10 rounded">
-          <div className="flex items-center gap-x-5 ">
-            <span className="text-5xl font-bold text-white ">Exceptional</span>
-            <Image
-              src={`/imgs/rating/3.png`}
-              alt="Racing"
-              className="w-20 h-20 opacity-100 "
-              width={50}
-              height={50}
-            />
-          </div>
-          <p className="text-gray-400 text-xl font-semibold">
-            comment description
-          </p>
-          <div className="flex items-center gap-x-5">
-            <Image
-              src={`/imgs/rating/5.png`}
-              alt="User Img"
-              className="w-20 h-20 opacity-100 "
-              width={50}
-              height={50}
-            />
-            <div>
-              <p className="text-xl font-bold">BoDZzz</p>
-              <p className="text-gray-500 text-lg font-semibold">3/13/2024</p>
-            </div>
-          </div>
-        </div>
+        {reviews.map((review) => (
+          <GameReview
+            username={review.username}
+            description={review.description}
+            rating={review.rating}
+            createdAt=""
+          />
+        ))}
       </div>
     </ScreenShotsCard>
   );
 };
 
 export default MovieComments;
-
+/* 
 export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
@@ -72,5 +62,29 @@ export async function getStaticPaths() {
   return {
     paths: paths,
     fallback: true,
+  };
+} */
+
+export async function getServerSideProps(ctx: {
+  params: { movieId: string };
+  req: any;
+  res: any;
+}) {
+  const movieId = ctx.params.movieId;
+
+  const movieData = await fetchMovieDetails(parseInt(movieId));
+
+  await connectDB();
+  const session: any = await getServerSession(ctx.req, ctx.res, authOptions);
+  const username = session?.user?.name;
+
+  const reviews = await Review.find({ movieId });
+  // console.log(reviews);
+
+  return {
+    props: {
+      reviews: JSON.parse(JSON.stringify(reviews)),
+      movie: movieData,
+    },
   };
 }

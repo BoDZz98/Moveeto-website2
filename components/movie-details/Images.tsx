@@ -8,8 +8,8 @@ const Images = () => {
   const { youtubeTrailerKey, images, id, cast } =
     useContext(MovieDetailsCtx).movieData;
   return (
-    <div className="2xl:w-2/5 z-10 ">
-      <div className="rounded-xl overflow-hidden mb-5 mt-12  flex justify-center">
+    <div className="2xl:w-2/5 z-0">
+      <div className="rounded-xl overflow-hidden mb-5 mt-12 z-0 flex justify-center">
         <Suspense fallback={<p>Loading</p>}>
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${youtubeTrailerKey}`}
