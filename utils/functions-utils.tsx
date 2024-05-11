@@ -41,3 +41,12 @@ export function getDate(days: number, identifier: string) {
 
   return `${year}-${newMonth}-${day}`;
 }
+
+export function formatDate(dateGot: String | any) {
+  var date = new Date(dateGot); // dateStr you get from mongodb
+
+  var d = date.getDate();
+  var m = date.getMonth() + 1;
+  var y = date.getFullYear();
+  return `${d}-${m}-${y}`;
+}

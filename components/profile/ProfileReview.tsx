@@ -2,16 +2,24 @@ import Image from "next/image";
 import React from "react";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
+import { formatDate } from "@/utils/functions-utils";
 
-const ProfileReview = () => {
+type ProfileReviewProps = {
+  movieName: String;
+  rating: String | any; // any to prevent compiler error
+  description: String;
+  createdAt: String;
+};
+
+const ProfileReview = (props: ProfileReviewProps) => {
   return (
-    <div className="flex flex-col gap-y-5 bg-gray-800  p-10 rounded">
+    <div className="flex flex-col gap-y-5 bg-gray-800  p-10 my-10 rounded">
       <div className="relative flex items-center gap-x-5 ">
         <span className="text-4xl font-bold text-gray-200 underline-offset-8 underline ">
-          MovieName
+          {props.movieName}
         </span>
         <Image
-          src={`/imgs/rating/3.png`}
+          src={`/imgs/rating/${props.rating}.png`}
           alt="Racing"
           className="w-16 h-16  "
           width={50}
@@ -19,9 +27,11 @@ const ProfileReview = () => {
         />
         {dropdown}
       </div>
-      <p className="text-gray-400 text-xl font-semibold">comment description</p>
+      <p className="text-gray-400 text-xl font-semibold">{props.description}</p>
       <div className="flex items-center gap-x-5">
-        <p className="text-gray-500 text-lg font-semibold">3/13/2024</p>
+        <p className="text-gray-500 text-lg font-semibold">
+          {formatDate(props.createdAt)}
+        </p>
       </div>
     </div>
   );

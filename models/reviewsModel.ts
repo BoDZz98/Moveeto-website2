@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Date } from "mongoose";
 var Schema = mongoose.Schema;
 
 const reviewSchema = new Schema(
@@ -22,4 +22,5 @@ export type reviewObj = {
   movieName: String;
   rating: String;
   description: String;
+  createdAt: String;
 };
