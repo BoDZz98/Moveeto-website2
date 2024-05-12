@@ -8,14 +8,14 @@ import authOptions from "../api/auth/[...nextauth]";
 import User from "@/models/userModel";
 import { GetServerSidePropsContext } from "next";
 import { Masonry, ResponsiveMasonry } from "@/utils/imports";
-import SearchComponent from "@/components/profile/Search";
 import { useState } from "react";
+import SearchComponent from "@/components/profile/Search";
 
-type favoriteProps = {
+type wishlistProps = {
   movies: Array<MovieObj>;
 };
 
-const favorite = ({ movies }: favoriteProps) => {
+const wishlist = ({ movies }: wishlistProps) => {
   const [value, setvalue] = useState("");
   const [moviesShown, setmoviesShown] = useState(movies);
   function inputHandler(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,8 +28,9 @@ const favorite = ({ movies }: favoriteProps) => {
   }
   return (
     <Layout>
-      <ProfileLayout pageTitle="Favorite">
+      <ProfileLayout pageTitle="Wishlist">
         <SearchComponent value={value} changeInputHandler={inputHandler} />
+
         <ResponsiveMasonry
           columnsCountBreakPoints={{ 350: 1, 1200: 2, 1536: 3 }} //1536px -> 2xl || 1200px -> xl
         >
@@ -46,7 +47,7 @@ const favorite = ({ movies }: favoriteProps) => {
   );
 };
 
-export default favorite;
+export default wishlist;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();
@@ -54,12 +55,12 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   const email = session?.user?.email;
 
   const user = await User.findOne({ email });
-  const favMovies = user.favMovies;
-  // console.log(favMovies);
+  const wishlistMovies = user.wishlistMovies;
+  //   console.log(favMovies);
 
   return {
     props: {
-      movies: JSON.parse(JSON.stringify(favMovies)),
+      movies: JSON.parse(JSON.stringify(wishlistMovies)),
     },
   };
 }

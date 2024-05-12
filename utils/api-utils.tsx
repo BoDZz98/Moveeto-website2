@@ -70,6 +70,7 @@ export async function fetchMovieDetails(movieId: number) {
     similarMovies: data.similar.results,
     revenue,
     youtubeTrailerKey,
+    vote_count: data.vote_count,
   };
 
   return newMovieObject;

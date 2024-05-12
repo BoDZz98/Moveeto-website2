@@ -5,10 +5,12 @@ import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
 
 type MovieObj = {
+  id: String;
   title: String;
   release_date: String;
   backdrop_path: String;
   genres: any;
+  vote_count: Number;
 };
 type reqData = {
   button: string;

@@ -14,7 +14,7 @@ type AddButtonProps = {
 };
 
 const AddButton = (props: AddButtonProps) => {
-  const { title, backdrop_path, genres, release_date } =
+  const { id, title, backdrop_path, genres, release_date, vote_count } =
     useContext(MovieDetailsCtx).movieData;
   const { data: session, update } = useSession();
   const [userCollections, setuserCollections] = useState<Array<collectionObj>>(
@@ -31,7 +31,7 @@ const AddButton = (props: AddButtonProps) => {
       method: "POST",
       body: JSON.stringify({
         collectionName,
-        movie: { title, backdrop_path, genres, release_date },
+        movie: { id, title, backdrop_path, genres, release_date, vote_count },
       }),
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ const AddButton = (props: AddButtonProps) => {
             </button>
           )}
         >
-          {userCollections.length !== 0 ? (
+          {userCollections && userCollections.length !== 0 ? (
             userCollections.map((collection, index) => (
               <Dropdown.Item
                 className="relative"
@@ -93,7 +93,7 @@ const AddButton = (props: AddButtonProps) => {
               </Dropdown.Item>
             ))
           ) : (
-            <p>No collections</p>
+            <p className="p-2">No collections</p>
           )}
         </Dropdown>
       )}
@@ -111,6 +111,7 @@ const checkIcon = (
     strokeWidth={4.5}
     stroke=" rgb(49 196 141)"
     className="w-4 h-4 absolute right-4"
+    key="any"
   >
     <path
       strokeLinecap="round"

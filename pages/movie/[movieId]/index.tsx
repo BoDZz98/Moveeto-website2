@@ -9,18 +9,8 @@ import {
   getAllGenres,
 } from "@/utils/api-utils";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import { getSession, useSession } from "next-auth/react";
 import React from "react";
 
-/* export type similarMovieObj = {
-  id: number;
-  title: string;
-  vote_count: number;
-  backdrop_path: string;
-  release_date: string;
-  genre_ids: Array<number>;
-  genres: Array<string>;
-}; */
 export type MovieObj = {
   id: number;
   title: string;
@@ -74,7 +64,7 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   const movieData = await fetchMovieDetails(movieId);
-  // console.log("movieData :", movieData.similarMovies);
+  console.log("movieData :", movieData.vote_count);
 
   const genresDetails = await getAllGenres();
 

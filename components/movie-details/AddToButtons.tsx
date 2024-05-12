@@ -9,7 +9,7 @@ const AddToButtons = () => {
   const [isWishlist, setIsWishlist] = useState(false);
 
   // movie data from ctx ------------------------------------------
-  const { backdrop_path, genres, title, release_date } =
+  const { id, backdrop_path, genres, title, release_date, vote_count } =
     useContext(MovieDetailsCtx).movieData;
   // Getting user data from the stored session -------------------
   const { data: session, update } = useSession();
@@ -33,7 +33,7 @@ const AddToButtons = () => {
       method: "POST",
       body: JSON.stringify({
         button,
-        movie: { backdrop_path, genres, title, release_date },
+        movie: { id, backdrop_path, genres, title, release_date, vote_count },
       }),
       headers: {
         "Content-Type": "application/json",
@@ -81,22 +81,7 @@ const AddToButtons = () => {
     {
       title: "Collection",
       subTitle: "Save to",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-8 h-8"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
-          />
-        </svg>
-      ),
+      icon: collectionIcon,
       textStyle: "hover:text-gray-400",
     },
   ];
@@ -104,12 +89,7 @@ const AddToButtons = () => {
   return (
     <div className="flex gap-x-4 ">
       {buttonsData.map((item) => (
-        // <p>s</p>
-        <AddButton
-          {...item}
-          userCollections={session ? session.user!.userCollections : []}
-          key={item.title}
-        />
+        <AddButton {...item} key={item.title} />
       ))}
     </div>
   );
@@ -171,5 +151,22 @@ const heartIcon = (
     className="w-12 h-12"
   >
     <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+  </svg>
+);
+
+const collectionIcon = (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth={1.5}
+    stroke="currentColor"
+    className="w-8 h-8"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"
+    />
   </svg>
 );

@@ -2,10 +2,12 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 const movieSchema = new Schema({
+  id: String,
   title: String,
   release_date: String,
   backdrop_path: String,
   genres: [String],
+  vote_count: Number,
 });
 
 const userCollectionsSchema = new Schema({
@@ -43,10 +45,12 @@ const User = mongoose.models?.User || mongoose.model("User", userSchema);
 export default User;
 
 type movieObj = {
+  id: String;
   title: String;
   release_date: String;
   backdrop_path: String;
   genres: Array<String>;
+  vote_count: Number;
 };
 
 export type collectionObj = {
