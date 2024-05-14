@@ -15,8 +15,9 @@ const ReviewsStatistics = ({
         {reviewsLength}
         <span className="text-4xl font-normal ml-2">Reviews</span>
       </span>
-      {reviewsStatistics.map((r) => (
+      {reviewsStatistics.map((r, i) => (
         <RatingBar
+          key={i}
           image={r.rating}
           color="pink"
           progress={(r.ctr / reviewsLength) * 100}

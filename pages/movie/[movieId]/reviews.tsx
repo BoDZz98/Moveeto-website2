@@ -49,7 +49,6 @@ export async function getServerSideProps(ctx: {
 
   await connectDB();
   const session: any = await getServerSession(ctx.req, ctx.res, authOptions);
-  const username = session?.user?.name;
 
   const reviews = await Review.find({ movieId });
 

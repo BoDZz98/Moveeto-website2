@@ -2,7 +2,6 @@ import Layout from "@/components/layout/layout";
 import Carousel from "@/components/profile/MyCarousel";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import React from "react";
-import RatingBar from "@/components/profile/RatingBar";
 import { GetServerSidePropsContext } from "next";
 import { connectDB } from "@/utils/db-util";
 import User, { collectionObj, userObj } from "@/models/userModel";
@@ -14,27 +13,28 @@ import GamesStatistics from "@/components/profile/GamesStatistics";
 import ReviewsStatistics from "@/components/profile/ReviewsStatistics";
 import CollectionsStatistics from "@/components/profile/CollectionsStatistics";
 import RecentMovies from "@/components/profile/RecentMovies";
+import RecentReviews from "@/components/profile/RecentReviews";
 
 type overviewProps = {
   favMovies: Array<MovieObj>;
   wishlistMovies: Array<MovieObj>;
   collections: Array<collectionObj>;
-  reviewsStatistics: Array<{ rating: number; ctr: number }>;
-  reviewsLength: number;
+  reviews: Array<reviewObj>;
 };
 
 const overview = (props: overviewProps) => {
-  const {
-    favMovies,
-    wishlistMovies,
-    collections,
-    reviewsStatistics,
-    reviewsLength,
-  } = props;
+  const { favMovies, wishlistMovies, collections, reviews } = props;
 
-  const uniqueMovies = new Set(
-    favMovies.slice(0, 2).concat(wishlistMovies.slice(0, 2))
-  );
+  const reviewsStatistics: Array<{ rating: number; ctr: number }> = [];
+  for (let i = 5; i >= 1; i--) {
+    let ctr = 0;
+    reviews.forEach((r, index) => {
+      if (i == r.rating) ctr += 1;
+
+      if (index + 1 === reviews.length)
+        reviewsStatistics.push({ rating: i, ctr });
+    });
+  }
   return (
     <Layout>
       <ProfileLayout pageTitle="Overview">
@@ -51,11 +51,14 @@ const overview = (props: overviewProps) => {
           />
           <ReviewsStatistics
             reviewsStatistics={reviewsStatistics}
-            reviewsLength={reviewsLength}
+            reviewsLength={reviews.length}
           />
           <CollectionsStatistics collections={collections} />
         </div>
-        <RecentMovies movies={Array.from(uniqueMovies)} />
+        <RecentMovies
+          movies={favMovies.slice(0, 4).concat(wishlistMovies.slice(0, 4))}
+        />
+        <RecentReviews reviews={reviews.slice(0, 2)} />
       </ProfileLayout>
     </Layout>
   );
@@ -74,31 +77,19 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   let favMovies = [];
   let wishlistMovies = [];
   let collections = [];
+
   if (user) {
     favMovies = JSON.parse(JSON.stringify(user.favMovies));
     wishlistMovies = JSON.parse(JSON.stringify(user.wishlistMovies));
     collections = JSON.parse(JSON.stringify(user.userCollections));
   }
 
-  const arr: Array<{}> = [];
-  for (let i = 5; i >= 1; i--) {
-    let ctr = 0;
-    reviews.forEach((r, index) => {
-      if (i.toString() === r.rating) {
-        ctr += 1;
-      }
-      if (index + 1 === reviews.length) {
-        arr.push({ rating: i, ctr });
-      }
-    });
-  }
   return {
     props: {
       collections,
       favMovies,
       wishlistMovies,
-      reviewsStatistics: arr,
-      reviewsLength: reviews.length,
+      reviews: JSON.parse(JSON.stringify(reviews)),
     },
   };
 }

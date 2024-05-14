@@ -10,14 +10,37 @@ export default async function handler(
 ) {
   await connectDB();
 
-  const { newReview } = await req.body;
+  const { newReview, _id } = await req.body;
   const session: Session | null = await getServerSession(req, res, authOptions);
   const username = session?.user?.name;
-  try {
-    await Review.create({ ...newReview, username });
-    res.status(201).json({ message: "review created!" });
-  } catch (error) {
-    console.log("error while creating review", error);
-    res.status(500).json({ message: "Error" });
+  // Create /update -----------------------------------------
+  if (req.method === "POST") {
+    try {
+      if (_id) {
+        //update review
+        await Review.findByIdAndUpdate(_id, {
+          rating: newReview.rating,
+          description: newReview.description,
+        });
+      } else {
+        // create review
+        await Review.create({ ...newReview, username });
+      }
+      res.status(201).json({ message: "review updated/created!" });
+    } catch (error) {
+      console.log("error while creating review", error);
+      res.status(500).json({ message: "Error" });
+    }
+  }
+
+  //Delete ---------------------------------------------
+  if (req.method === "DELETE") {
+    try {
+      await Review.findByIdAndDelete(_id);
+      res.status(201).json({ message: "review updated/created!" });
+    } catch (error) {
+      console.log("error while deleting review", error);
+      res.status(500).json({ message: "Error" });
+    }
   }
 }

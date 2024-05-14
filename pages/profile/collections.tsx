@@ -8,6 +8,7 @@ import User, { collectionObj, userObj } from "@/models/userModel";
 import EmptyPage from "@/components/profile/EmptyPage";
 import { useState } from "react";
 import ManageCollection from "@/components/profile/ManageCollection";
+import Link from "next/link";
 
 type collectionsProps = {
   collections: Array<collectionObj>;
@@ -34,17 +35,19 @@ const collections = ({ collections }: collectionsProps) => {
             </div>
             {collections.length !== 0 &&
               collections.map((collection, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group hover:cursor-pointer"
-                >
-                  <p className="underline text-3xl font-bold group-hover:text-gray-300">
-                    {collection.name}
-                  </p>
-                  <p className="text-xl text-gray-300">
-                    Movies: {collection.movies.length}
-                  </p>
-                </div>
+                <Link href={`/profile/collectionMovies/${collection._id}`}>
+                  <div
+                    key={index}
+                    className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group hover:cursor-pointer"
+                  >
+                    <p className="underline text-3xl font-bold group-hover:text-gray-300">
+                      {collection.name}
+                    </p>
+                    <p className="text-xl text-gray-300">
+                      Movies: {collection.movies.length}
+                    </p>
+                  </div>
+                </Link>
               ))}
           </div>
         )}

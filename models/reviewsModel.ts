@@ -18,9 +18,10 @@ const Review =
 export default Review;
 
 export type reviewObj = {
+  _id: string;
   username: String;
   movieName: String;
-  rating: String;
+  rating: number;
   description: String;
   createdAt: String;
 };

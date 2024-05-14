@@ -8,53 +8,58 @@ type RecentMoviesProps = {
   movies: Array<MovieObj>;
 };
 const RecentMovies = ({ movies }: RecentMoviesProps) => {
-  console.log(movies);
+  const uniqueMovies = Array.from(
+    new Map(movies.map((obj) => [obj.id, obj])).values()
+  );
 
   const contClassName =
     "flex items-center gap-x-1 rounded bg-gray-600 w-fit group cont hover:bg-white transition ease-in-out duration-300";
 
   return (
     <>
-      <p className="font-semibold text-5xl place-self-center">
+      <p className="font-semibold text-5xl place-self-center my-10">
         Recently Added Movies
       </p>
-      <div className="grid grid-cols-2 gap-10">
-        {movies.map((m) => (
-          <div
-            className="flex group rounded-lg p-4 h-52  bg-gray-800"
-            key={m.id}
-          >
-            <Image
-              src={baseImageURL + m.backdrop_path}
-              alt="movie img"
-              width={150}
-              height={150}
-              className="rounded-xl w-1/2 "
-            />
-            <div className="flex flex-col justify-center ml-2 w-1/2">
-              <p className="text-2xl font-semibold mb-2">{m.title}</p>
-              <p className="text-lg mb-2 text-gray-400">{m.release_date}</p>
+      <div className="grid grid-cols-2 gap-10 ">
+        {uniqueMovies.map((m, index) => {
+          if (index > 3) return;
+          return (
+            <div
+              className="flex group rounded-lg p-4 h-52  bg-gray-800"
+              key={m.id}
+            >
+              <Image
+                src={baseImageURL + m.backdrop_path}
+                alt="movie img"
+                width={150}
+                height={150}
+                className="rounded-xl w-1/2 "
+              />
+              <div className="flex flex-col justify-center ml-2 w-1/2">
+                <p className="text-2xl font-semibold mb-2">{m.title}</p>
+                <p className="text-lg mb-2 text-gray-400">{m.release_date}</p>
 
-              <div className="flex gap-x-3">
-                <div className={`${contClassName} p-2`}>
-                  <p className=" group-hover:group-[.cont]:text-black font-semibold">
-                    {heartIcon}
-                  </p>
-                </div>
-                <div
-                  className={`${contClassName} px-2 py-2 hidden group-hover:flex `}
-                >
-                  {giftIcon}
-                </div>
-                <div
-                  className={`${contClassName} px-2 py-1 hidden group-hover:flex `}
-                >
-                  {optionsIcon}
+                <div className="flex gap-x-3">
+                  <div className={`${contClassName} p-2`}>
+                    <p className=" group-hover:group-[.cont]:text-black font-semibold">
+                      {heartIcon}
+                    </p>
+                  </div>
+                  <div
+                    className={`${contClassName} px-2 py-2 hidden group-hover:flex `}
+                  >
+                    {giftIcon}
+                  </div>
+                  <div
+                    className={`${contClassName} px-2 py-1 hidden group-hover:flex `}
+                  >
+                    {optionsIcon}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </>
   );

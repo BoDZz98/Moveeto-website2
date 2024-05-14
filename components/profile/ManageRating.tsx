@@ -7,16 +7,17 @@ import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
 type ManageRatingProps = {
   title: string;
+  oldValue?: { _id: string; rating: string; description: String | any };
   onClose: () => void;
 };
-const ManageRating = ({ title, onClose }: ManageRatingProps) => {
+const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
   // const { update } = useSession();
   const { title: movieName, id: movieId } =
     useContext(MovieDetailsCtx).movieData;
 
   const [inputs, setInputs] = useState({
-    rating: { value: "", isValid: true },
-    description: { value: "", isValid: true },
+    rating: { value: oldValue ? oldValue.rating : "", isValid: true },
+    description: { value: oldValue ? oldValue.description : "", isValid: true },
   });
 
   function changeInputHandler(identifier: string, enteredValue: string) {
@@ -38,6 +39,7 @@ const ManageRating = ({ title, onClose }: ManageRatingProps) => {
       const res = await fetch("/api/reviews", {
         method: "POST",
         body: JSON.stringify({
+          _id: oldValue?._id,
           newReview: {
             movieId,
             movieName,

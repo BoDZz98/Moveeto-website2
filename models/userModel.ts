@@ -10,15 +10,18 @@ const movieSchema = new Schema({
   vote_count: Number,
 });
 
-const userCollectionsSchema = new Schema({
-  name: {
-    type: String,
-    // sparse: true,
-    unique: [true, "Collection name already exists"],
+const userCollectionsSchema = new Schema(
+  {
+    name: {
+      type: String,
+      // sparse: true,
+      unique: [true, "Collection name already exists"],
+    },
+    description: String,
+    movies: [movieSchema],
   },
-  description: String,
-  movies: [movieSchema],
-});
+  { timestamps: true }
+);
 
 const userSchema = new Schema(
   {
@@ -45,18 +48,20 @@ const User = mongoose.models?.User || mongoose.model("User", userSchema);
 export default User;
 
 type movieObj = {
-  id: String;
-  title: String;
-  release_date: String;
-  backdrop_path: String;
-  genres: Array<String>;
+  id: string;
+  title: string;
+  release_date: string;
+  backdrop_path: string;
+  genres: Array<string>;
   vote_count: Number;
 };
 
 export type collectionObj = {
+  _id: string;
   name: string;
   description: string;
   movies: Array<movieObj>;
+  createdAt: string;
 };
 
 export type userObj = {
