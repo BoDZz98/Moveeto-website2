@@ -13,8 +13,8 @@ const RatingDiv = ({ rating, reviewsNumber }: ratingDivProps) => {
         src={`/imgs/rating/${rating}.png`}
         alt="Racing"
         className="w-12 h-12  "
-        width={50}
-        height={50}
+        width={40}
+        height={40}
       />
       <p className="font-semibold ml-2 group-hover:text-black transition ease-in-out delay-150">
         {ratingArray[parseInt(rating) - 1]}

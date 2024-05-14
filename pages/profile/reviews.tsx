@@ -5,8 +5,6 @@ import ProfileReview from "@/components/profile/ProfileReview";
 import Review, { reviewObj } from "@/models/reviewsModel";
 import { connectDB } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
-import React, { JSXElementConstructor } from "react";
 import { GetServerSidePropsContext } from "next";
 import authOptions from "../api/auth/[...nextauth]";
 import RatingDiv from "@/components/profile/RatingDiv";
@@ -43,19 +41,6 @@ const reviews = ({ reviews }: reviewsProps) => {
               {reviews.length} Reviews
             </h1>
             {arr}
-            {/* <div className="flex relative w-fit p-4 items-center rounded-full bg-transparent ring-2 ring-gray-500 text-white hover:bg-white  hover:cursor-pointer group transition ease-in-out delay-150">
-              <Image
-                src={`/imgs/rating/3.png`}
-                alt="Racing"
-                className="w-12 h-12  "
-                width={50}
-                height={50}
-              />
-              <p className="font-semibold ml-2 group-hover:text-black transition ease-in-out delay-150">
-                Exceptional
-              </p>
-              <p className="absolute -right-10 text-xl ">2</p>
-            </div> */}
           </div>
         </div>
       </ProfileLayout>
