@@ -7,6 +7,8 @@ import authOptions from "../../api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next";
 import User, { collectionObj, userObj } from "@/models/userModel";
 import { formatDate } from "@/utils/functions-utils";
+import MoviesGrid from "@/components/ui/MoviesGrid";
+import Dropdown from "@/components/ui/Dropdown";
 
 type CollectionMoviesProps = {
   userCollection: collectionObj;
@@ -16,17 +18,22 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
   return (
     <Layout>
       <Card backdrop_path={userCollection.movies[lastMovieIndex].backdrop_path}>
-        <h1 className="text-white text-7xl font-bold  ">
-          {userCollection.name}
-        </h1>
-        <span className="text-gray-400 text-2xl font-semibold my-10">
-          created at
-          <span className="text-white text-3xl ml-2">
-            {formatDate(userCollection.createdAt)}
+        <div className="flex flex-col gap-y-5">
+          <h1 className="text-white text-7xl font-bold  ">
+            {userCollection.name}
+          </h1>
+          <span className="text-gray-400 text-2xl font-semibold mb-5">
+            created at
+            <span className="text-white text-3xl ml-2">
+              {formatDate(userCollection.createdAt)}
+            </span>
           </span>
-        </span>
 
-        <p className="text-lg z-10">{userCollection.description}</p>
+          <p className="text-lg z-10">{userCollection.description}</p>
+          <Dropdown />
+
+          <MoviesGrid movies={userCollection.movies} gridCols={3} />
+        </div>
       </Card>
     </Layout>
   );
@@ -50,7 +57,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
       JSON.stringify(user.userCollections)
     );
     userCollection = allCollections.find((c) => c._id === collectionId);
-    console.log(userCollection);
+    // console.log(userCollection);
   }
 
   return {

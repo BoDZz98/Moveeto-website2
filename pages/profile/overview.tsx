@@ -4,7 +4,7 @@ import ProfileLayout from "@/components/profile/ProfileLayout";
 import React from "react";
 import { GetServerSidePropsContext } from "next";
 import { connectDB } from "@/utils/db-util";
-import User, { collectionObj, userObj } from "@/models/userModel";
+import User, { collectionObj, userMovieObj, userObj } from "@/models/userModel";
 import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]";
 import { MovieObj } from "../movie/[movieId]";
@@ -16,8 +16,8 @@ import RecentMovies from "@/components/profile/RecentMovies";
 import RecentReviews from "@/components/profile/RecentReviews";
 
 type overviewProps = {
-  favMovies: Array<MovieObj>;
-  wishlistMovies: Array<MovieObj>;
+  favMovies: Array<userMovieObj>;
+  wishlistMovies: Array<userMovieObj>;
   collections: Array<collectionObj>;
   reviews: Array<reviewObj>;
 };
@@ -38,13 +38,13 @@ const overview = (props: overviewProps) => {
   return (
     <Layout>
       <ProfileLayout pageTitle="Overview">
-        <div className="relative  w-full h-[400px]">
+        <div className="relative  w-full  h-[600px]">
           <h1 className="text-4xl mb-8">Favourite games</h1>
-          <div className="absolute w-full ">
-            <Carousel />
+          <div className="absolute w-full overflow-visible ">
+            <Carousel movies={favMovies} />
           </div>
         </div>
-        <div className="flex my-10">
+        <div className="flex my-10 mt-20">
           <GamesStatistics
             favMoviesLength={favMovies.length}
             wishlistMoviesLength={wishlistMovies.length}

@@ -47,20 +47,20 @@ const User = mongoose.models?.User || mongoose.model("User", userSchema);
 
 export default User;
 
-type movieObj = {
+export type userMovieObj = {
   id: string;
   title: string;
   release_date: string;
   backdrop_path: string;
   genres: Array<string>;
-  vote_count: Number;
+  vote_count: number;
 };
 
 export type collectionObj = {
   _id: string;
   name: string;
   description: string;
-  movies: Array<movieObj>;
+  movies: Array<userMovieObj>;
   createdAt: string;
 };
 
@@ -68,7 +68,7 @@ export type userObj = {
   name: string;
   email: string;
   userCollections: Array<collectionObj>;
-  favMovies: Array<movieObj>;
-  wishlistMovies: Array<movieObj>;
+  favMovies: Array<userMovieObj>;
+  wishlistMovies: Array<userMovieObj>;
   save: () => {}; // to prevent compiler error -> ( save() is not a property of userObj)
 };

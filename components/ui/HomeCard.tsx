@@ -3,12 +3,12 @@ import Layout from "../layout/layout";
 import Head from "next/head";
 import Dropdown from "./Dropdown";
 import MoviesGrid from "./MoviesGrid";
-import { MovieObj } from "@/pages/movie/[movieId]";
+import { userMovieObj } from "@/models/userModel";
 
 type HomeCardProps = {
   title: string;
   subTitle: string;
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
 };
 const HomeCard = ({ title, subTitle, movies }: HomeCardProps) => {
   return (
@@ -22,7 +22,7 @@ const HomeCard = ({ title, subTitle, movies }: HomeCardProps) => {
         <h1 className="text-white text-2xl font-semibold  ">{subTitle}</h1>
 
         <Dropdown />
-        <MoviesGrid movies={movies} />
+        <MoviesGrid movies={movies} gridCols={4} />
       </div>
     </Layout>
   );

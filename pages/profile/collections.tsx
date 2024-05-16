@@ -8,7 +8,8 @@ import User, { collectionObj, userObj } from "@/models/userModel";
 import EmptyPage from "@/components/profile/EmptyPage";
 import { useState } from "react";
 import ManageCollection from "@/components/profile/ManageCollection";
-import Link from "next/link";
+import { baseImageURL } from "@/utils/api-utils";
+import UserCollection from "@/components/profile/UserCollection";
 
 type collectionsProps = {
   collections: Array<collectionObj>;
@@ -34,21 +35,22 @@ const collections = ({ collections }: collectionsProps) => {
               </p>
             </div>
             {collections.length !== 0 &&
-              collections.map((collection, index) => (
-                <Link href={`/profile/collectionMovies/${collection._id}`}>
-                  <div
+              collections.map((collection, index) => {
+                let backgroundStyle = { backgroundImage: "" };
+                if (collection.movies.length !== 0) {
+                  const lastMovieIndex = collection.movies.length - 1;
+                  backgroundStyle = {
+                    backgroundImage: `url(${baseImageURL}${collection.movies[lastMovieIndex].backdrop_path})`,
+                  };
+                }
+                return (
+                  <UserCollection
                     key={index}
-                    className="flex flex-col gap-y-5 my-14 items-center justify-center w-2/3 h-52 rounded-lg p4 bg-gradient-to-br from-gray-800 to-gray-700 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-200 group hover:cursor-pointer"
-                  >
-                    <p className="underline text-3xl font-bold group-hover:text-gray-300">
-                      {collection.name}
-                    </p>
-                    <p className="text-xl text-gray-300">
-                      Movies: {collection.movies.length}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+                    collection={collection}
+                    // backgroundStyle={backgroundStyle}
+                  />
+                );
+              })}
           </div>
         )}
         {modalIsVisible && (

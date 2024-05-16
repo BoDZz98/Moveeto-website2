@@ -1,11 +1,16 @@
-import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import React from "react";
 import EmptyMovieCard from "./EmptyMovieCard";
+import { userMovieObj } from "@/models/userModel";
+import { Slider } from "@/utils/imports";
+import MovieGridItem from "../ui/MovieGridItem";
 
-const Carousel = () => {
+type CarouselProps = {
+  movies: Array<userMovieObj>;
+};
+const Carousel = ({ movies }: CarouselProps) => {
   var settings = {
     dots: true,
     infinite: true,
@@ -42,19 +47,37 @@ const Carousel = () => {
       },
     ],
   };
-
+  const myArray = ["", "", "", "", "", ""];
   return (
-    <div className="">
-      <Slider {...settings}>
+    <Slider {...settings}>
+      {myArray.map((a, i) => {
+        if (i > 5) return;
+        if (i < movies.length) {
+          return (
+            <div className="p-4 h-[650px]">
+              <MovieGridItem movie={movies[i]} />
+            </div>
+          );
+        } else {
+          return <EmptyMovieCard />;
+        }
+      })}
+
+      {/* 
         <EmptyMovieCard />
         <EmptyMovieCard />
         <EmptyMovieCard />
         <EmptyMovieCard />
-        <EmptyMovieCard />
-        <EmptyMovieCard />
-      </Slider>
-    </div>
+        <EmptyMovieCard /> */}
+    </Slider>
   );
 };
 
 export default Carousel;
+
+/* {movies.map((m) => (
+        <div className="p-4 h-[650px]">
+          <MovieGridItem movie={m} />
+          {/* <EmptyMovieCard /> 
+          </div>
+        ))} */

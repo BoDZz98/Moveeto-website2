@@ -3,9 +3,10 @@ import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import React from "react";
 import { giftIcon, optionsIcon } from "../ui/MovieGridItem";
+import { userMovieObj } from "@/models/userModel";
 
 type RecentMoviesProps = {
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
 };
 const RecentMovies = ({ movies }: RecentMoviesProps) => {
   const uniqueMovies = Array.from(

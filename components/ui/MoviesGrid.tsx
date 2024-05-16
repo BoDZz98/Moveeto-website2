@@ -1,57 +1,28 @@
 import React from "react";
 import MovieGridItem from "./MovieGridItem";
-import { MovieObj } from "@/pages/movie/[movieId]";
+import { Masonry, ResponsiveMasonry } from "@/utils/imports";
+import { userMovieObj } from "@/models/userModel";
 
 type MoviesGridProps = {
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
+  gridCols?: number;
 };
 
-const MoviesGrid = ({ movies }: MoviesGridProps) => {
+const MoviesGrid = ({ movies, gridCols }: MoviesGridProps) => {
+  const columns = gridCols ? gridCols : 4;
   return (
-    <div className="gap-x-8 flex flex-col gap-y-8 xl:flex-row ">
-      <div className="flex flex-col gap-y-8  xl:w-1/4 xl:px-0">
-        {movies.map(
-          // 0, 5
-          (movieData, index) =>
-            index < 5 &&
-            movieData.backdrop_path && (
-              <MovieGridItem movie={movieData} key={movieData.title} />
-            )
-        )}
-      </div>
-      <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
-        {movies.map(
-          // 5, 10
-          (movieData, index) =>
-            index >= 5 &&
-            index < 10 &&
-            movieData.backdrop_path && (
-              <MovieGridItem movie={movieData} key={movieData.title} />
-            )
-        )}
-      </div>
-      <div className="flex flex-col gap-y-8  px-20 xl:w-1/4 xl:px-0">
-        {movies.map(
-          // 10, 15
-          (movieData, index) =>
-            index >= 10 &&
-            index < 15 &&
-            movieData.backdrop_path && (
-              <MovieGridItem movie={movieData} key={movieData.title} />
-            )
-        )}
-      </div>
-      <div className="flex flex-col gap-y-10  px-20 xl:w-1/4 xl:px-0 xl:mt-8">
-        {movies.map(
-          // 15, 20
-          (movieData, index) =>
-            index >= 15 &&
-            index < 20 &&
-            movieData.backdrop_path && (
-              <MovieGridItem movie={movieData} key={movieData.title} />
-            )
-        )}
-      </div>
+    <div className="-ml-4">
+      <ResponsiveMasonry
+        columnsCountBreakPoints={{ 350: 1, 1200: 2, 1536: gridCols }} //1536px -> 2xl || 1200px -> xl
+      >
+        <Masonry>
+          {movies.map((movie) => (
+            <div className="m-4" key={movie.id}>
+              {movie.backdrop_path && <MovieGridItem movie={movie} />}
+            </div>
+          ))}
+        </Masonry>
+      </ResponsiveMasonry>
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { userMovieObj } from "@/models/userModel";
 import { MovieObj } from "@/pages/movie/[movieId]";
 import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
@@ -5,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 
 type MovieGridItemProps = {
-  movie: MovieObj;
+  movie: userMovieObj;
 };
 
 const contClassName =

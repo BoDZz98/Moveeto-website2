@@ -5,14 +5,14 @@ import MovieGridItem from "@/components/ui/MovieGridItem";
 import { connectDB } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]";
-import User from "@/models/userModel";
+import User, { userMovieObj } from "@/models/userModel";
 import { GetServerSidePropsContext } from "next";
 import { Masonry, ResponsiveMasonry } from "@/utils/imports";
 import SearchComponent from "@/components/profile/Search";
 import { useState } from "react";
 
 type favoriteProps = {
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
 };
 
 const favorite = ({ movies }: favoriteProps) => {
