@@ -6,15 +6,19 @@ import { useSession } from "next-auth/react";
 
 type ManageCollectionProps = {
   title: string;
+  oldValue?: { _id: string; name: string; description: string };
   onClose: () => void;
 };
-const ManageCollection = ({ title, onClose }: ManageCollectionProps) => {
+const ManageCollection = (props: ManageCollectionProps) => {
+  const { title, oldValue, onClose } = props;
   const router = useRouter();
   const { update } = useSession();
+
   const [inputs, setInputs] = useState({
-    title: { value: "", isValid: true },
-    description: { value: "", isValid: true },
+    title: { value: oldValue ? oldValue.name : "", isValid: true },
+    description: { value: oldValue ? oldValue.description : "", isValid: true },
   });
+
   function changeInputHandler(identifier: string, enteredValue: string) {
     setInputs((prevState) => {
       return {
@@ -34,7 +38,8 @@ const ManageCollection = ({ title, onClose }: ManageCollectionProps) => {
       const res = await fetch("/api/collections", {
         method: "POST",
         body: JSON.stringify({
-          title: inputs.title.value,
+          _id: oldValue?._id,
+          name: inputs.title.value,
           description: inputs.description.value,
         }),
         headers: {

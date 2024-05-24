@@ -1,39 +1,61 @@
-import React from "react";
+import { MovieObj } from "@/pages/movie/[movieId]";
+import { baseImageURL, searchMovies } from "@/utils/api-utils";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useState } from "react";
+import SearchItem from "./SearchItem";
 
 const SearchBar = () => {
+  const [results, setResults] = useState<Array<MovieObj>>([]);
+  async function searchHandler(e: any) {
+    // setsearchInput(e.target.value);
+    if (e.target.value.length > 3) {
+      const data: Array<MovieObj> = await searchMovies(e.target.value);
+      setResults(data);
+    }
+    if (e.target.value.length === 0) {
+      setResults([]);
+    }
+  }
   return (
-    <div className="relative ">
+    <div className="relative group rounded-full ">
       <div className="absolute inset-y-0 start-0 flex items-center ps-4 pointer-events-none ">
-        <svg
-          className="w-4 h-4 text-gray-200 "
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 20"
-        >
-          <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-          />
-        </svg>
+        {searchIcon}
       </div>
+
       <input
         type="search"
-        className=" rounded-full w-full  py-5 ps-12  text-white placeholder-gray-100  bg-gray-500 focus:ring-red-500 focus:border-red-500 "
-        placeholder="Search Mockups, Logos..."
-        required
+        placeholder="Search Movies"
+        onChange={searchHandler}
+        className="rounded-full opacity-60 w-full  py-5 ps-12 text-black text-lg placeholder-gray-100  bg-gray-500 hover:placeholder-black hover:bg-white  focus:bg-white focus:placeholder-black transition-all ease-in-out duration-300 "
       />
-      <button
-        type="submit"
-        className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 "
-      >
-        Search
-      </button>
+      {results.length !== 0 && (
+        <div className="absolute top-20 p-6 bg-black w-full rounded-3xl z-50 ">
+          {results.map((m) => (
+            <SearchItem movie={m} key={m.id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
 export default SearchBar;
+
+const searchIcon = (
+  <svg
+    className="w-5 h-5 text-gray-200 z-10 group-hover:text-black group-focus-within:text-black"
+    aria-hidden="true"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 20 20"
+  >
+    <path
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+    />
+  </svg>
+);

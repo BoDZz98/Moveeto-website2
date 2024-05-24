@@ -5,7 +5,7 @@ export const MovieDetailsCtx = createContext({
   movieData: {
     id: 0,
     title: "",
-    poster: "",
+    poster_path: "",
     backdrop_path: "",
     vote_average: 0,
     release_date: "",

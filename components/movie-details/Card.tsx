@@ -18,7 +18,7 @@ const Card = ({ children, backdrop_path, noLeftPadding }: CardProps) => {
       }  w-full flex flex-col `}
     >
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-20 "
+        className="absolute inset-0 bg-cover bg-center opacity-20  "
         style={backgroundStyle}
       ></div>
       <div className="absolute inset-0 top-1/2  bg-gradient-to-b from-transparent to-gray-900 "></div>

@@ -9,12 +9,11 @@ import {
   getAllGenres,
 } from "@/utils/api-utils";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import React from "react";
 
 export type MovieObj = {
   id: number;
   title: string;
-  poster: string;
+  poster_path: string;
   backdrop_path: string;
   vote_average: number;
   release_date: string;
@@ -64,7 +63,7 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   const movieData = await fetchMovieDetails(movieId);
-  console.log("movieData :", movieData.vote_count);
+  // console.log("movieData :", movieData.vote_count);
 
   const genresDetails = await getAllGenres();
 

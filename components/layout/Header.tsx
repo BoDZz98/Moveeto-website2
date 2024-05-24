@@ -9,7 +9,7 @@ const Header = () => {
   const { status } = useSession();
   const router = useRouter();
   return (
-    <div className="mb-20 flex sm:flex-col items-start lg:flex-row z-10 opacity-60">
+    <div className="mb-20 flex sm:flex-col items-start lg:flex-row z-50 ">
       {/*  */}
       <Link href="/" className="w-full lg:w-3/12 flex gap-x-11  ">
         <h1 className="text-white text-5xl font-extrabold py-2 ">Moveeto</h1>

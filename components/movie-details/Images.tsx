@@ -1,16 +1,21 @@
-import React, { Suspense, useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import ImagesGrid from "./ImagesGrid";
-import Link from "next/link";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
 const Images = () => {
   const { youtubeTrailerKey, images, id, cast } =
     useContext(MovieDetailsCtx).movieData;
+  const [domLoaded, setDomLoaded] = useState(false);
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
+
   return (
     <div className="2xl:w-2/5 z-0">
       <div className="rounded-xl overflow-hidden mb-5 mt-12 z-0 flex justify-center">
-        <Suspense fallback={<p>Loading</p>}>
+        {domLoaded && (
           <ReactPlayer
             url={`https://www.youtube.com/watch?v=${youtubeTrailerKey}`}
             style={{ maxWidth: "100%" }}
@@ -19,7 +24,7 @@ const Images = () => {
             muted
             controls
           />
-        </Suspense>
+        )}
       </div>
       <ImagesGrid movieImgs={images} movieId={id} />
       <h1 className="text-white text-5xl font-extrabold my-12 ">Cast</h1>

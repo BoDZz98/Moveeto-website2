@@ -109,3 +109,14 @@ export async function fetchMoviesByDate(time: string) {
   const data = await response.json();
   return data.results;
 }
+
+export async function searchMovies(movieName: string) {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/search/movie?query=${movieName}&include_adult=false&language=en-US&page=1`,
+    {
+      headers: configHeaders,
+    }
+  );
+  const data = await response.json();
+  return data.results.splice(0, 10);
+}

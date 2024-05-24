@@ -9,7 +9,8 @@ const Details = ({ movieTitle }: DetailsProps) => {
   //movieData: movie -> renaming movieData to movie
   return (
     <div className="flex flex-col gap-y-8 2xl:w-1/2 z-10">
-      <div className="opacity-100 z-10">
+      
+      <div className="opacity-100 ">
         <MyBreadcrumb title={movieTitle} />
       </div>
       <h1 className="text-white text-8xl font-extrabold ">{movieTitle}</h1>

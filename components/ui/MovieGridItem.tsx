@@ -1,5 +1,4 @@
 import { userMovieObj } from "@/models/userModel";
-import { MovieObj } from "@/pages/movie/[movieId]";
 import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,7 +13,7 @@ const contClassName =
 
 const MovieGridItem = ({ movie }: MovieGridItemProps) => {
   return (
-    <div className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition ease-in-out duration-1000 ">
+    <div className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition-all ease-in-out duration-1000 ">
       <Image
         src={baseImageURL + movie.backdrop_path}
         alt="movie img"

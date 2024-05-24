@@ -11,7 +11,7 @@ const Rating = () => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   return (
-    <div className="flex flex-col  gap-y-8">
+    <div className="flex flex-col  gap-y-8 ">
       <div className="flex gap-x-16">
         {data.map((item, index) => (
           <div

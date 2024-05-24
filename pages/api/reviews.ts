@@ -37,7 +37,7 @@ export default async function handler(
   if (req.method === "DELETE") {
     try {
       await Review.findByIdAndDelete(_id);
-      res.status(201).json({ message: "review updated/created!" });
+      res.status(201).json({ message: "review deleted" });
     } catch (error) {
       console.log("error while deleting review", error);
       res.status(500).json({ message: "Error" });
