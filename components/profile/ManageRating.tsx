@@ -4,6 +4,7 @@ import { Label, Textarea } from "flowbite-react";
 import OneEmoji from "../movie-details/OneEmoji";
 import { ratingData } from "../movie-details/Rating";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
+import { useRouter } from "next/router";
 
 type ManageRatingProps = {
   title: string;
@@ -12,6 +13,7 @@ type ManageRatingProps = {
 };
 const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
   // const { update } = useSession();
+  const router = useRouter();
   const { title: movieName, id: movieId } =
     useContext(MovieDetailsCtx).movieData;
 
@@ -52,6 +54,10 @@ const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
         },
       });
       if (res.ok) {
+        // If we are updating, refresh the page
+        if (oldValue) {
+          router.push("/profile/reviews");
+        }
         onClose();
         // update();
       }

@@ -39,7 +39,7 @@ const ProfileReview = (props: reviewObj) => {
         />
         <ReviewDropdown
           deleteHandler={deleteHandler}
-          editHandler={() => setModalIsVisible(false)}
+          editHandler={() => setModalIsVisible(true)}
         />
         {modalIsVisible && (
           <ManageRating

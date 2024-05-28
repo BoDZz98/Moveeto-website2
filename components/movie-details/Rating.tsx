@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OneEmoji from "./OneEmoji";
 import ManageRating from "../profile/ManageRating";
+import { useRouter } from "next/router";
 
 const data = [
   { title: "Exceptional", subTitle: "46 Rating" },
@@ -8,7 +9,12 @@ const data = [
   { title: "# 1" },
 ];
 const Rating = () => {
+  const router = useRouter();
+  const { query } = router;
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  useEffect(() => {
+    setModalIsVisible(!!query.showModal);
+  }, []);
 
   return (
     <div className="flex flex-col  gap-y-8 ">

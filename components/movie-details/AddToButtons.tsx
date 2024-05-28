@@ -42,19 +42,11 @@ const AddToButtons = () => {
     if (res.status === 201) {
       // 201 means that we added the movie
       button === "favMovies" ? setIsFav(true) : setIsWishlist(true);
-      update(/* {
-        movie: { backdrop_path, genres, title, release_date },
-        list: button,
-        operation: "add",
-      } */);
+      update();
     }
     if (res.status === 202) {
       button === "favMovies" ? setIsFav(false) : setIsWishlist(false);
-      update(/* {
-        movie: title,
-        list: button,
-        operation: "remove",
-      } */);
+      update();
     }
   }
   const buttonsData = [

@@ -38,19 +38,8 @@ const AddButton = (props: AddButtonProps) => {
       },
     });
     if (res.ok) {
-      update(/* {
-        movie: { backdrop_path, genres, title, release_date },
-        collectionName,
-        operation: "add",
-      } */);
+      update();
     }
-    // if (res.status === 202) {
-    //   update({
-    //     movie: title,
-    //     collectionName,
-    //     operation: "remove",
-    //   });
-    // }
   }
   return (
     <>
@@ -103,7 +92,7 @@ const AddButton = (props: AddButtonProps) => {
 
 export default AddButton;
 
-const checkIcon = (
+export const checkIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"

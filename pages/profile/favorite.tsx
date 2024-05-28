@@ -9,7 +9,9 @@ import User, { userMovieObj } from "@/models/userModel";
 import { GetServerSidePropsContext } from "next";
 import { Masonry, ResponsiveMasonry } from "@/utils/imports";
 import SearchComponent from "@/components/profile/Search";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type favoriteProps = {
   movies: Array<userMovieObj>;
@@ -18,6 +20,18 @@ type favoriteProps = {
 const favorite = ({ movies }: favoriteProps) => {
   const [value, setvalue] = useState("");
   const [moviesShown, setmoviesShown] = useState(movies);
+  const { data: session, update } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    // console.log("changed");
+    router.push("/profile/favorite");
+    if (session) {
+      setmoviesShown(session?.user!.favMovies);
+    }
+  }, [session?.user]);
+
+  //----------------------------------------------------------------------
   function inputHandler(e: React.ChangeEvent<HTMLInputElement>) {
     const searchQuery = e.target.value.toLowerCase();
     setvalue(searchQuery);
@@ -26,6 +40,7 @@ const favorite = ({ movies }: favoriteProps) => {
     );
     setmoviesShown(filteredResults);
   }
+  //----------------------------------------------------------------------
   return (
     <Layout>
       <ProfileLayout pageTitle="Favorite">
@@ -55,7 +70,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   const user = await User.findOne({ email });
   const favMovies = user.favMovies;
-  // console.log(favMovies);
+  console.log(favMovies);
 
   return {
     props: {

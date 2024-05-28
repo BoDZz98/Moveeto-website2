@@ -19,7 +19,7 @@ const SimilarMovies = (props: { movie: MovieObj }) => {
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
-      <MoviesGrid movies={movie.similarMovies!} />
+      <MoviesGrid gridCols={3} movies={movie.similarMovies!} />
     </ScreenShotsCard>
   );
 };

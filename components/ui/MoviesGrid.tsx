@@ -11,9 +11,9 @@ type MoviesGridProps = {
 const MoviesGrid = ({ movies, gridCols }: MoviesGridProps) => {
   const columns = gridCols ? gridCols : 4;
   return (
-    <div className="-ml-4">
+    <div className="-ml-4 w-full ">
       <ResponsiveMasonry
-        columnsCountBreakPoints={{ 350: 1, 1200: 2, 1536: gridCols }} //1536px -> 2xl || 1200px -> xl
+        columnsCountBreakPoints={{ 350: 1, 1200: 2, 1536: columns }} //1536px -> 2xl || 1200px -> xl
       >
         <Masonry>
           {movies.map((movie) => (

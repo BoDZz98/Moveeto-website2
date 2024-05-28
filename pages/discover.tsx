@@ -3,11 +3,11 @@ import {
   fetchMoviesByDate,
   getAllGenres,
 } from "@/utils/api-utils";
-import { MovieObj } from "./movie/[movieId]";
 import HomeCard from "@/components/ui/HomeCard";
+import { userMovieObj } from "@/models/userModel";
 
 type HomeProps = {
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
   title: string;
 };
 

@@ -3,12 +3,12 @@ import {
   fetchPopularMovies,
   getAllGenres,
 } from "@/utils/api-utils";
-import { MovieObj } from "./movie/[movieId]";
 import HomeCard from "@/components/ui/HomeCard";
 import { useSession } from "next-auth/react";
+import { userMovieObj } from "@/models/userModel";
 
 type HomeProps = {
-  movies: Array<MovieObj>;
+  movies: Array<userMovieObj>;
 };
 
 const data = {
