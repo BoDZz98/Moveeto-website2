@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { memo, useEffect, useState } from "react";
 import MovieGridItemDropdown from "./MovieGridItemDropdown";
+// million-ignore
 
 type MovieGridItemProps = {
   movie: userMovieObj;

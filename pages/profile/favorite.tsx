@@ -20,12 +20,9 @@ type favoriteProps = {
 const favorite = ({ movies }: favoriteProps) => {
   const [value, setvalue] = useState("");
   const [moviesShown, setmoviesShown] = useState(movies);
-  const { data: session, update } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    // console.log("changed");
-    router.push("/profile/favorite");
     if (session) {
       setmoviesShown(session?.user!.favMovies);
     }
