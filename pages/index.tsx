@@ -7,13 +7,13 @@ import HomeCard from "@/components/ui/HomeCard";
 import { useSession } from "next-auth/react";
 import { userMovieObj } from "@/models/userModel";
 
+type HomeProps = {
+  movies: Array<userMovieObj>;
+};
+
 const data = {
   title: "New and trending",
   subTitle: "Based on player counts and release date",
-};
-
-type HomeProps = {
-  movies: Array<userMovieObj>;
 };
 
 export default function Home({ movies }: HomeProps) {
