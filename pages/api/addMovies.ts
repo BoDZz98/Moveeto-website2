@@ -1,20 +1,20 @@
-import User, { collectionObj, userObj } from "@/models/userModel";
+import User, { collectionObj, userMovieObj, userObj } from "@/models/userModel";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session, getServerSession } from "next-auth";
 import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
 
-type MovieObj = {
-  id: String;
-  title: String;
-  release_date: String;
-  backdrop_path: String;
-  genres: any;
-  vote_count: Number;
-};
+// type MovieObj = {
+//   id: String;
+//   title: String;
+//   release_date: String;
+//   backdrop_path: String;
+//   genres: any;
+//   vote_count: Number;
+// };
 type reqData = {
   button: string;
-  movie: MovieObj;
+  movie: userMovieObj;
   collectionName: string;
 };
 export default async function handler(
@@ -32,7 +32,7 @@ export default async function handler(
   if ((list === "favMovies" || list === "wishlistMovies") && user) {
     try {
       const movieIndex: number = user[list].findIndex(
-        (movieObj: MovieObj) => movieObj.title === movie.title
+        (m: userMovieObj) => m.title === movie.title
       );
 
       if (movieIndex !== -1) {
@@ -41,9 +41,6 @@ export default async function handler(
         user.save();
         res.status(202).json({});
       } else {
-        movie["genres"] = movie.genres.map(
-          (genre: { name: string }) => genre.name
-        );
         user[list].push(movie);
         user.save();
         res.status(201).json({});
@@ -73,9 +70,6 @@ export default async function handler(
         user.save();
         res.status(202).json({ collections: user.userCollections });
       } else {
-        movie["genres"] = movie.genres.map(
-          (genre: { name: string }) => genre.name
-        );
         user.userCollections;
         collection?.movies.push(movie);
         user.save();

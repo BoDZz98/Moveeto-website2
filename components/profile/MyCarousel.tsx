@@ -47,28 +47,20 @@ const Carousel = ({ movies }: CarouselProps) => {
       },
     ],
   };
-  const myArray = ["", "", "", "", "", ""];
+  const myArray = ["1", "2", "3", "4", "5", "6"];
   return (
     <Slider {...settings}>
-      {myArray.map((a, i) => {
-        if (i > 5) return;
+      {myArray.map((k, i) => {
         if (i < movies.length) {
           return (
-            <div className="p-4 h-[650px]">
+            <div key={k} className="p-4 h-[650px] ">
               <MovieGridItem movie={movies[i]} />
             </div>
           );
         } else {
-          return <EmptyMovieCard />;
+          return <EmptyMovieCard key={k} />;
         }
       })}
-
-      {/* 
-        <EmptyMovieCard />
-        <EmptyMovieCard />
-        <EmptyMovieCard />
-        <EmptyMovieCard />
-        <EmptyMovieCard /> */}
     </Slider>
   );
 };

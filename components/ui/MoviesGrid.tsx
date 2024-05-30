@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MovieGridItem from "./MovieGridItem";
 import { Masonry, ResponsiveMasonry } from "@/utils/imports";
 import { userMovieObj } from "@/models/userModel";
+import { useSession } from "next-auth/react";
 
 type MoviesGridProps = {
   movies: Array<userMovieObj>;
@@ -9,6 +10,7 @@ type MoviesGridProps = {
 };
 
 const MoviesGrid = ({ movies, gridCols }: MoviesGridProps) => {
+  
   const columns = gridCols ? gridCols : 4;
   return (
     <div className="-ml-4 w-full ">

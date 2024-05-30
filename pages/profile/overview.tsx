@@ -1,19 +1,20 @@
 import Layout from "@/components/layout/layout";
 import Carousel from "@/components/profile/MyCarousel";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import React from "react";
+import React, { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
 import { connectDB } from "@/utils/db-util";
 import User, { collectionObj, userMovieObj, userObj } from "@/models/userModel";
 import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]";
-import { MovieObj } from "../movie/[movieId]";
 import Review, { reviewObj } from "@/models/reviewsModel";
 import GamesStatistics from "@/components/profile/GamesStatistics";
 import ReviewsStatistics from "@/components/profile/ReviewsStatistics";
 import CollectionsStatistics from "@/components/profile/CollectionsStatistics";
 import RecentMovies from "@/components/profile/RecentMovies";
 import RecentReviews from "@/components/profile/RecentReviews";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 type overviewProps = {
   favMovies: Array<userMovieObj>;
@@ -24,6 +25,15 @@ type overviewProps = {
 
 const overview = (props: overviewProps) => {
   const { favMovies, wishlistMovies, collections, reviews } = props;
+  const { data: session } = useSession();
+  
+  const router = useRouter();
+  useEffect(() => {
+    if (session) {
+      router.push("/profile/overview");
+    }
+  }, [session?.user]);
+
 
   const reviewsStatistics: Array<{ rating: number; ctr: number }> = [];
   for (let i = 5; i >= 1; i--) {

@@ -39,35 +39,28 @@ const UserCollection = ({ collection }: UserCollectionProps) => {
         {collection.movies.length !== 0 && (
           <div className="flex  justify-center items-end gap-x-2 w-full ">
             {collection.movies.map((m, i) => {
+              // Max 3 imgs appear
               if (i > 2) return;
               // To make the center Image larger
               const className =
                 (lastMovieIndex === 0 && i === 0) ||
-                (lastMovieIndex === 2 && i === 1)
+                (lastMovieIndex >= 2 && i === 1)
                   ? "rounded-xl w-1/3"
                   : "rounded-xl w-1/4 ";
               return (
                 <Image
-                  src={
-                    baseImageURL +
-                    collection.movies[lastMovieIndex - i].backdrop_path
-                  }
                   alt="movie img"
                   width={300}
                   height={300}
                   className={className}
+                  key={collection.movies[lastMovieIndex - i].backdrop_path}
+                  src={
+                    baseImageURL +
+                    collection.movies[lastMovieIndex - i].backdrop_path
+                  }
                 />
               );
             })}
-            {/* <Image
-              src={
-                baseImageURL + collection.movies[lastMovieIndex].backdrop_path
-              }
-              alt="movie img"
-              width={300}
-              height={300}
-              className="rounded-xl w-1/4"
-            /> */}
           </div>
         )}
       </div>

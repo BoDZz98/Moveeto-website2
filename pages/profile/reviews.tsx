@@ -29,6 +29,7 @@ const reviews = ({ reviews }: reviewsProps) => {
       if (index + 1 === reviews.length && ctr !== 0)
         arr.push(
           <RatingDiv
+            key={Math.random() * 1000}
             rating={i}
             reviewsNumber={ctr}
             isActive={i === activeRating}
@@ -52,11 +53,11 @@ const reviews = ({ reviews }: reviewsProps) => {
   return (
     <Layout>
       <ProfileLayout pageTitle="Reviews">
-        {/* {reviews.length === 0 && <EmptyPage collectionPage={false} />} */}
+        {reviews.length === 0 && <EmptyPage collectionPage={false} />}
         <div className="flex flex-col xl:flex-row">
           <div className="flex flex-col xl:w-2/3 order-2 xl:order-1 ">
-            {filterReviews.map((review, i) => (
-              <ProfileReview {...review} key={i} />
+            {filterReviews.map((review) => (
+              <ProfileReview review={review} key={review._id} />
             ))}
           </div>
           {/* -------------------- */}

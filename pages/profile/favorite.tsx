@@ -1,6 +1,5 @@
 import Layout from "@/components/layout/layout";
 import ProfileLayout from "@/components/profile/ProfileLayout";
-import { MovieObj } from "../movie/[movieId]";
 import MovieGridItem from "@/components/ui/MovieGridItem";
 import { connectDB } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
@@ -11,7 +10,7 @@ import { Masonry, ResponsiveMasonry } from "@/utils/imports";
 import SearchComponent from "@/components/profile/Search";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import MoviesGrid from "@/components/ui/MoviesGrid";
 
 type favoriteProps = {
   movies: Array<userMovieObj>;
@@ -20,12 +19,9 @@ type favoriteProps = {
 const favorite = ({ movies }: favoriteProps) => {
   const [value, setvalue] = useState("");
   const [moviesShown, setmoviesShown] = useState(movies);
-  const { data: session, update } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession();
 
   useEffect(() => {
-    // console.log("changed");
-    router.push("/profile/favorite");
     if (session) {
       setmoviesShown(session?.user!.favMovies);
     }
@@ -45,17 +41,7 @@ const favorite = ({ movies }: favoriteProps) => {
     <Layout>
       <ProfileLayout pageTitle="Favorite">
         <SearchComponent value={value} changeInputHandler={inputHandler} />
-        <ResponsiveMasonry
-          columnsCountBreakPoints={{ 350: 1, 1200: 2, 1536: 3 }} //1536px -> 2xl || 1200px -> xl
-        >
-          <Masonry>
-            {moviesShown.map((movie) => (
-              <div className="m-4" key={movie.id}>
-                <MovieGridItem movie={movie} />
-              </div>
-            ))}
-          </Masonry>
-        </ResponsiveMasonry>
+        <MoviesGrid movies={moviesShown} gridCols={3} />
       </ProfileLayout>
     </Layout>
   );
@@ -70,7 +56,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
 
   const user = await User.findOne({ email });
   const favMovies = user.favMovies;
-  console.log(favMovies);
+  // console.log(favMovies);
 
   return {
     props: {

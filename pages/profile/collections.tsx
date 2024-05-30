@@ -23,7 +23,7 @@ const collections = ({ collections }: collectionsProps) => {
         {collections.length === 0 ? (
           <EmptyPage collectionPage />
         ) : (
-          <div>
+          <>
             <div className="flex justify-end">
               <p
                 className="underline hover:cursor-pointer hover:text-gray-300"
@@ -34,24 +34,12 @@ const collections = ({ collections }: collectionsProps) => {
                 + Start a new collection
               </p>
             </div>
-            {collections.length !== 0 &&
-              collections.map((collection, index) => {
-                let backgroundStyle = { backgroundImage: "" };
-                if (collection.movies.length !== 0) {
-                  const lastMovieIndex = collection.movies.length - 1;
-                  backgroundStyle = {
-                    backgroundImage: `url(${baseImageURL}${collection.movies[lastMovieIndex].backdrop_path})`,
-                  };
-                }
-                return (
-                  <UserCollection
-                    key={index}
-                    collection={collection}
-                    // backgroundStyle={backgroundStyle}
-                  />
-                );
-              })}
-          </div>
+            {collections.map((collection) => {
+              return (
+                <UserCollection key={collection._id} collection={collection} />
+              );
+            })}
+          </>
         )}
         {modalIsVisible && (
           <ManageCollection

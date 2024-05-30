@@ -1,10 +1,10 @@
 import { Dropdown } from "flowbite-react";
 import React, { useState } from "react";
-import { optionsIcon } from "./MovieGridItem";
 import { useSession } from "next-auth/react";
 import { collectionObj, userMovieObj } from "@/models/userModel";
 import { checkIcon } from "../movie-details/AddButton";
 import { useRouter } from "next/router";
+import { optionsIcon } from "./MGIButtonGroup";
 
 type MovieGridItemDropdownProps = {
   movie: userMovieObj;

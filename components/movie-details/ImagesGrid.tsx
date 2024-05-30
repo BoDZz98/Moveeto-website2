@@ -1,9 +1,9 @@
 import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import React from "react";
-import { optionsIcon } from "../ui/MovieGridItem";
 import ActorImage from "./ActorImage";
 import { useRouter } from "next/router";
+import { optionsIcon } from "../ui/MGIButtonGroup";
 
 type ImagesGridProps = {
   movieId: number;

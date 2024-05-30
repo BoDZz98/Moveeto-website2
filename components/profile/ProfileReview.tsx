@@ -5,9 +5,13 @@ import ReviewDropdown from "./ReviewDropdown";
 import ManageRating from "./ManageRating";
 import { reviewObj } from "@/models/reviewsModel";
 import { useRouter } from "next/router";
+type ProfileReviewProps = {
+  review: reviewObj;
+  notEditable?: boolean;
+};
 
-const ProfileReview = (props: reviewObj) => {
-  const { movieName, rating, description, createdAt, _id } = props;
+const ProfileReview = (props: ProfileReviewProps) => {
+  const { movieName, rating, description, createdAt, _id } = props.review;
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const router = useRouter();
   async function deleteHandler() {
@@ -37,10 +41,12 @@ const ProfileReview = (props: reviewObj) => {
           width={50}
           height={50}
         />
-        <ReviewDropdown
-          deleteHandler={deleteHandler}
-          editHandler={() => setModalIsVisible(true)}
-        />
+        {!props.notEditable && (
+          <ReviewDropdown
+            deleteHandler={deleteHandler}
+            editHandler={() => setModalIsVisible(true)}
+          />
+        )}
         {modalIsVisible && (
           <ManageRating
             title="Edit Rating"
