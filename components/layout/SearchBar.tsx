@@ -1,21 +1,25 @@
 import { MovieObj } from "@/pages/movie/[movieId]";
-import { baseImageURL, searchMovies } from "@/utils/api-utils";
-import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
+import { searchMovies } from "@/utils/api-utils";
+import React, { useRef, useState } from "react";
 import SearchItem from "./SearchItem";
 
 const SearchBar = () => {
   const [results, setResults] = useState<Array<MovieObj>>([]);
-  async function searchHandler(e: any) {
-    // setsearchInput(e.target.value);
-    if (e.target.value.length > 3) {
-      const data: Array<MovieObj> = await searchMovies(e.target.value);
-      setResults(data);
-    }
-    if (e.target.value.length === 0) {
-      setResults([]);
-    }
+  const lastChange = useRef<number | null>();
+
+  async function searchHandler(e: React.ChangeEvent<HTMLInputElement>) {
+    // Adding debouncing, meaning it will only search if the user stops writing for 500ms
+    if (lastChange.current) clearTimeout(lastChange.current);
+    // The setTimeout() method sets a timer which executes a function or specified piece of code once the timer expires.
+    lastChange.current = window.setTimeout(async () => {
+      if (e.target.value.length > 3) {
+        const data: Array<MovieObj> = await searchMovies(e.target.value);
+        setResults(data);
+      }
+      if (e.target.value.length === 0) {
+        setResults([]);
+      }
+    }, 500);
   }
   return (
     <div className="relative group rounded-full ">

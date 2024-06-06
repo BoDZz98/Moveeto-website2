@@ -14,7 +14,7 @@ export const MovieDetailsCtx = createContext({
     youtubeTrailerKey: "",
     revenue: "",
     vote_count: 0,
-    genres: [{ name: "" }],
+    genres: [""],
     images: [{ file_path: "" }],
     cast: [{ name: "", profile_path: "", character: "" }],
     production_companies: [{ name: "" }],

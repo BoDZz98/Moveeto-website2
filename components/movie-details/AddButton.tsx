@@ -1,7 +1,8 @@
+import useMySession from "@/hooks/useMySession";
 import { collectionObj } from "@/models/userModel";
+import { addMovieHandler } from "@/utils/db-util";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { Dropdown } from "flowbite-react";
-import { useSession } from "next-auth/react";
 import React, { ReactNode, useContext, useEffect, useState } from "react";
 
 type AddButtonProps = {
@@ -16,31 +17,32 @@ type AddButtonProps = {
 const AddButton = (props: AddButtonProps) => {
   const { id, title, backdrop_path, genres, release_date, vote_count } =
     useContext(MovieDetailsCtx).movieData;
-  const { data: session, update } = useSession();
-  const [userCollections, setuserCollections] = useState<Array<collectionObj>>(
-    []
-  );
+  const movie = {
+    id: id.toString(),
+    title,
+    backdrop_path,
+    genres,
+    release_date,
+    vote_count,
+  };
+  const { userCollections, update } = useMySession();
 
-  useEffect(() => {
-    if (session && props.title === "Collection")
-      setuserCollections(session.user!.userCollections);
-  }, [session]);
+  useEffect(() => {}, [userCollections]);
 
-  async function addMovieHandler(collectionName: string) {
-    const res = await fetch("/api/addMovies", {
-      method: "POST",
-      body: JSON.stringify({
-        collectionName,
-        movie: { id, title, backdrop_path, genres, release_date, vote_count },
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      update();
-    }
-  }
+  // async function addMovieHandler(collectionId: string) {
+  //   const res = await fetch("/api/addMovies", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       collectionId,
+  //       movie: { id, title, backdrop_path, genres, release_date, vote_count },
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   if (res.ok) update();
+  // }
+  //-----------------------------------------------
   return (
     <>
       {props.title !== "Collection" ? (
@@ -69,14 +71,14 @@ const AddButton = (props: AddButtonProps) => {
           )}
         >
           {userCollections && userCollections.length !== 0 ? (
-            userCollections.map((collection, index) => (
+            userCollections.map((c: collectionObj) => (
               <Dropdown.Item
                 className="relative"
-                key={index}
-                onClick={() => addMovieHandler(collection.name)}
+                key={c._id}
+                onClick={() => addMovieHandler(movie, update, c._id)}
               >
-                {collection.name}
-                {collection.movies.map((m) => {
+                {c.name}
+                {c.movies.map((m) => {
                   if (m.title === title) return checkIcon;
                 })}
               </Dropdown.Item>

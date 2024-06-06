@@ -4,18 +4,10 @@ import { Session, getServerSession } from "next-auth";
 import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
 
-// type MovieObj = {
-//   id: String;
-//   title: String;
-//   release_date: String;
-//   backdrop_path: String;
-//   genres: any;
-//   vote_count: Number;
-// };
 type reqData = {
   button: string;
   movie: userMovieObj;
-  collectionName: string;
+  collectionId: string;
 };
 export default async function handler(
   req: NextApiRequest,
@@ -26,7 +18,7 @@ export default async function handler(
   const session: Session | null = await getServerSession(req, res, authOptions);
   const email = session?.user?.email;
   const user: userObj | null = await User.findOne({ email });
-  const { button: list, movie, collectionName }: reqData = await req.body;
+  const { button: list, movie, collectionId }: reqData = await req.body;
 
   // Adding movies to fav and wishlist --------------------------------------------------
   if ((list === "favMovies" || list === "wishlistMovies") && user) {
@@ -54,10 +46,10 @@ export default async function handler(
     }
   }
   // Adding movies to user Collections --------------------------------------------------
-  if (collectionName && user) {
+  if (collectionId && user) {
     try {
       const collection: collectionObj | undefined = user.userCollections.find(
-        (collection) => collection.name === collectionName
+        (collection) => collection._id == collectionId
       );
 
       const movieIndex: number = collection!.movies.findIndex(
@@ -70,7 +62,6 @@ export default async function handler(
         user.save();
         res.status(202).json({ collections: user.userCollections });
       } else {
-        user.userCollections;
         collection?.movies.push(movie);
         user.save();
         res.status(201).json({ collections: user.userCollections });

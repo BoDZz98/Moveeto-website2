@@ -1,4 +1,4 @@
-import User from "@/models/userModel";
+import User, { userMovieObj } from "@/models/userModel";
 import mongoose from "mongoose";
 
 export async function connectDB() {
@@ -9,4 +9,26 @@ export async function connectDB() {
   } catch (error) {
     console.log("error while connecting to DB", error);
   }
+}
+
+//-------------------------------------------------------------------------------------
+
+export async function addMovieHandler(
+  movie: userMovieObj,
+  update: any,
+  collectionId?: string,
+  list?: string
+) {
+  const res = await fetch("/api/addMovies", {
+    method: "POST",
+    body: JSON.stringify({
+      list,
+      collectionId,
+      movie,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) update();
 }

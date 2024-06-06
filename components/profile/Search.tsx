@@ -2,17 +2,15 @@ import React from "react";
 
 type searchProps = {
   changeInputHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
 };
-const SearchComponent = ({ changeInputHandler, value }: searchProps) => {
+const SearchComponent = ({ changeInputHandler }: searchProps) => {
   return (
     <div className="flex items-center p-2 border-b-4 border-gray-800 hover:border-gray-500 group ">
       {searchIcon}
       <input
         className="bg-transparent text-2xl border-none focus:ring-0 focus:border-none w-full group-hover:placeholder-gray-300"
-        type="text"
+        type="search"
         placeholder="Search my favorite"
-        value={value}
         onChange={changeInputHandler}
       />
     </div>

@@ -52,7 +52,8 @@ export async function fetchMovieDetails(movieId: number) {
     (video: { type: string }) => video.type === "Trailer"
   );
   const youtubeTrailerKey = youtubeTrailer ? youtubeTrailer.key : "";
-
+  const genres = data.genres.map((g: { name: string }) => g.name);
+  
   const newMovieObject = {
     id: data.id,
     title: data.title,
@@ -62,7 +63,7 @@ export async function fetchMovieDetails(movieId: number) {
     release_date: data.release_date,
     runtime: `${hours}h ${minutes} min`,
     overview: data.overview,
-    genres: data.genres,
+    genres: genres,
     images: data.images.backdrops.slice(0, 21),
     production_companies: data.production_companies.slice(0, 5),
     production_countries: data.production_countries.slice(0, 5),
@@ -75,6 +76,8 @@ export async function fetchMovieDetails(movieId: number) {
 
   return newMovieObject;
 }
+
+//------------------------------------------------------------------------------
 
 export function convertIdGenresToNames(
   genres: Array<number>,
@@ -91,6 +94,8 @@ export function convertIdGenresToNames(
   });
   return genresNames;
 }
+
+//------------------------------------------------------------------------------
 
 export async function fetchMoviesByDate(time: string) {
   const currentDate = getCurrentDate();
@@ -110,6 +115,8 @@ export async function fetchMoviesByDate(time: string) {
   const data = await response.json();
   return data.results;
 }
+
+//----------------------------------------------------------------------------------------------------
 
 export async function searchMovies(movieName: string) {
   const response = await fetch(
