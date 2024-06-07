@@ -16,19 +16,20 @@ export async function connectDB() {
 export async function addMovieHandler(
   movie: userMovieObj,
   update: any,
-  collectionId?: string,
-  list?: string
+  collectionId: string | null,
+  list: string | null
 ) {
   const res = await fetch("/api/addMovies", {
     method: "POST",
     body: JSON.stringify({
-      list,
-      collectionId,
       movie,
+      collectionId,
+      list,
     }),
     headers: {
       "Content-Type": "application/json",
     },
   });
+  // If condition for adding movies in the collections
   if (res.ok) update();
 }

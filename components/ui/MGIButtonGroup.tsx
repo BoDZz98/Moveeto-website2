@@ -1,53 +1,20 @@
 import { userMovieObj } from "@/models/userModel";
-import React, { useEffect, useState } from "react";
 import MovieGridItemDropdown from "./MovieGridItemDropdown";
-import { useSession } from "next-auth/react";
+import { addMovieHandler } from "@/utils/db-util";
+import useMySession from "@/hooks/useMySession";
 
 type MGIButtonGroupProps = {
   movie: userMovieObj;
 };
 
 const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
-  const { data: session, status, update } = useSession();
-  const [isFav, setIsFav] = useState(false);
-  const [isWishlist, setIsWishlist] = useState(false);
-
-  useEffect(() => {
-    if (status !== "loading" && session) {
-      const userData: any = session.user;
-      // console.log("userDatass", userData);
-      const movieIsFav = !!userData.favMovies.find(
-        (movieOb: { title: string }) => movieOb.title === movie.title
-      );
-      const movieIsWishlist = !!userData.wishlistMovies.find(
-        (movieOb: { title: string }) => movieOb.title === movie.title
-      );
-      setIsFav(movieIsFav);
-      setIsWishlist(movieIsWishlist);
-    }
-  }, [status]);
-
-  //-------------------------------------------------------------------------
-  async function BtnHandler(button: string) {
-    const res = await fetch("/api/addMovies", {
-      method: "POST",
-      body: JSON.stringify({
-        button,
-        movie: movie,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status === 201) {
-      // 201 means that we added the movie
-      button === "favMovies" ? setIsFav(true) : setIsWishlist(true);
-    }
-    if (res.status === 202) {
-      button === "favMovies" ? setIsFav(false) : setIsWishlist(false);
-    }
-    update();
-  }
+  const { userFavMovies, userWishlistMovies, update } = useMySession();
+  const movieIsFav = !!userFavMovies?.find(
+    (movieOb: { title: string }) => movieOb.title === movie.title
+  );
+  const movieIsWishlist = !!userWishlistMovies?.find(
+    (movieOb: { title: string }) => movieOb.title === movie.title
+  );
   //-------------------------------------------------------------------------
   const contClassName =
     "flex items-center gap-x-1 rounded bg-gray-600 w-fit group cont hover:cursor-pointer transition ease-in-out duration-300";
@@ -55,20 +22,28 @@ const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
   return (
     <div className="flex gap-x-3">
       <div
-        onClick={BtnHandler.bind(null, "favMovies")}
+        onClick={addMovieHandler.bind(null, movie, update, null, "favMovies")}
         className={`${contClassName} p-2 ${
-          isFav ? "bg-green-400 hover:bg-green-500" : "hover:bg-white "
+          movieIsFav ? "bg-green-400 hover:bg-green-500" : "hover:bg-white "
         }`}
       >
-        {!isFav && plusIcon}
+        {!movieIsFav && plusIcon}
         <p className=" group-hover:group-[.cont]:text-black font-semibold">
-          {isFav ? heartIcon : movie.vote_count}
+          {movieIsFav ? heartIcon : movie.vote_count}
         </p>
       </div>
       <div
-        onClick={BtnHandler.bind(null, "wishlistMovies")}
+        onClick={addMovieHandler.bind(
+          null,
+          movie,
+          update,
+          null,
+          "wishlistMovies"
+        )}
         className={`${contClassName} px-4 py-2 hidden group-hover:flex ${
-          isWishlist ? "bg-green-400 hover:bg-green-500 " : "hover:bg-white "
+          movieIsWishlist
+            ? "bg-green-400 hover:bg-green-500 "
+            : "hover:bg-white "
         }`}
       >
         {giftIcon}

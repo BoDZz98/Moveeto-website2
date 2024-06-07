@@ -1,74 +1,52 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import AddButton from "./AddButton";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import { useSession } from "next-auth/react";
+import { addMovieHandler } from "@/utils/db-util";
+import useMySession from "@/hooks/useMySession";
 
 const AddToButtons = () => {
-  // ---------------------------------------
-  const [isFav, setIsFav] = useState(false);
-  const [isWishlist, setIsWishlist] = useState(false);
-
   // movie data from ctx ------------------------------------------
   const { id, backdrop_path, genres, title, release_date, vote_count } =
     useContext(MovieDetailsCtx).movieData;
+  const movie = {
+    id: id.toString(),
+    title,
+    backdrop_path,
+    genres,
+    release_date,
+    vote_count,
+  };
   // Getting user data from the stored session -------------------
-  const { data: session, update } = useSession();
-  useEffect(() => {
-    if (session) {
-      const userData: any = session.user;
-      // console.log("userDatass", userData);
-      const movieIsFav = !!userData.favMovies.find(
-        (movieOb: { title: string }) => movieOb.title === title
-      );
-      const movieIsWishlist = !!userData.wishlistMovies.find(
-        (movieOb: { title: string }) => movieOb.title === title
-      );
-      setIsFav(movieIsFav);
-      setIsWishlist(movieIsWishlist);
-    }
-  }, []);
+  const { userFavMovies, userWishlistMovies, update } = useMySession();
+  const movieIsFav = !!userFavMovies?.find(
+    (movieOb: { title: string }) => movieOb.title === title
+  );
+  const movieIsWishlist = !!userWishlistMovies?.find(
+    (movieOb: { title: string }) => movieOb.title === title
+  );
 
-  async function BtnHandler(button: string) {
-    const res = await fetch("/api/addMovies", {
-      method: "POST",
-      body: JSON.stringify({
-        button,
-        movie: { id, backdrop_path, genres, title, release_date, vote_count },
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status === 201) {
-      // 201 means that we added the movie
-      button === "favMovies" ? setIsFav(true) : setIsWishlist(true);
-      update();
-    }
-    if (res.status === 202) {
-      button === "favMovies" ? setIsFav(false) : setIsWishlist(false);
-      update();
-    }
-  }
+  // -----------------------------------------------------------------------------
   const buttonsData = [
     {
       title: "Favorites",
       subTitle: "Add to",
-      icon: isFav ? heartIcon : favIcon,
+      icon: movieIsFav ? heartIcon : favIcon,
       textStyle: "text-black",
       contStyle: `bg-white hover:bg-gray-200 ${
-        isFav && "border-2 border-green-500"
+        movieIsFav && "border-2 border-green-500"
       }`,
 
-      clickHandler: () => BtnHandler("favMovies"),
+      clickHandler: () => addMovieHandler(movie, update, null, "favMovies"),
     },
     {
       title: "Wishlist",
       subTitle: "Add to",
-      icon: isWishlist ? addedIcon : wishlistIcon,
-      contStyle: isWishlist
+      icon: movieIsWishlist ? addedIcon : wishlistIcon,
+      contStyle: movieIsWishlist
         ? "border-2 border-green-500 hover:border-green-400"
         : "border-2 border-white hover:border-gray-400",
-      clickHandler: () => BtnHandler("wishlistMovies"),
+      clickHandler: () =>
+        addMovieHandler(movie, update, null, "wishlistMovies"),
     },
     {
       title: "Collection",
@@ -77,7 +55,7 @@ const AddToButtons = () => {
       textStyle: "hover:text-gray-400",
     },
   ];
-
+  // -----------------------------------------------------------------------------
   return (
     <div className="flex gap-x-4 ">
       {buttonsData.map((item) => (

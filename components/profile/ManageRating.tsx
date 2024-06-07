@@ -12,7 +12,6 @@ type ManageRatingProps = {
   onClose: () => void;
 };
 const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
-  // const { update } = useSession();
   const router = useRouter();
   const { title: movieName, id: movieId } =
     useContext(MovieDetailsCtx).movieData;

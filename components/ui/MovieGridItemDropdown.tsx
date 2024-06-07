@@ -1,35 +1,20 @@
 import { Dropdown } from "flowbite-react";
-import React, { useState } from "react";
-import { useSession } from "next-auth/react";
+import React from "react";
 import { collectionObj, userMovieObj } from "@/models/userModel";
 import { checkIcon } from "../movie-details/AddButton";
 import { useRouter } from "next/router";
 import { optionsIcon } from "./MGIButtonGroup";
+import { addMovieHandler } from "@/utils/db-util";
+import useMySession from "@/hooks/useMySession";
 
 type MovieGridItemDropdownProps = {
   movie: userMovieObj;
 };
 const MovieGridItemDropdown = ({ movie }: MovieGridItemDropdownProps) => {
-  const { data: session, update } = useSession();
-  const router = useRouter();
-  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const { userCollections, update } = useMySession();
 
-  async function addMovieHandler(collectionName: string) {
-    const res = await fetch("/api/addMovies", {
-      method: "POST",
-      body: JSON.stringify({
-        collectionName,
-        movie: movie,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      update();
-    }
-  }
-  //-----------------------------------------------------
+  const router = useRouter();
+
   function reviewHandler() {
     router.push(`/movie/${movie.id}?showModal=true`);
   }
@@ -55,9 +40,12 @@ const MovieGridItemDropdown = ({ movie }: MovieGridItemDropdownProps) => {
           <span className="block text-sm">Add to Collection</span>
         </Dropdown.Header>
 
-        {session && session?.user?.userCollections.length !== 0 ? (
-          session?.user?.userCollections.map((c: collectionObj) => (
-            <Dropdown.Item key={c._id} onClick={() => addMovieHandler(c.name)}>
+        {userCollections && userCollections.length !== 0 ? (
+          userCollections.map((c: collectionObj) => (
+            <Dropdown.Item
+              key={c._id}
+              onClick={() => addMovieHandler(movie, update, c._id, null)}
+            >
               {c.name}
               {c.movies.map((m) => {
                 if (m.id == movie.id) return checkIcon;

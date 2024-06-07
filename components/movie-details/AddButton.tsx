@@ -3,7 +3,7 @@ import { collectionObj } from "@/models/userModel";
 import { addMovieHandler } from "@/utils/db-util";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { Dropdown } from "flowbite-react";
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, { ReactNode, useContext } from "react";
 
 type AddButtonProps = {
   title: string;
@@ -27,22 +27,8 @@ const AddButton = (props: AddButtonProps) => {
   };
   const { userCollections, update } = useMySession();
 
-  useEffect(() => {}, [userCollections]);
+  // useEffect(() => {}, [userCollections]);
 
-  // async function addMovieHandler(collectionId: string) {
-  //   const res = await fetch("/api/addMovies", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       collectionId,
-  //       movie: { id, title, backdrop_path, genres, release_date, vote_count },
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   if (res.ok) update();
-  // }
-  //-----------------------------------------------
   return (
     <>
       {props.title !== "Collection" ? (
@@ -75,7 +61,7 @@ const AddButton = (props: AddButtonProps) => {
               <Dropdown.Item
                 className="relative"
                 key={c._id}
-                onClick={() => addMovieHandler(movie, update, c._id)}
+                onClick={() => addMovieHandler(movie, update, c._id, null)}
               >
                 {c.name}
                 {c.movies.map((m) => {

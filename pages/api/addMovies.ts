@@ -5,7 +5,7 @@ import authOptions from "./auth/[...nextauth]";
 import { connectDB } from "@/utils/db-util";
 
 type reqData = {
-  button: string;
+  list: string;
   movie: userMovieObj;
   collectionId: string;
 };
@@ -18,7 +18,8 @@ export default async function handler(
   const session: Session | null = await getServerSession(req, res, authOptions);
   const email = session?.user?.email;
   const user: userObj | null = await User.findOne({ email });
-  const { button: list, movie, collectionId }: reqData = await req.body;
+  const { list, movie, collectionId }: reqData = await req.body;
+  // console.log(list);
 
   // Adding movies to fav and wishlist --------------------------------------------------
   if ((list === "favMovies" || list === "wishlistMovies") && user) {
