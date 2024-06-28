@@ -3,6 +3,7 @@ import MyModalCard from "../ui/MyModalCard";
 import { Label, Textarea } from "flowbite-react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
+import { manageCollection } from "@/utils/db-util";
 
 type ManageCollectionProps = {
   title: string;
@@ -30,38 +31,24 @@ const ManageCollection = (props: ManageCollectionProps) => {
   //----------------------------------------------------
   async function onSubmitForm(e: any) {
     e.preventDefault();
-    const titleIsValid = inputs.title.value.length > 2;
-    const descriptionIsValid = inputs.description.value.length > 4;
-
-    if (titleIsValid && descriptionIsValid) {
-      // If all is good
-      const res = await fetch("/api/collections", {
-        method: "POST",
-        body: JSON.stringify({
-          _id: oldValue?._id,
-          name: inputs.title.value,
-          description: inputs.description.value,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok) {
-        router.push("/profile/collections");
-        onClose();
-        update();
-      }
-    } else {
+    const res = await manageCollection(inputs, oldValue?._id);
+    if (res.ok) {
+      update();
+      onClose();
+      // If we are creating a new collection, we want to refresh page
+      if (!oldValue?._id) router.push("/profile/collections");
+    }
+    if (res.invalidInputs) {
       // If sth wrong with the inputs field
       setInputs((prev) => {
         return {
           title: {
             value: prev.title.value,
-            isValid: titleIsValid,
+            isValid: res.titleIsValid,
           },
           description: {
             value: prev.description.value,
-            isValid: descriptionIsValid,
+            isValid: res.descriptionIsValid,
           },
         };
       });

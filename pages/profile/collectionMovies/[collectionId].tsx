@@ -1,8 +1,8 @@
 import Layout from "@/components/layout/layout";
 import Card from "@/components/movie-details/Card";
-import { connectDB } from "@/utils/db-util";
+import { connectDB, deleteCollection } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import authOptions from "../../api/auth/[...nextauth]";
 import { GetServerSidePropsContext } from "next";
 import User, { collectionObj, userObj } from "@/models/userModel";
@@ -11,7 +11,7 @@ import MoviesGrid from "@/components/ui/MoviesGrid";
 import Dropdown from "@/components/ui/Dropdown";
 import ManageCollection from "@/components/profile/ManageCollection";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import useMySession from "@/hooks/useMySession";
 
 type CollectionMoviesProps = {
   userCollection: collectionObj;
@@ -19,36 +19,21 @@ type CollectionMoviesProps = {
 const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const router = useRouter();
-  const { data: session, update } = useSession();
+
+  // In order to update the page if a change  occured (movie removed, collection name updated)
+  const { update, userCollections } = useMySession();
+  if (userCollections) {
+    userCollection = userCollections.find(
+      (c) => c._id === userCollection._id
+    ) as collectionObj;
+  }
 
   const lastMovieIndex = userCollection.movies.length - 1;
   const background =
     lastMovieIndex >= 0
       ? userCollection.movies[lastMovieIndex].backdrop_path
       : "";
-  // Delete function--------------------------------------
-  async function deleteHandler() {
-    const res = await fetch("/api/collections", {
-      method: "DELETE",
-      body: JSON.stringify({
-        _id: userCollection._id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.ok) {
-      router.push("/profile/collections");
-      update();
-    }
-  }
-  //-
 
-  useEffect(() => {
-    if (session) {
-      router.push(`/profile/collectionMovies/${userCollection._id}`);
-    }
-  }, [session?.user]);
   return (
     <Layout>
       <Card backdrop_path={background}>
@@ -76,7 +61,9 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
                 />
               )}
               <div
-                onClick={deleteHandler}
+                onClick={() =>
+                  deleteCollection(userCollection._id, router, update)
+                }
                 className="h-fit z-10 py-4 px-8 rounded text-3xl font-semibold bg-white bg-opacity-20 hover:bg-opacity-100  hover:cursor-pointer hover:text-red-500 transition-all ease-in-out duration-300"
               >
                 Delete
@@ -94,7 +81,7 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
           <Dropdown />
 
           <MoviesGrid movies={userCollection.movies} gridCols={3} />
-          
+
           {lastMovieIndex === -1 && (
             <p className="place-self-center mt-20 text-3xl font-bold">
               No Movies In This Collection

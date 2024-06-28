@@ -5,6 +5,7 @@ import OneEmoji from "../movie-details/OneEmoji";
 import { ratingData } from "../movie-details/Rating";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { useRouter } from "next/router";
+import { manageReview } from "@/utils/db-util";
 
 type ManageRatingProps = {
   title: string;
@@ -29,48 +30,27 @@ const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
       };
     });
   }
-  //----------------------------------------------------
+  //------------------------------------------------------------------
   async function onSubmitForm(e: any) {
     e.preventDefault();
-    const ratingIsValid = inputs.rating.value.length !== 0;
-    const descriptionIsValid = inputs.description.value.length > 4;
-
-    if (ratingIsValid && descriptionIsValid) {
-      // If all is good
-      const res = await fetch("/api/reviews", {
-        method: "POST",
-        body: JSON.stringify({
-          _id: oldValue?._id,
-          newReview: {
-            movieId,
-            movieName,
-            rating: inputs.rating.value,
-            description: inputs.description.value,
-          },
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (res.ok) {
-        // If we are updating, refresh the page
-        if (oldValue) {
-          router.push("/profile/reviews");
-        }
-        onClose();
-        // update();
-      }
-    } else {
+    const movieData = { movieId, movieName };
+    const res = await manageReview(inputs, movieData, oldValue?._id);
+    if (res.ok) {
+      // If we are updating, refresh the page
+      if (oldValue) router.push("/profile/reviews");
+      onClose();
+    }
+    if (res.invalidInputs) {
       // If sth wrong with the inputs field
       setInputs((prev) => {
         return {
           rating: {
             value: prev.rating.value,
-            isValid: ratingIsValid,
+            isValid: res.ratingIsValid,
           },
           description: {
             value: prev.description.value,
-            isValid: descriptionIsValid,
+            isValid: res.descriptionIsValid,
           },
         };
       });
@@ -84,6 +64,7 @@ const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
           {ratingData.map((obj, index) => (
             <OneEmoji
               {...obj}
+              key={obj.key}
               onPress={(value) => {
                 changeInputHandler("rating", value);
               }}
@@ -110,6 +91,11 @@ const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
           placeholder="Write a description..."
           className="bg-black p-4 mt-2 text-white text-lg  border-none focus:border-none focus:ring-0"
         />
+        {!inputs.description.isValid && (
+          <p className="text-red-500 text-lg place-self-center">
+            description is invalid
+          </p>
+        )}
         <button
           className="rounded p-4 h-fit hover:bg-gray-400 bg-white text-black text-2xl transition ease-in-out"
           type="submit"

@@ -33,3 +33,99 @@ export async function addMovieHandler(
   // If condition for adding movies in the collections
   if (res.ok) update();
 }
+
+//-------------------------------------------------------------------------------------
+
+type inputsObj = { rating: { value: string }; description: { value: string } };
+type movieObj = { movieId: number; movieName: string };
+export async function manageReview(
+  inputs: inputsObj,
+  movie: movieObj,
+  reviewId?: string
+) {
+  const ratingIsValid = inputs.rating.value.length !== 0;
+  const descriptionIsValid = inputs.description.value.length > 4;
+
+  if (ratingIsValid && descriptionIsValid) {
+    // If all is good
+    const res = await fetch("/api/reviews", {
+      method: "POST",
+      body: JSON.stringify({
+        _id: reviewId,
+        newReview: {
+          ...movie,
+          rating: inputs.rating.value,
+          description: inputs.description.value,
+        },
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      return { ok: true };
+    } else {
+      return { ok: false };
+    }
+  } else {
+    return { invalidInputs: true, ratingIsValid, descriptionIsValid };
+  }
+}
+
+//-------------------------------------------------------------------------------------
+
+type inputsObj2 = { title: { value: string }; description: { value: string } };
+export async function manageCollection(
+  inputs: inputsObj2,
+  collectionId?: string
+) {
+  const titleIsValid = inputs.title.value.length > 3;
+  const descriptionIsValid = inputs.description.value.length > 4;
+
+  if (titleIsValid && descriptionIsValid) {
+    // If all is good
+    const res = await fetch("/api/collections", {
+      method: "POST",
+      body: JSON.stringify({
+        _id: collectionId,
+        name: inputs.title.value,
+        description: inputs.description.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.ok) {
+      return { ok: true };
+    } else {
+      return { ok: false };
+    }
+  } else {
+    return { invalidInputs: true, titleIsValid, descriptionIsValid };
+  }
+}
+
+//-------------------------------------------------------------------------------------
+
+export async function deleteCollection(
+  collectionId: string,
+  router: any,
+  update: any
+) {
+  const res = await fetch("/api/collections", {
+    method: "DELETE",
+    body: JSON.stringify({
+      _id: collectionId,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    update();
+    router.push("/profile/collections");
+    return true;
+  } else {
+    return false;
+  }
+}
