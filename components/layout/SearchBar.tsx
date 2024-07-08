@@ -1,6 +1,6 @@
 import { MovieObj } from "@/pages/movie/[movieId]";
-import { searchMovies } from "@/utils/api-utils";
 import React, { useRef, useState } from "react";
+import { searchMovies } from "../../utils/api-utils";
 import SearchItem from "./SearchItem";
 
 const SearchBar = () => {
