@@ -5,6 +5,7 @@ import {
   AppRouterInstance,
 } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import React from "react";
+import { vi } from "vitest";
 
 export type AppRouterContextProviderMockProps = {
   router: Partial<AppRouterInstance>;
@@ -16,12 +17,12 @@ export const AppRouterContextProviderMock = ({
   children,
 }: AppRouterContextProviderMockProps): React.ReactNode => {
   const mockedRouter: AppRouterInstance = {
-    back: jest.fn(),
-    forward: jest.fn(),
-    push: jest.fn(),
-    replace: jest.fn(),
-    refresh: jest.fn(),
-    prefetch: jest.fn(),
+    back: vi.fn(),
+    forward: vi.fn(),
+    push: vi.fn(),
+    replace: vi.fn(),
+    refresh: vi.fn(),
+    prefetch: vi.fn(),
     ...router,
   };
   return (

@@ -1,9 +1,8 @@
 import { connectDB } from "@/utils/db-util";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User, { collectionObj } from "@/models/userModel";
+import User from "@/models/userModel";
 import bcrypt from "bcrypt";
-import { MovieObj } from "@/pages/movie/[movieId]";
 
 // min 25 protected routes -> https://www.youtube.com/watch?v=yfQkDwJAirs&t=1242s
 // ERCGFMYqm2Tuq(@

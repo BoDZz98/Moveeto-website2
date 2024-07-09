@@ -2,14 +2,10 @@ import { expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import Header from "../Header";
 import { SessionProvider } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { AppRouterContextProviderMock } from "./app-router-context-provider-mock";
-// import { useRouter } from "next/router";
-// import * as mockRouter from "next-router-mock";
-// const useRouter = mockRouter.useRouter;
+import { useSession } from "next-auth/react";
 
-vi.mock("next/navigation", () => {
-  const actual = vi.importActual("next/navigation");
+vi.mock("next/router", () => {
+  const actual = vi.importActual("next/router");
   return {
     ...actual,
     useRouter: vi.fn(() => ({
@@ -22,28 +18,43 @@ vi.mock("next/navigation", () => {
   };
 });
 
-test("should first", () => {
-  // render(<Header />, { wrapper: SessionProvider });
-  const push = jest.fn();
+//---------------------------------------------------------------------
+vi.mock("next-auth/react", async (importOriginal) => {
+  const originalModule: {} = await importOriginal();
+  const mockSession1 = { status: "unauthenticated" };
+  const mockSession2 = { status: "authenticated" };
+  return {
+    ...originalModule,
+    useSession: vi
+      .fn()
+      .mockReturnValueOnce(mockSession1)
+      .mockReturnValueOnce(mockSession2),
+  };
+});
+//---------------------------------------------------------------------
 
-  render(
-    <AppRouterContextProviderMock router={{ push }}>
-      <Header />
-    </AppRouterContextProviderMock>,
-    { wrapper: SessionProvider }
-  );
+test("should first", async () => {
+  render(<Header />, { wrapper: SessionProvider });
 
-  const any = screen.getByRole("heading", {
-    name: /my library/i,
+  const any = await screen.findByRole("heading", {
+    name: /login/i,
   });
   expect(any).toBeDefined();
 });
 
-/* 
-vi.mock("next/router", () => ({
-    // require("next-router-mock");
-    ...mockRouter,
-    useRouter: () => {},
-  }));
-  
-*/
+test("should second", async () => {
+  render(<Header />, { wrapper: SessionProvider });
+
+  const any = await screen.findByRole("heading", {
+    name: /logout/i,
+  });
+  expect(any).toBeDefined();
+});
+
+// const push = vi.fn();
+// render(
+//   <AppRouterContextProviderMock router={{ push }}>
+//     <Header />
+//   </AppRouterContextProviderMock>,
+//   { wrapper: SessionProvider }
+// );
