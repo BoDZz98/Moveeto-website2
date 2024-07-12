@@ -8,17 +8,10 @@ export const handlers = [
     ]);
   }),
 
-  // Doesn't work
-  http.post("/api/auth/session", async () => {
+  // I used this handler just to remove the warnings, This was actually mocked in layout.test.tsx
+  http.get("/api/auth/session", async () => {
     await delay(500);
-    return HttpResponse.json(
-      {
-        data: {},
-        status: "unauthenticated",
-        update: () => {},
-      },
-      { status: 201 }
-    );
+    return HttpResponse.json({}, { status: 201 });
   }),
 
   http.post("http://localhost:3030/order", async () => {

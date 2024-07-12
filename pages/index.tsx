@@ -4,7 +4,6 @@ import {
   getAllGenres,
 } from "@/utils/api-utils";
 import HomeCard from "@/components/ui/HomeCard";
-import { useSession } from "next-auth/react";
 import { userMovieObj } from "@/models/userModel";
 
 type HomeProps = {
@@ -36,7 +35,7 @@ export async function getStaticProps() {
     );
     return { ...movie, genres: genresNames };
   });
-  // console.log("data is", popularMovies[0]);
+  console.log("data is", popularMovies[1]);
 
   return {
     props: { movies: popularMovies },

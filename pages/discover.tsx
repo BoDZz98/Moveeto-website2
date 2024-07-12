@@ -22,11 +22,7 @@ export async function getServerSideProps(context: any) {
   let movies: Array<{ genre_ids: Array<number> }> = [];
   if (query.time) {
     movies = await fetchMoviesByDate(query.time);
-    console.log("1");
-  } else {
-    console.log("2");
   }
-
   const genresDetails = await getAllGenres();
 
   movies = movies.map((movie) => {

@@ -3,17 +3,11 @@ import Card from "@/components/movie-details/Card";
 import LoginForm from "@/components/ui/LoginForm";
 import { fetchPopularMovies } from "@/utils/api-utils";
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  PagesOptions,
-  Session,
-  SessionOptions,
-  getServerSession,
-} from "next-auth";
+import { Session, getServerSession } from "next-auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import authOptions from "./api/auth/[...nextauth]";
-import { Provider } from "next-auth/providers/index";
 type loginProps = {
   backgroundImg: string;
 };
