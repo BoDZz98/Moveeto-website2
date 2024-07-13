@@ -18,19 +18,19 @@ describe("Auth flow", () => {
   test("should show the login button if the user is not auth", async () => {
     render(<Header />);
 
-    const any = await screen.findByRole("heading", {
+    const loginElement = await screen.findByRole("heading", {
       name: /login/i,
     });
-    expect(any).toBeDefined();
+    expect(loginElement).toBeInTheDocument();
   });
 
   test("should show the logout button if the user is auth", async () => {
     render(<Header />);
 
-    const any = await screen.findByRole("heading", {
+    const logoutElement = await screen.findByRole("heading", {
       name: /logout/i,
     });
-    expect(any).toBeDefined();
+    expect(logoutElement).toBeInTheDocument();
   });
 });
 

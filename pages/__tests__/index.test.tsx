@@ -27,7 +27,7 @@ describe("Testing the Home page", () => {
     const movieTitle = screen.getByRole("heading", {
       name: /inside out 2/i,
     });
-    expect(movieTitle).toBeDefined();
+    expect(movieTitle).toBeInTheDocument();
 
     const moviesItem = screen.getAllByTestId("movieGridItem");
     expect(moviesItem.length).toBe(2); // Asserts that YourComponent is rendered twice

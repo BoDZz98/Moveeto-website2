@@ -20,6 +20,7 @@ const Card = ({ children, backdrop_path, noLeftPadding }: CardProps) => {
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20  "
         style={backgroundStyle}
+        data-testid='backgroundDiv'
       ></div>
       <div className="absolute inset-0 top-1/2  bg-gradient-to-b from-transparent to-gray-900 "></div>
       {children}

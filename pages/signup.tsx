@@ -22,7 +22,6 @@ const siginup = ({ backgroundImg }: loginProps) => {
     password: string,
     username: string
   ) {
-    console.log("aaaaaaaaa");
 
     try {
       setTitle("signing up");

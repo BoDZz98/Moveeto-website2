@@ -13,6 +13,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 type loginProps = {
   backgroundImg: string;
 };
+function anyfunction() {}
 
 const login = ({ backgroundImg }: loginProps) => {
   const router = useRouter();
@@ -20,31 +21,33 @@ const login = ({ backgroundImg }: loginProps) => {
   const [error, setError] = useState("");
 
   async function loginHandler(email: string, password: string) {
-    setTitle("logging in");
+    // setTitle("logging in");
 
-    // This function will trigger our api route [...nextauth].js
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false, // we don't want to be redirected to an error page when we through an error
-    });
-    console.log(result);
+    // // This function will trigger our api route [...nextauth].js
+    // const result = await signIn("credentials", {
+    //   email,
+    //   password,
+    //   redirect: false, // we don't want to be redirected to an error page when we through an error
+    // });
+    // console.log(result);
 
-    if (result!.error) {
-      setError(result!.error);
-      setTitle("Log in");
-      return;
-    } else {
-      router.replace("/");
-    }
+    // if (result!.error) {
+    //   setError(result!.error);
+    //   setTitle("Log in");
+    //   return;
+    // } else {
+    //   router.push("/");
+    // }
+
+    router.push("/");
+    anyfunction();
   }
-
   return (
     <Layout sideBarNotVisible>
       <Card backdrop_path={backgroundImg} noLeftPadding={true}>
         <div className=" py-48 flex items-center justify-center ">
           <div className="w-full xl:w-2/3 2xl:w-1/2 z-10 flex flex-col items-center gap-y-6  ">
-            <p className="text-5xl font-bold">Login</p>
+            <h1 className="text-5xl font-bold">Login</h1>
             <LoginForm
               submitHandler={loginHandler}
               buttonTitle={title}
