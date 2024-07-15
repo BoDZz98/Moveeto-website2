@@ -13,34 +13,32 @@ import { NextApiRequest, NextApiResponse } from "next";
 type loginProps = {
   backgroundImg: string;
 };
-function anyfunction() {}
 
-const login = ({ backgroundImg }: loginProps) => {
+const Login = ({ backgroundImg }: loginProps) => {
   const router = useRouter();
   const [title, setTitle] = useState("Log in");
   const [error, setError] = useState("");
 
   async function loginHandler(email: string, password: string) {
-    // setTitle("logging in");
+    setTitle("logging in");
 
-    // // This function will trigger our api route [...nextauth].js
-    // const result = await signIn("credentials", {
-    //   email,
-    //   password,
-    //   redirect: false, // we don't want to be redirected to an error page when we through an error
-    // });
-    // console.log(result);
+    // This function will trigger our api route [...nextauth].js
+    const result = await signIn("credentials", {
+      email,
+      password,
+      redirect: false, // we don't want to be redirected to an error page when we through an error
+    });
 
-    // if (result!.error) {
-    //   setError(result!.error);
-    //   setTitle("Log in");
-    //   return;
-    // } else {
-    //   router.push("/");
-    // }
+    console.log(result);
 
-    router.push("/");
-    anyfunction();
+    if (result!.error) {
+      setError(result!.error);
+      setTitle("Log in");
+      return;
+    } else {
+      setTitle("Log in");
+      router.push("/");
+    }
   }
   return (
     <Layout sideBarNotVisible>
@@ -57,7 +55,7 @@ const login = ({ backgroundImg }: loginProps) => {
               href="/signup"
               className="text-center text-white underline hover:text-gray-500 "
             >
-              <p>Don't have an account? Sign up</p>
+              <p>Dont have an account? Sign up</p>
             </Link>
           </div>
         </div>
@@ -66,7 +64,7 @@ const login = ({ backgroundImg }: loginProps) => {
   );
 };
 
-export default login;
+export default Login;
 
 interface Context {
   req: NextApiRequest;
@@ -97,3 +95,10 @@ export async function getServerSideProps(context: Context) {
     props: { backgroundImg: popularMovies[randomNumber].backdrop_path },
   };
 }
+
+/* 
+const result = await fetch(
+      "https://makeup-api.herokuapp.com/api/v1/products.json?price_greater_than=1&rating_greater_than=1"
+    );
+
+*/

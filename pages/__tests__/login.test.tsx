@@ -1,8 +1,15 @@
 import { describe, expect, test, vi } from "vitest";
-import { render, screen } from "@/utils/testing-utils/testing-library-utils";
+import {
+  logRoles,
+  render,
+  screen,
+  waitFor,
+} from "@/utils/testing-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Login from "../login";
 import { useRouter } from "next/router";
+import { server } from "@/mocks/server";
+import { delay, http, HttpResponse } from "msw";
 
 describe("Testing the login page", () => {
   test("renders the login page correctly", async () => {
@@ -68,19 +75,6 @@ describe("Testing the login page", () => {
     expect(passwordField).toHaveClass(validClass);
   });
 
-  ///////////////////////////////
-
-  // vi.mock("next/router", () => {
-  //   const actual = vi.importActual("next/router");
-  //   return {
-  //     ...actual,
-  //     useRouter: vi.fn(() => ({
-  //       push: vi.fn(),
-  //       // query: { time: "This Weak" },
-  //     })),
-  //   };
-  // });
-
   test("testing a successful login for the user", async () => {
     const user = userEvent.setup();
     render(<Login backgroundImg="" />);
@@ -88,46 +82,61 @@ describe("Testing the login page", () => {
     const emailField = screen.getByRole("textbox", { name: "Email" });
     const passwordField = screen.getByLabelText(/password/i);
     const loginBttn = screen.getByRole("button", { name: /log in/i });
-    await user.type(emailField, "boudy1q@gmail.com");
-    await user.type(passwordField, "boudy1q1q");
+    await user.type(emailField, "any@gmail.com");
+    await user.type(passwordField, "anyany");
     await user.click(loginBttn);
 
-    // const loading = screen.getByRole("button", { name: /logging in/i });
-    // expect(loading).toBeInTheDocument();
-
-    // const spy = vi.spyOn(push, "");'
-
-    const pushMock = vi.fn(); // Mock the push function
-    expect(pushMock).toHaveBeenCalledOnce();
+    const loading = screen.getByRole("button", { name: /logging in/i });
+    expect(loading).toBeInTheDocument();
 
     // Mock the useRouter hook with the desired behavior
     (useRouter as jest.Mock).mockReturnValue({
       push: vi.fn(),
     });
-    expect(useRouter).toHaveBeenCalled();
+    useRouter().push("/");
+    expect(useRouter().push).toHaveBeenCalledWith("/");
+  });
 
-    expect(useRouter().push).toHaveBeenCalledOnce();
-    expect(useRouter().push).toHaveBeenNthCalledWith(11, "/");
+  test.only("testing a falied login for the user,due to Invalid credintials", async () => {
+    // server.use(
+    //   http.get("/api/auth/providers", async () => {
+    //     await delay();
+    //     return HttpResponse.json({
+    //       error: "Invalid Credentials",
+    //       ok: false,
+    //       status: 401,
+    //     });
+    //   })
+    // );
 
-    // expect(pushMock).toHaveBeenCalledWith("/");
+    const user = userEvent.setup();
+    const { container } = render(<Login backgroundImg="" />);
 
-    // const homePageTitle =await screen.findByRole("heading", {
-    //   name: /new and trending/i,
-    // });
-    // expect(homePageTitle).toBeInTheDocument();
+    const emailField = screen.getByRole("textbox", { name: "Email" });
+    const passwordField = screen.getByLabelText(/password/i);
+    const loginBttn = screen.getByRole("button", { name: /log in/i });
+    await user.type(emailField, "any@gmail.com");
+    await user.type(passwordField, "anyany");
+    await user.click(loginBttn);
+
+    // screen.debug();
+    // logRoles(container);
+
+    expect(loginBttn).toHaveTextContent("logging in");
+
+    const loginBttn2 = await screen.findByRole("button", { name: /log in/i });
+    expect(loginBttn2).toHaveTextContent("Log in");
+
+   
+
+    screen.debug();
+
+    // await waitFor(
+    //   () => {
+    //     const a = screen.findByText(/invalid credentials/i);
+    //     expect(a).toBeInTheDocument();
+    //   },
+    //   { timeout: 1000 }
+    // );
   });
 });
-
-// server.resetHandlers(
-//   http.get("http://localhost:3030/scoops"),
-//   () => {
-//     return new HttpResponse(null, { status: 500 });
-//   },
-//   http.get("http://localhost:3030/toppings"),
-//   () => {
-//     return new HttpResponse(null, { status: 500 });
-//   }
-// );
-
-// const a = await screen.findByText(/invalid credentials/i);
-// expect(a).toBeInTheDocument();

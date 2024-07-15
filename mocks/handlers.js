@@ -12,15 +12,19 @@ export const handlers = [
   // For the login testing
   http.get("/api/auth/providers", async () => {
     await delay(500); // We wrote this delay bec we return data, and we want the test case to wait for this returned data
-    return HttpResponse.json({
-      error: null,
-      ok: true,
-      status: 200,
-    });
+    return HttpResponse.json(
+      {
+        error: "Invalid Credentials",
+        ok: true,
+        status: 200,
+      },
+      { status: 201 }
+    );
   }),
 
   http.post("http://localhost:3030/order", async () => {
     await delay(400);
     return HttpResponse.json({ orderNumber: 12345 }, { status: 201 });
   }),
+  
 ];

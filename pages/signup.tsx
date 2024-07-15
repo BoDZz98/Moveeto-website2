@@ -12,7 +12,7 @@ type loginProps = {
   backgroundImg: string;
 };
 
-const siginup = ({ backgroundImg }: loginProps) => {
+const Siginup = ({ backgroundImg }: loginProps) => {
   const router = useRouter();
   const [title, setTitle] = useState("signup");
   const [error, setError] = useState("");
@@ -22,7 +22,6 @@ const siginup = ({ backgroundImg }: loginProps) => {
     password: string,
     username: string
   ) {
-
     try {
       setTitle("signing up");
       const res = await fetch("/api/auth/signin", {
@@ -65,7 +64,7 @@ const siginup = ({ backgroundImg }: loginProps) => {
   );
 };
 
-export default siginup;
+export default Siginup;
 
 interface Context {
   req: NextApiRequest;
