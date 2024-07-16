@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/layout";
 import Card from "@/components/movie-details/Card";
-import LoginForm from "@/components/ui/LoginForm";
+import LoginForm from "@/components/auth/LoginForm";
 import { fetchPopularMovies } from "@/utils/api-utils";
 import { Session, getServerSession } from "next-auth";
 import { signIn } from "next-auth/react";
