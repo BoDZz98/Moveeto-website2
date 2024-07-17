@@ -26,7 +26,7 @@ const SideBar = () => {
           padding="p-2"
         />
       ))}
-      <h1 className="w-fit text-white text-3xl font-extrabold py-4 ">Top</h1>
+      <h1 className="w-fit text-white text-3xl font-extrabold py-4 ">Top Rated </h1>
       {topData.map((item) => (
         <ChildLinkItem
           key={item.title}

@@ -30,7 +30,7 @@ const SearchItem = ({ movie }: SearchItemProps) => {
         <p className=" mb-2 text-gray-400">{movie.release_date}</p>
         <div className="flex items-center gap-x-1 rounded bg-gray-700 w-fit group cont hover:bg-white transition ease-in-out duration-300 p-1">
           <p className=" group-hover:group-[.cont]:text-black cursor-default font-semibold ">
-            {movie.vote_average.toFixed(1)}
+            {movie.vote_average!.toFixed(1)}
           </p>
           {star}
         </div>

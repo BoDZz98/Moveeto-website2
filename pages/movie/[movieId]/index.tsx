@@ -15,20 +15,20 @@ export type MovieObj = {
   title: string;
   poster_path: string;
   backdrop_path: string;
-  vote_average: number;
+  vote_average?: number;
   release_date: string;
-  runtime: string;
-  overview: string;
-  youtubeTrailerKey: string;
-  revenue: string;
+  runtime?: string;
+  overview?: string;
+  youtubeTrailerKey?: string;
+  revenue?: string;
   vote_count: number;
-  genres: Array<{ name: string }>;
-  images: Array<{ file_path: string }>;
-  cast: Array<{ name: string; profile_path: string; character: string }>;
-  production_companies: Array<{ name: string }>;
-  production_countries: Array<{ name: string }>;
+  genres?: Array<{ name: string }>;
+  images?: Array<{ file_path: string }>;
+  cast?: Array<{ name: string; profile_path: string; character: string }>;
+  production_companies?: Array<{ name: string }>;
+  production_countries?: Array<{ name: string }>;
   similarMovies?: Array<MovieObj>;
-  genre_ids: Array<number>;
+  genre_ids?: Array<number>;
 };
 
 type MovieProps = {

@@ -35,7 +35,7 @@ export async function getStaticProps() {
     );
     return { ...movie, genres: genresNames };
   });
-  console.log("data is", popularMovies[1]);
+  // console.log("data is", popularMovies[1]);
 
   return {
     props: { movies: popularMovies },
