@@ -17,7 +17,7 @@ const Header = () => {
         <h1 className="text-white text-5xl font-extrabold py-2 ">Moveeto</h1>
         <Image
           src="/imgs/icon.png"
-          alt="An image showing bodz"
+          alt="webstie logo"
           width={300}
           height={300}
           className="rounded-2xl w-40 h-16"
@@ -34,10 +34,10 @@ const Header = () => {
           {session.status === "unauthenticated" && (
             <>
               <Link href="/login">
-                <h1 className="text-white text-2xl font-bold ">Login</h1>
+                <h2 className="text-white text-2xl font-bold ">Login</h2>
               </Link>
               <Link href="/signup">
-                <h1 className="text-white text-2xl font-bold ">Signup</h1>
+                <h2 className="text-white text-2xl font-bold ">Signup</h2>
               </Link>
             </>
           )}

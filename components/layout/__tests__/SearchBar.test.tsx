@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { findAllByTestId, render, screen } from "@testing-library/react";
 import SearchBar from "../SearchBar";
 import userEvent from "@testing-library/user-event";
 
@@ -19,6 +19,15 @@ describe("testing the search bar", () => {
     const searchBox = screen.getByRole("searchbox");
 
     await user.type(searchBox, "despic");
+    expect(searchBox).toHaveValue("despic");
     expect(searchBox).toHaveFocus();
+
+    const searchedMovieTitle = await screen.findByRole("link", {
+      name: "Despicable Me 4",
+    });
+    const searhchedMovies = await screen.findAllByTestId("searchItem");
+
+    expect(searchedMovieTitle).toBeInTheDocument();
+    expect(searhchedMovies).toHaveLength(2);
   });
 });

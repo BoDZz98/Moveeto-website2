@@ -53,7 +53,7 @@ export async function fetchMovieDetails(movieId: number) {
   );
   const youtubeTrailerKey = youtubeTrailer ? youtubeTrailer.key : "";
   const genres = data.genres.map((g: { name: string }) => g.name);
-  
+
   const newMovieObject = {
     id: data.id,
     title: data.title,
@@ -126,5 +126,7 @@ export async function searchMovies(movieName: string) {
     }
   );
   const data = await response.json();
+  // console.log("data is", data.results[1]);
+
   return data.results.splice(0, 10);
 }

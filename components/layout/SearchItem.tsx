@@ -10,7 +10,7 @@ type SearchItemProps = {
 
 const SearchItem = ({ movie }: SearchItemProps) => {
   return (
-    <div className="flex group rounded-lg p-4 ">
+    <div className="flex group rounded-lg p-4 " data-testid="searchItem">
       <Link href={`/movie/${movie.id}`}>
         <Image
           src={baseImageURL + movie.poster_path}

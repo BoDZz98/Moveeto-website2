@@ -1,56 +1,33 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@/utils/testing-utils/testing-library-utils";
-import Header from "../Header";
+import Layout from "../layout";
 
-vi.mock("next-auth/react", async (importOriginal) => {
-  const originalModule: {} = await importOriginal();
-  return {
-    ...originalModule,
-    useSession: vi
-      .fn()
-      .mockReturnValue({ status: "authenticated" }) //default return value, which will be returned in the third test and the tests after it
-      .mockReturnValueOnce({ status: "unauthenticated" }) // will be returned in the first test
-      .mockReturnValueOnce({ status: "authenticated" }), // will be returned in the second test
-  };
-});
 //---------------------------------------------------------------------
-describe("Auth flow", () => {
-  test("should show the login button if the user is not auth", async () => {
-    render(<Header />);
+describe("Testing layout", () => {
+  test("Layout renders correctly", () => {
+    render(
+      <Layout>
+        <h6>Any text</h6>
+      </Layout>
+    );
+    // Make sure header is rendered
+    const searchBox = screen.getByRole("searchbox");
 
-    const loginElement = await screen.findByRole("heading", {
-      name: /login/i,
+    // Make sure sideBar is rendered
+    const homeElement = screen.getByRole("heading", {
+      name: /home/i,
     });
-    expect(loginElement).toBeInTheDocument();
-  });
 
-  test("should show the logout button if the user is auth", async () => {
-    render(<Header />);
-
-    const logoutElement = await screen.findByRole("heading", {
-      name: /logout/i,
+    const children = screen.getByRole("heading", {
+      name: /any text/i,
+      level: 6,
     });
-    expect(logoutElement).toBeInTheDocument();
+    expect(searchBox).toBeInTheDocument();
+    expect(homeElement).toBeInTheDocument();
+    expect(children).toBeInTheDocument();
   });
 });
 
-// test("should go to the right page when clicking on a link", async () => {
-//   const user = userEvent.setup();
-//   render(
-//     <Layout>
-//       <h1>This weak</h1>
-//     </Layout>
-//   );
-
-//   const linkElement = screen.getByRole("heading", {
-//     name: /this week/i,
-//   });
-//   await user.click(linkElement);
-//   const pageTitle = screen.getByRole("heading", {
-//     name: /this weak/i,
-//   });
-//   expect(pageTitle).toBeDefined();
-// });
 // const push = vi.fn();
 // render(
 //   <AppRouterContextProviderMock router={{ push }}>

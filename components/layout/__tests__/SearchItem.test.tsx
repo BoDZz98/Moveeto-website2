@@ -24,6 +24,7 @@ describe("testing search item", () => {
 
     expect(img).toBeInTheDocument();
     expect(movieTitle).toBeInTheDocument();
+    expect(movieTitle).toHaveAttribute('href','/movie/519182');
     expect(movieLinks).toHaveLength(2);
 
     expect(img).toHaveClass(" hover:opacity-60 cursor-pointer");
