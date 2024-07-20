@@ -1,5 +1,5 @@
 import { userMovieObj } from "@/models/userModel";
-import MovieGridItemDropdown from "./MovieGridItemDropdown";
+import MovieGridItemDropdown from "./MGIDropdown";
 import { addMovieHandler } from "@/utils/db-util";
 import useMySession from "@/hooks/useMySession";
 
@@ -9,6 +9,7 @@ type MGIButtonGroupProps = {
 
 const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
   const { userFavMovies, userWishlistMovies, update } = useMySession();
+
   const movieIsFav = !!userFavMovies?.find(
     (movieOb: { title: string }) => movieOb.title === movie.title
   );
@@ -22,6 +23,7 @@ const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
   return (
     <div className="flex gap-x-3">
       <div
+        data-testid="favCont"
         onClick={addMovieHandler.bind(null, movie, update, null, "favMovies")}
         className={`${contClassName} p-2 ${
           movieIsFav ? "bg-green-400 hover:bg-green-500" : "hover:bg-white "
@@ -33,6 +35,7 @@ const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
         </p>
       </div>
       <div
+        data-testid="wishlistCont"
         onClick={addMovieHandler.bind(
           null,
           movie,
@@ -48,7 +51,8 @@ const MGIButtonGroup = ({ movie }: MGIButtonGroupProps) => {
       >
         {giftIcon}
       </div>
-      <div className={`hidden group-hover:flex `}>
+
+      <div className={`hidden group-hover:flex z-20`} data-testid="dropdownCont">
         <MovieGridItemDropdown movie={movie} />
       </div>
     </div>

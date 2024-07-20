@@ -12,8 +12,13 @@ type MovieGridItemProps = {
 const MovieGridItem = memo(function MovieGridItem({
   movie,
 }: MovieGridItemProps) {
+  // console.log(movie);
+
   return (
-    <div className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition-all ease-in-out duration-1000 " data-testid='movieGridItem'>
+    <div
+      className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition-all ease-in-out duration-1000 "
+      data-testid="movieGridItem"
+    >
       <Image
         src={baseImageURL + movie.backdrop_path}
         alt="movie img"
@@ -37,10 +42,10 @@ const MovieGridItem = memo(function MovieGridItem({
             <h1 className="text-gray-400 absolute left-0">genres:</h1>
             {movie.genres &&
               movie.genres.map((genre: string, index) => (
-                <h1 className="mr-1 underline text-gray-300" key={index}>
+                <h6 className="mr-1 underline text-gray-300" key={index}>
                   {genre}
                   {index + 1 !== movie.genres?.length && ","}
-                </h1>
+                </h6>
               ))}
           </div>
           <Link
