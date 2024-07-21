@@ -2,7 +2,6 @@ import { Dropdown } from "flowbite-react";
 import React from "react";
 import { collectionObj, userMovieObj } from "@/models/userModel";
 import { checkIcon } from "../movie-details/AddButton";
-import { useRouter } from "next/router";
 import { optionsIcon } from "./MGIButtonGroup";
 import { addMovieHandler } from "@/utils/db-util";
 import useMySession from "@/hooks/useMySession";
@@ -14,12 +13,6 @@ type MovieGridItemDropdownProps = {
 const MovieGridItemDropdown = ({ movie }: MovieGridItemDropdownProps) => {
   const { userCollections, update } = useMySession();
 
-  const router = useRouter();
-
-  function reviewHandler() {
-    router.push(`/movie/${movie.id}?showModal=true`);
-  }
-
   return (
     <Dropdown
       label=""
@@ -27,7 +20,7 @@ const MovieGridItemDropdown = ({ movie }: MovieGridItemDropdownProps) => {
       dismissOnClick={false}
       renderTrigger={() => (
         <div
-          data-testid="anyyyyy"
+          data-testid="dropdown"
           className="flex items-center gap-x-1 rounded bg-gray-600 w-fit group cont hover:bg-white hover:cursor-pointer transition ease-in-out duration-300 px-2 py-2 h-full "
         >
           {optionsIcon}
@@ -37,7 +30,6 @@ const MovieGridItemDropdown = ({ movie }: MovieGridItemDropdownProps) => {
       <Dropdown.Item
         as={Link}
         className="text-lg"
-        // onClick={reviewHandler}
         href={`/movie/${movie.id}?showModal=true`}
       >
         Write a Review

@@ -89,6 +89,7 @@ export const checkIcon = (
     stroke=" rgb(49 196 141)"
     className="w-4 h-4 absolute right-4"
     key="any"
+    data-testid="check icon"
   >
     <path
       strokeLinecap="round"
