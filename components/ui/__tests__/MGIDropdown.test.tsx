@@ -24,8 +24,6 @@ describe("testing movie grid item dropdown", () => {
   beforeEach(() => {
     // Initialize the mock data
     mockUseMySession = {
-      //   userFavMovies: [],
-      //   userWishlistMovies: [],
       userCollections: [],
     };
     // Mock the return value of useMySession
@@ -116,5 +114,35 @@ describe("testing movie grid item dropdown", () => {
     });
 
     within(button2).getByTestId("check icon");
+  });
+
+  test("remove movie from a certain list", async () => {
+    mockUseMySession.userCollections = [
+      { name: "collection 1", movies: [] },
+      { name: "coll 2", movies: [{ id: "519182" }] },
+    ];
+    const user = userEvent.setup();
+    render(<MovieGridItemDropdown movie={movie} />);
+
+    const dropdownBtn = screen.getByTestId("dropdown");
+    await user.click(dropdownBtn);
+
+    const button = screen.getByRole("button", {
+      name: /coll 2/i,
+    });
+    await user.click(button);
+    mockUseMySession.userCollections[1].movies = [];
+
+    const { container } = render(<MovieGridItemDropdown movie={movie} />);
+
+    const dropdownBtn2 = within(container).getByTestId("dropdown");
+    await user.click(dropdownBtn2);
+
+    const button2 = within(container).getByRole("button", {
+      name: /coll 2/i,
+    });
+
+    const icon = within(button2).queryByTestId("check icon");
+    expect(icon).toBeNull();
   });
 });

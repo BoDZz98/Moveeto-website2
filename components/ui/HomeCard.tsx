@@ -22,7 +22,7 @@ const HomeCard = ({ title, subTitle, movies }: HomeCardProps) => {
         <h1 className="text-white text-2xl font-semibold  ">{subTitle}</h1>
 
         <Dropdown />
-        <MoviesGrid movies={movies} gridCols={4} />
+        <MoviesGrid movies={movies} />
       </div>
     </Layout>
   );

@@ -1,4 +1,8 @@
-import { render, screen } from "@/utils/testing-utils/testing-library-utils";
+import {
+  render,
+  screen,
+  within,
+} from "@/utils/testing-utils/testing-library-utils";
 import MGIButtonGroup from "../MGIButtonGroup";
 import userEvent from "@testing-library/user-event";
 import { vi } from "vitest";
@@ -21,8 +25,6 @@ describe("testing movie grid item button group renders correctly", () => {
     mockUseMySession = {
       userFavMovies: [],
       userWishlistMovies: [],
-      userCollections: [],
-      update: vi.fn(),
     };
     // Mock the return value of useMySession
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);
@@ -72,13 +74,13 @@ describe("testing movie grid item button group renders correctly", () => {
     mockUseMySession.userFavMovies = [{ title: "Despicable Me 4" }];
     mockUseMySession.userWishlistMovies = [{ title: "Despicable Me 4" }];
 
-    render(<MGIButtonGroup movie={movie} />);
+    const { container } = render(<MGIButtonGroup movie={movie} />);
 
-    const favCont2 = screen.getAllByTestId("favCont");
-    const wishlistCont2 = screen.getAllByTestId("wishlistCont");
+    const favCont2 = within(container).getByTestId("favCont");
+    const wishlistCont2 = within(container).getByTestId("wishlistCont");
 
-    expect(favCont2[1]).toHaveClass("bg-green-400 hover:bg-green-500");
-    expect(wishlistCont2[1]).toHaveClass("bg-green-400 hover:bg-green-500");
+    expect(favCont2).toHaveClass("bg-green-400 hover:bg-green-500");
+    expect(wishlistCont2).toHaveClass("bg-green-400 hover:bg-green-500");
   });
 
   test("remove movie from fav/wishlist , if they are already fav/wishlist", async () => {
@@ -97,12 +99,12 @@ describe("testing movie grid item button group renders correctly", () => {
     mockUseMySession.userFavMovies = [{ title: "Inside Out 2" }];
     mockUseMySession.userWishlistMovies = [{ title: "Inside Out 2" }];
 
-    render(<MGIButtonGroup movie={movie} />);
+    const { container } = render(<MGIButtonGroup movie={movie} />);
 
-    const favCont2 = screen.getAllByTestId("favCont");
-    const wishlistCont2 = screen.getAllByTestId("wishlistCont");
+    const favCont2 = within(container).getByTestId("favCont");
+    const wishlistCont2 = within(container).getByTestId("wishlistCont");
 
-    expect(favCont2[1]).not.toHaveClass("bg-green-400 hover:bg-green-500");
-    expect(wishlistCont2[1]).not.toHaveClass("bg-green-400 hover:bg-green-500");
+    expect(favCont2).not.toHaveClass("bg-green-400 hover:bg-green-500");
+    expect(wishlistCont2).not.toHaveClass("bg-green-400 hover:bg-green-500");
   });
 });
