@@ -29,14 +29,13 @@ const Login = ({ backgroundImg }: loginProps) => {
       redirect: false, // we don't want to be redirected to an error page when we through an error
     });
 
-    console.log(result);
+    console.log("result is ->", result);
 
     if (result!.error) {
       setError(result!.error);
       setTitle("Log in");
       return;
     } else {
-      setTitle("Log in");
       router.push("/");
     }
   }

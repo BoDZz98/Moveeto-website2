@@ -5,7 +5,7 @@ import { fetchPopularMovies } from "@/utils/api-utils";
 import { NextApiRequest, NextApiResponse } from "next";
 import { Session, getServerSession } from "next-auth";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import authOptions from "./api/auth/[...nextauth]";
 type loginProps = {
@@ -44,7 +44,7 @@ const Siginup = ({ backgroundImg }: loginProps) => {
       <Card backdrop_path={backgroundImg} noLeftPadding={true}>
         <div className=" py-48 flex items-center justify-center ">
           <div className="w-full xl:w-2/3 2xl:w-1/2 z-10 flex flex-col items-center gap-y-6  ">
-            <p className="text-5xl font-bold">Signup</p>
+            <h1 className="text-5xl font-bold">Signup</h1>
             <LoginForm
               submitHandler={signupHandler}
               buttonTitle={title}

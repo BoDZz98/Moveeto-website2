@@ -18,10 +18,12 @@ describe("Testing layout", () => {
       name: /home/i,
     });
 
+    // Make sure children is rendered
     const children = screen.getByRole("heading", {
       name: /any text/i,
       level: 6,
     });
+
     expect(searchBox).toBeInTheDocument();
     expect(homeElement).toBeInTheDocument();
     expect(children).toBeInTheDocument();

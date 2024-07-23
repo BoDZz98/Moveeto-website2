@@ -3,13 +3,11 @@ import {
   logRoles,
   render,
   screen,
-  waitFor,
 } from "@/utils/testing-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import Login from "../login";
+import * as nextAuthReact from "next-auth/react";
 import { useRouter } from "next/router";
-import { server } from "@/mocks/server";
-import { delay, http, HttpResponse } from "msw";
 
 describe("Testing the login page", () => {
   test("renders the login page correctly", async () => {
@@ -33,6 +31,7 @@ describe("Testing the login page", () => {
     });
     expect(homeElement).not.toBeInTheDocument();
 
+    // Checking the initial values of data
     const emailField = screen.getByRole("textbox", { name: "Email" });
     const passwordField = screen.getByLabelText(/password/i);
     expect(emailField).toHaveTextContent("");
@@ -45,9 +44,19 @@ describe("Testing the login page", () => {
   });
 
   test("testing a successful login for the user", async () => {
-    const user = userEvent.setup();
-    render(<Login backgroundImg="" />);
+    // Mock the useRouter hook with the desired behavior
+    const pushMock = vi.fn();
+    (useRouter as jest.Mock).mockReturnValue({
+      push: pushMock,
+    });
 
+    vi.spyOn(nextAuthReact, "signIn").mockImplementation(() =>
+      Promise.resolve({ error: null, status: 200, ok: true, url: "" })
+    );
+    const user = userEvent.setup();
+    const { container } = render(<Login backgroundImg="" />);
+
+    // Typing the data
     const emailField = screen.getByRole("textbox", { name: "Email" });
     const passwordField = screen.getByLabelText(/password/i);
     const loginBttn = screen.getByRole("button", { name: /log in/i });
@@ -55,33 +64,28 @@ describe("Testing the login page", () => {
     await user.type(passwordField, "anyany");
     await user.click(loginBttn);
 
+    // Loading appear for a second
     const loading = screen.getByRole("button", { name: /logging in/i });
     expect(loading).toBeInTheDocument();
 
-    // Mock the useRouter hook with the desired behavior
-    (useRouter as jest.Mock).mockReturnValue({
-      push: vi.fn(),
-    });
-    useRouter().push("/");
-    expect(useRouter().push).toHaveBeenCalledWith("/");
+    // Expect the user to be redirected to the home page
+    expect(pushMock).toHaveBeenCalledWith("/");
   });
 
-  //I should find another way to mock the next auth API, as MSW doesnt work
-  test.skip("testing a falied login for the user,due to Invalid credintials", async () => {
-    // server.use(
-    //   http.get("/api/auth/providers", async () => {
-    //     await delay();
-    //     return HttpResponse.json({
-    //       error: "Invalid Credentials",
-    //       ok: false,
-    //       status: 401,
-    //     });
-    //   })
-    // );
+  test("testing a falied login for the user,due to Invalid credintials", async () => {
+    vi.spyOn(nextAuthReact, "signIn").mockImplementation(() =>
+      Promise.resolve({
+        error: "Invalid Credentials",
+        status: 401,
+        ok: false,
+        url: "",
+      })
+    );
 
     const user = userEvent.setup();
     const { container } = render(<Login backgroundImg="" />);
 
+    // Typing the data
     const emailField = screen.getByRole("textbox", { name: "Email" });
     const passwordField = screen.getByLabelText(/password/i);
     const loginBttn = screen.getByRole("button", { name: /log in/i });
@@ -89,22 +93,11 @@ describe("Testing the login page", () => {
     await user.type(passwordField, "anyany");
     await user.click(loginBttn);
 
-    // screen.debug();
-    // logRoles(container);
+    // Checking for error message
+    const error = screen.getByText(/invalid credentials/i);
+    expect(error).toBeInTheDocument();
 
-    expect(loginBttn).toHaveTextContent("logging in");
-
-    const loginBttn2 = await screen.findByRole("button", { name: /log in/i });
-    expect(loginBttn2).toHaveTextContent("Log in");
-
-    screen.debug();
-
-    // await waitFor(
-    //   () => {
-    //     const a = screen.findByText(/invalid credentials/i);
-    //     expect(a).toBeInTheDocument();
-    //   },
-    //   { timeout: 1000 }
-    // );
+    // Loading state is finished
+    expect(loginBttn).toHaveTextContent("Log in");
   });
 });

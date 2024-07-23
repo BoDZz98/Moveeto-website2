@@ -26,18 +26,7 @@ export const handlers = [
   http.get("/api/auth/session", async () => {
     return HttpResponse.json({}, { status: 201 });
   }),
-  // For the login testing
-  http.get("/api/auth/providers", async () => {
-    await delay(500); // We wrote this delay bec we return data, and we want the test case to wait for this returned data
-    return HttpResponse.json(
-      {
-        error: "Invalid Credentials",
-        ok: true,
-        status: 200,
-      },
-      { status: 201 }
-    );
-  }),
+
   http.get(
     "https://api.themoviedb.org/3/search/movie?query=despic",
     async () => {
