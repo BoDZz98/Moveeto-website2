@@ -30,7 +30,6 @@ export async function addMovieHandler(
       "Content-Type": "application/json",
     },
   });
-  // If condition for adding movies in the collections
   if (res.ok) update();
 }
 

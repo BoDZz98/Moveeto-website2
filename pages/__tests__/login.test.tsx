@@ -98,6 +98,6 @@ describe("Testing the login page", () => {
     expect(error).toBeInTheDocument();
 
     // Loading state is finished
-    expect(loginBttn).toHaveTextContent("Log in");
+    expect(loginBttn).toHaveTextContent(/Log in/i);
   });
 });

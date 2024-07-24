@@ -1,5 +1,4 @@
 import Layout from "@/components/layout/layout";
-import Card from "@/components/movie-details/Card";
 import LoginForm from "@/components/auth/LoginForm";
 import { fetchPopularMovies } from "@/utils/api-utils";
 import { Session, getServerSession } from "next-auth";
@@ -9,6 +8,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import authOptions from "./api/auth/[...nextauth]";
 import { NextApiRequest, NextApiResponse } from "next";
+import Card from "@/components/layout/Card";
 
 type loginProps = {
   backgroundImg: string;

@@ -25,6 +25,7 @@ describe("testing movie grid item button group renders correctly", () => {
     mockUseMySession = {
       userFavMovies: [],
       userWishlistMovies: [],
+      update: vi.fn(),
     };
     // Mock the return value of useMySession
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);

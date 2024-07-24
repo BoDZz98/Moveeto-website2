@@ -25,8 +25,6 @@ export default async function handler(
     const userExists = await User.findOne({ email: email });
 
     if (userExists) {
-      // return res.status(400).send("User already exists!");
-
       console.log("user Exists");
       res.status(500).json({ message: "Email already exists" });
       // return NextResponse.json({ message: "Email already exists" });

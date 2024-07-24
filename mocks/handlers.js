@@ -39,6 +39,13 @@ export const handlers = [
       );
     }
   ),
+  // I used this handler just to remove the warnings,
+  http.post("/api/addMovies", async () => {
+    // await delay(400);
+    return HttpResponse.json({}, { status: 201 });
+  }),
+
+  
 
   http.post("http://localhost:3030/order", async () => {
     await delay(400);

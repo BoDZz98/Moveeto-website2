@@ -25,6 +25,7 @@ describe("testing movie grid item dropdown", () => {
     // Initialize the mock data
     mockUseMySession = {
       userCollections: [],
+      update: vi.fn(),
     };
     // Mock the return value of useMySession
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);

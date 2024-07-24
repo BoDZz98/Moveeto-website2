@@ -1,5 +1,5 @@
+import Card from "@/components/layout/Card";
 import Layout from "@/components/layout/layout";
-import Card from "@/components/movie-details/Card";
 import Details from "@/components/movie-details/Details";
 import Images from "@/components/movie-details/Images";
 import SimilarMovies from "@/components/movie-details/SimilarMovies";

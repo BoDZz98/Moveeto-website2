@@ -1,9 +1,9 @@
 import React, { ReactNode, useState } from "react";
-import Card from "./Card";
 import MyBreadcrumb from "./Breadcrumb";
 import Link from "next/link";
 import Router from "next/router";
 import Layout from "../layout/layout";
+import Card from "../layout/Card";
 
 type ScreenShotsCardProps = {
   titlePage: string;

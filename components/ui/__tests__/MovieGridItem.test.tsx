@@ -59,6 +59,7 @@ describe("testing Movie Grid Item", () => {
         { name: "collection 1", movies: [] },
         { name: "coll 2", movies: [] },
       ],
+      update: vi.fn(),
     };
     // Mock the return value of useMySession
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);

@@ -27,8 +27,6 @@ const AddButton = (props: AddButtonProps) => {
   };
   const { userCollections, update } = useMySession();
 
-  // useEffect(() => {}, [userCollections]);
-
   return (
     <>
       {props.title !== "Collection" ? (
@@ -65,7 +63,9 @@ const AddButton = (props: AddButtonProps) => {
               >
                 {c.name}
                 {c.movies.map((m) => {
-                  if (m.title === title) return checkIcon;
+                  console.log("movie -> ", movie);
+
+                  if (m.id === movie.id) return checkIcon;
                 })}
               </Dropdown.Item>
             ))

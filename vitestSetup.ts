@@ -2,9 +2,6 @@ import { beforeAll, vi } from "vitest";
 import { server } from "./mocks/server";
 import "@testing-library/jest-dom";
 
-// beforeAll(() => {
-//   vi.mock("next/router", () => require("next-router-mock"));
-// });
 
 // Establish API mocking, or any mock in general before all tests
 beforeAll(() => {
