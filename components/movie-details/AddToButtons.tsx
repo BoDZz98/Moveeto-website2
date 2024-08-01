@@ -18,15 +18,12 @@ const AddToButtons = () => {
   };
   // Getting user data from the stored session -------------------
   const { userFavMovies, userWishlistMovies, update } = useMySession();
-  console.log("user fav movies ->", userFavMovies);
-  console.log(" movies ->", movie);
-
 
   const movieIsFav = !!userFavMovies?.find(
-    (movieOb: { title: string }) => movieOb.title === title
+    (movieOb: { id: string }) => movieOb.id === movie.id
   );
   const movieIsWishlist = !!userWishlistMovies?.find(
-    (movieOb: { title: string }) => movieOb.title === title
+    (movieOb: { id: string }) => movieOb.id === movie.id
   );
 
   // -----------------------------------------------------------------------------

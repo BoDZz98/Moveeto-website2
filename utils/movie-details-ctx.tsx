@@ -21,4 +21,8 @@ export const MovieDetailsCtx = createContext({
     production_countries: [{ name: "" }],
     genre_ids: [1],
   },
+  reviewData: {
+    reviewsLength: 0,
+    mostRepeatedRating: "",
+  },
 });

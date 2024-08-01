@@ -1,13 +1,10 @@
-import { fetchMovieDetails, fetchPopularMovies } from "@/utils/api-utils";
+import { fetchMovieDetails } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
 import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
-import GameReview from "@/components/movie-details/GameReview";
 import { connectDB } from "@/utils/db-util";
-import { getServerSession } from "next-auth";
-import authOptions from "../../api/auth/[...nextauth]";
 import Review, { reviewObj } from "@/models/reviewsModel";
-import { formatDate } from "@/utils/functions-utils";
+import MovieReview from "@/components/movie-details/MovieReview";
 
 type MovieCommentsProps = {
   movie: MovieObj;
@@ -24,7 +21,8 @@ const MovieComments = ({ movie, reviews }: MovieCommentsProps) => {
     >
       <div className="w-3/4  flex flex-col  p-10 ">
         {reviews.map((review) => (
-          <GameReview
+          <MovieReview
+            key={review._id}
             username={review.username}
             description={review.description}
             rating={review.rating}
@@ -48,7 +46,6 @@ export async function getServerSideProps(ctx: {
   const movieData = await fetchMovieDetails(parseInt(movieId));
 
   await connectDB();
-  const session: any = await getServerSession(ctx.req, ctx.res, authOptions);
 
   const reviews = await Review.find({ movieId });
 

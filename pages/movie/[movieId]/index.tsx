@@ -3,11 +3,13 @@ import Layout from "@/components/layout/layout";
 import Details from "@/components/movie-details/Details";
 import Images from "@/components/movie-details/Images";
 import SimilarMovies from "@/components/movie-details/SimilarMovies";
+import Review from "@/models/reviewsModel";
 import {
   fetchMovieDetails,
   fetchPopularMovies,
   getAllGenres,
 } from "@/utils/api-utils";
+import { getMostRepeatedRating } from "@/utils/functions-utils";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
 export type MovieObj = {
@@ -34,14 +36,20 @@ export type MovieObj = {
 type MovieProps = {
   movie: MovieObj;
   genresDetails: Array<{ id: number; name: string }>;
+  mostRepeatedRating: string;
+  reviewsLength: number;
 };
 
 const MovieDetails = (props: MovieProps) => {
-  const { movie, genresDetails } = props;
+  const { movie, genresDetails, reviewsLength, mostRepeatedRating } = props;
+  const ctxValue = {
+    movieData: movie,
+    reviewData: { reviewsLength, mostRepeatedRating },
+  };
   return (
     <Layout>
       <Card backdrop_path={movie.backdrop_path}>
-        <MovieDetailsCtx.Provider value={{ movieData: movie }}>
+        <MovieDetailsCtx.Provider value={ctxValue}>
           <div className="flex flex-col 2xl:flex-row ">
             <Details movieTitle={movie.title} />
             <Images />
@@ -63,12 +71,22 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   const movieId = context.params.movieId;
 
   const movieData = await fetchMovieDetails(movieId);
-  // console.log("movieData :", movieData.vote_count);
+  // console.log("movieData :", movieData);
 
   const genresDetails = await getAllGenres();
 
+  const reviews = await Review.find({ movieId });
+
+  let mostRepeatedRating = "No Ratings";
+  if (reviews.length !== 0) mostRepeatedRating = getMostRepeatedRating(reviews);
+
   return {
-    props: { movie: movieData, genresDetails },
+    props: {
+      movie: movieData,
+      genresDetails,
+      mostRepeatedRating,
+      reviewsLength: reviews.length,
+    },
     revalidate: 600,
   };
 }

@@ -70,6 +70,15 @@ export async function manageReview(
     return { invalidInputs: true, ratingIsValid, descriptionIsValid };
   }
 }
+//-------------------------------------------------------------------------------------
+// export async function getMovieReviews(movieId: string) {
+//   const res = await fetch("/api/reviews", {
+//     method: "GET",
+//     body: JSON.stringify({
+//       movieId,
+//     }),
+//   });
+// }
 
 //-------------------------------------------------------------------------------------
 

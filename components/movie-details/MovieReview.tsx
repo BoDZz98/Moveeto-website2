@@ -8,7 +8,7 @@ type GameReviewProps = {
   description: String;
   createdAt: String;
 };
-const GameReview = (props: GameReviewProps) => {
+const MovieReview = (props: GameReviewProps) => {
   const { username, rating, description, createdAt } = props;
 
   return (
@@ -45,6 +45,6 @@ const GameReview = (props: GameReviewProps) => {
   );
 };
 
-export default GameReview;
+export default MovieReview;
 
 const ratingArray = ["Skip", "Bad", "Meh", "Recommended", "Exeptional"];

@@ -5,6 +5,7 @@ import Rating from "./Rating";
 import MovieDetails from "./MovieDetails";
 
 type DetailsProps = { movieTitle: string };
+
 const Details = ({ movieTitle }: DetailsProps) => {
   //movieData: movie -> renaming movieData to movie
   return (

@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import OneEmoji from "./OneEmoji";
 import ManageRating from "../profile/ManageRating";
 import { useRouter } from "next/router";
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 
-const data = [
-  { title: "Exceptional", subTitle: "46 Rating" },
-  { title: "# 190" },
-  { title: "# 1" },
-];
 const Rating = () => {
   const router = useRouter();
   const { query } = router;
+
   const [modalIsVisible, setModalIsVisible] = useState(false);
   useEffect(() => {
     setModalIsVisible(!!query.showModal);
-  }, []);
+  }, [query.showModal]);
+
+  const { vote_average, vote_count } = useContext(MovieDetailsCtx).movieData;
+  const { mostRepeatedRating, reviewsLength } =
+    useContext(MovieDetailsCtx).reviewData;
+
+  const data = [
+    { title: mostRepeatedRating, subTitle: reviewsLength + " Rating" },
+    { title: vote_average },
+    { title: "Based on", subTitle: vote_count + " Rating" },
+  ];
 
   return (
     <div className="flex flex-col  gap-y-8 ">
@@ -31,7 +38,7 @@ const Rating = () => {
       </div>
       <div className="flex">
         {ratingData.map((obj) => (
-          <OneEmoji {...obj} />
+          <OneEmoji {...obj} key={obj.key} />
         ))}
       </div>
       <div>

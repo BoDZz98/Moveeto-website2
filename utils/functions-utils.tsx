@@ -1,3 +1,5 @@
+import { reviewObj } from "@/models/reviewsModel";
+
 export function convertMinutesToTime(minutes: number) {
   const hours = Math.floor(minutes / 60);
   const remainingMinutes = minutes % 60;
@@ -49,4 +51,30 @@ export function formatDate(dateGot: String | any) {
   var m = date.getMonth() + 1;
   var y = date.getFullYear();
   return `${d}-${m}-${y}`;
+}
+
+export function getMostRepeatedRating(data: reviewObj[]) {
+  const ratingArray = ["Skip", "Bad", "Meh", "Recommended", "Exeptional"];
+
+  const ratingCount: { [key: string]: number } = {};
+
+  data.forEach((item) => {
+    if (ratingCount[item.rating]) {
+      ratingCount[item.rating]++;
+    } else {
+      ratingCount[item.rating] = 1;
+    }
+  });
+
+  let mostRepeatedRating = 0;
+  let maxCount = 0;
+
+  for (const [rating, count] of Object.entries(ratingCount)) {
+    if (count > maxCount) {
+      mostRepeatedRating = parseInt(rating);
+      maxCount = count;
+    }
+  }
+  console.log(mostRepeatedRating);
+  return ratingArray[mostRepeatedRating - 1];
 }

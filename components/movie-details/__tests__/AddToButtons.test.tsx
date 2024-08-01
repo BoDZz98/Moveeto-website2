@@ -1,11 +1,16 @@
-import { render, screen } from "@/utils/testing-utils/testing-library-utils";
+import {
+  render,
+  screen,
+  within,
+} from "@/utils/testing-utils/testing-library-utils";
 import AddToButtons from "../AddToButtons";
 import { vi } from "vitest";
 import * as sessionHook from "@/hooks/useMySession";
+import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
+import userEvent from "@testing-library/user-event";
 
 describe("Testing AddToButtons component", () => {
   let mockUseMySession: any;
-
   beforeEach(() => {
     // Initialize the mock data
     mockUseMySession = {
@@ -20,6 +25,21 @@ describe("Testing AddToButtons component", () => {
     // Mock the return value of useMySession
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);
   });
+  //--------------------------------------------------------------------------------------------------------------------------
+  // Provider props is used if we want to pass different data to our context , in each test case
+  const providerProps = {};
+  // @ts-ignore
+  const customRender = (ui, { providerProps, ...renderOptions }) => {
+    return render(
+      <MovieDetailsCtx.Provider
+        value={{ movieData: { id: "519182", ...providerProps } }}
+      >
+        {ui}
+      </MovieDetailsCtx.Provider>,
+      renderOptions
+    );
+  };
+  //--------------------------------------------------------------------------------------------------------------------------
   test("render AddToButtons component correctly", () => {
     render(<AddToButtons />);
 
@@ -40,20 +60,60 @@ describe("Testing AddToButtons component", () => {
   });
 
   test("render component correctly if the movie is added to fav and wishlist", async () => {
-    mockUseMySession.userFavMovies = [{ title: "Despicable Me 4" }];
-    mockUseMySession.userWishlistMovies = [{ title: "Despicable Me 4" }];
+    mockUseMySession.userFavMovies = [{ id: "519182" }];
+    mockUseMySession.userWishlistMovies = [{ id: "519182" }];
 
-    render(<AddToButtons />);
+    customRender(<AddToButtons />, { providerProps });
 
-    const favButton = await screen.findByRole("button", {
+    const favButton = screen.getByRole("button", {
       name: /add to favorites/i,
     });
-    const wishlistButton = await screen.findByRole("button", {
+    const wishlistButton = screen.getByRole("button", {
       name: /add to wishlist/i,
     });
-    screen.debug();
+
+    // Checking the right icons is rendered
+    within(favButton).getByTestId("heartIcon");
+    within(wishlistButton).getByTestId("wishlisted");
+
+    // Checking the right style is applied
     expect(favButton).toHaveClass("border-2 border-green-500 ");
     expect(wishlistButton).toHaveClass(
+      "border-2 border-green-500 hover:border-green-400"
+    );
+  });
+
+  test("Testing the functionality of the buttons", async () => {
+    const user = userEvent.setup();
+
+    customRender(<AddToButtons />, { providerProps });
+    // Finding the buttons and clicking it
+    const favButton = screen.getByRole("button", {
+      name: /add to favorites/i,
+    });
+    const wishlistButton = screen.getByRole("button", {
+      name: /add to wishlist/i,
+    });
+
+    await user.click(favButton);
+    await user.click(wishlistButton);
+
+    mockUseMySession.userFavMovies = [{ id: "519182" }];
+    mockUseMySession.userWishlistMovies = [{ id: "519182" }];
+
+    // re-rendering the component
+    const { container } = customRender(<AddToButtons />, { providerProps });
+
+    const favBttn = within(container).getByRole("button", {
+      name: /add to favorites/i,
+    });
+    const wishlistBttn = within(container).getByRole("button", {
+      name: /add to wishlist/i,
+    });
+
+    // Checking the right style is applied
+    expect(favBttn).toHaveClass("border-2 border-green-500 ");
+    expect(wishlistBttn).toHaveClass(
       "border-2 border-green-500 hover:border-green-400"
     );
   });

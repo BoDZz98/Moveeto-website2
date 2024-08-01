@@ -10,9 +10,19 @@ export default async function handler(
 ) {
   await connectDB();
 
-  const { newReview, _id } = await req.body;
+  // _id is the review id created by mongoDB, used to update review
+  // movieId is used to fetch all reviews for certain movie
+  const { newReview, _id, movieId } = await req.body;
   const session: Session | null = await getServerSession(req, res, authOptions);
   const username = session?.user?.name;
+
+  // // Get move reviews -----------------------------------------
+  // if (req.method === "GET") {
+  //   try {
+  //     const reviews = await Review.find({ movieId });
+  //     console.log("review is -> ", reviews);
+  //   } catch (error) {}
+  // }
   // Create /update -----------------------------------------
   if (req.method === "POST") {
     try {
