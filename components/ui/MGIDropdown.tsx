@@ -1,7 +1,7 @@
 import { Dropdown } from "flowbite-react";
 import React from "react";
 import { collectionObj, userMovieObj } from "@/models/userModel";
-import { checkIcon } from "../movie-details/AddButton";
+import { checkIcon } from "../movie-details/details/AddButton";
 import { optionsIcon } from "./MGIButtonGroup";
 import { addMovieHandler } from "@/utils/db-util";
 import useMySession from "@/hooks/useMySession";

@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import MyModalCard from "../ui/MyModalCard";
 import { Label, Textarea } from "flowbite-react";
 import OneEmoji from "../movie-details/OneEmoji";
-import { ratingData } from "../movie-details/Rating";
+import { ratingData } from "../movie-details/details/Rating";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { useRouter } from "next/router";
 import { manageReview } from "@/utils/db-util";

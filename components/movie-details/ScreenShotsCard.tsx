@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import MyBreadcrumb from "./Breadcrumb";
+import MyBreadcrumb from "./details/Breadcrumb";
 import Link from "next/link";
 import Router from "next/router";
 import Layout from "../layout/layout";

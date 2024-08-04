@@ -2,13 +2,13 @@ import { formatDate } from "@/utils/functions-utils";
 import Image from "next/image";
 import React from "react";
 
-type GameReviewProps = {
+type MovieReviewProps = {
   username: String;
   rating: String | any; // any to prevent compiler error
   description: String;
   createdAt: String;
 };
-const MovieReview = (props: GameReviewProps) => {
+const MovieReview = (props: MovieReviewProps) => {
   const { username, rating, description, createdAt } = props;
 
   return (

@@ -1,7 +1,7 @@
 import Card from "@/components/layout/Card";
 import Layout from "@/components/layout/layout";
-import Details from "@/components/movie-details/Details";
-import Images from "@/components/movie-details/Images";
+import Details from "@/components/movie-details/details/Details";
+import Images from "@/components/movie-details/images/Images";
 import SimilarMovies from "@/components/movie-details/SimilarMovies";
 import Review from "@/models/reviewsModel";
 import {

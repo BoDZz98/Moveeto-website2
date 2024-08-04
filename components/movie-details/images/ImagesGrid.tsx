@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import ActorImage from "./ActorImage";
 import { useRouter } from "next/router";
-import { optionsIcon } from "../ui/MGIButtonGroup";
+import { optionsIcon } from "../../ui/MGIButtonGroup";
 
 type ImagesGridProps = {
   movieId: number;
@@ -30,7 +30,7 @@ const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
       })}
       {cast?.map((actor, index) => {
         if (index > 2) return;
-        return <ActorImage actor={actor} imgSize="h-56" key={index} />;
+        return <ActorImage actor={actor} imgSize="h-56" key={actor.name} />;
       })}
       <div
         className="w-full rounded-lg bg-gray-800 flex flex-col justify-center items-center hover:bg-gray-400 group"

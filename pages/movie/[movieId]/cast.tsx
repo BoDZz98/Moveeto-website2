@@ -2,7 +2,7 @@ import { fetchMovieDetails, fetchPopularMovies } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
 import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
-import ActorImage from "@/components/movie-details/ActorImage";
+import ActorImage from "@/components/movie-details/images/ActorImage";
 
 const Cast = (props: { movie: MovieObj }) => {
   const { movie } = props;

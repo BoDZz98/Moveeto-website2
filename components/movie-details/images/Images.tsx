@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import ImagesGrid from "./ImagesGrid";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
+import ImagesGrid from "./ImagesGrid";
 
 const Images = () => {
   const { youtubeTrailerKey, images, id, cast } =
