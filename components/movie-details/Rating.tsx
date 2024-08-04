@@ -31,14 +31,18 @@ const Rating = () => {
             className={index + 1 !== data.length ? "border-r pr-16" : ""}
             key={item.title}
           >
-            <p className="font-bold text-3xl">{item.title}</p>
+            <h1 className="font-bold text-3xl">{item.title}</h1>
             <p className="underline text-gray-500">{item?.subTitle}</p>
           </div>
         ))}
       </div>
       <div className="flex">
         {ratingData.map((obj) => (
-          <OneEmoji {...obj} key={obj.key} />
+          <OneEmoji
+            {...obj}
+            key={obj.key}
+            isClicked={obj.name === mostRepeatedRating}
+          />
         ))}
       </div>
       <div>

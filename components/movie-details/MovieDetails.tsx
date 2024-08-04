@@ -26,15 +26,19 @@ const MovieDetails = () => {
       <h1 className="text-white text-4xl font-extrabold  ">About</h1>
       <p className="text-lg">{overview}</p>
       <div className="grid grid-cols-2 gap-y-8 ">
-        {data.map((item, index) => (
-          <div className="flex flex-col " key={index}>
+        {data.map((item) => (
+          <div
+            className="flex flex-col "
+            key={item.title}
+            data-testid={item.title}
+          >
             <span className="font-bold text-gray-500 mb-4">{item.title}</span>
             <div className="flex ">
               {item.arrayData?.map((genre, index) => (
-                <p key={genre.name}>
+                <h1 key={typeof genre === "string" ? genre : genre.name}>
                   {index > 0 ? ", " : ""}
-                  {genre.name}
-                </p>
+                  {typeof genre === "string" ? genre : genre.name}
+                </h1>
               ))}
             </div>
             <span>{item.value}</span>

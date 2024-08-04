@@ -75,9 +75,12 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
 
   const genresDetails = await getAllGenres();
 
-  const reviews = await Review.find({ movieId });
-
+  let reviews = [];
   let mostRepeatedRating = "No Ratings";
+  try {
+    reviews = await Review.find({ movieId });
+  } catch (error) {}
+
   if (reviews.length !== 0) mostRepeatedRating = getMostRepeatedRating(reviews);
 
   return {

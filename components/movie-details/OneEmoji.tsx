@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 type OneEmojiProps = {
   name: string;
   image: string;
@@ -21,6 +20,7 @@ const OneEmoji = ({
   return (
     <div
       className="flex flex-col gap-y-10 items-center mr-10 w-28 group"
+      data-testid="emoji div"
       onClick={() => {
         onPress && onPress(image);
       }}
@@ -39,7 +39,10 @@ const OneEmoji = ({
             : "group-hover:ring-2 group-hover:cursor-pointer"
         }`}
       >
-        <div className={`${color} w-3 h-3 rounded-full`}></div>
+        <div
+          className={`${color} w-3 h-3 rounded-full`}
+          data-testid="color div"
+        ></div>
         <p>{name}</p>
       </div>
     </div>

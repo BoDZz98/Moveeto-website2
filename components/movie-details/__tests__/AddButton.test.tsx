@@ -45,6 +45,7 @@ describe("Testing AddButton component", () => {
   const customRender = (ui, { providerProps, ...renderOptions }) => {
     return render(
       <MovieDetailsCtx.Provider
+      // @ts-ignore
         value={{ movieData: { id: "519182", ...providerProps } }}
       >
         {ui}

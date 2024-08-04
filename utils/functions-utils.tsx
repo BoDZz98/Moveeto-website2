@@ -75,6 +75,6 @@ export function getMostRepeatedRating(data: reviewObj[]) {
       maxCount = count;
     }
   }
-  console.log(mostRepeatedRating);
+  // console.log(mostRepeatedRating);
   return ratingArray[mostRepeatedRating - 1];
 }
