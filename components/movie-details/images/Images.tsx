@@ -6,6 +6,7 @@ import ImagesGrid from "./ImagesGrid";
 const Images = () => {
   const { youtubeTrailerKey, images, id, cast } =
     useContext(MovieDetailsCtx).movieData;
+
   const [domLoaded, setDomLoaded] = useState(false);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ const Images = () => {
             loop
             muted
             controls
+            data-testid="video player"
           />
         )}
       </div>

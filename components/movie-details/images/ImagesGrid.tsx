@@ -22,7 +22,7 @@ const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
             key={movie.file_path}
             src={baseImageURL + movie.file_path}
             className="w-full rounded-lg"
-            alt={movie.file_path}
+            alt={movie.file_path + " movieImg"}
             width={200}
             height={200}
           />
@@ -34,6 +34,7 @@ const ImagesGrid = ({ movieId, movieImgs, cast }: ImagesGridProps) => {
       })}
       <div
         className="w-full rounded-lg bg-gray-800 flex flex-col justify-center items-center hover:bg-gray-400 group"
+        data-testid="view all div"
         onClick={() =>
           movieImgs
             ? router.push(`/movie/${movieId}/screenshots`)

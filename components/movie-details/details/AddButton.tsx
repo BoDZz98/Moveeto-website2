@@ -63,8 +63,7 @@ const AddButton = (props: AddButtonProps) => {
               >
                 {c.name}
                 {c.movies.map((m) => {
-                  console.log("movie -> ", movie);
-
+                  // console.log("movie -> ", movie);
                   if (m.id === movie.id) return checkIcon;
                 })}
               </Dropdown.Item>

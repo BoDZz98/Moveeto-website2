@@ -8,14 +8,11 @@ type ActorImageProps = {
 };
 const ActorImage = ({ actor, imgSize }: ActorImageProps) => {
   return (
-    <div
-      id={actor.profile_path}
-      className=" flex flex-col  w-full rounded-lg bg-gray-800 "
-    >
+    <div className=" flex flex-col  w-full rounded-lg bg-gray-800 ">
       <Image
         src={baseImageURL + actor.profile_path}
         className={`rounded-lg w-full object-cover ${imgSize} `}
-        alt={actor.profile_path}
+        alt={'actorImg '+actor.name}
         width={200}
         height={200}
       />

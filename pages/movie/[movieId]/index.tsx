@@ -30,7 +30,7 @@ export type MovieObj = {
   production_companies?: Array<{ name: string }>;
   production_countries?: Array<{ name: string }>;
   similarMovies?: Array<MovieObj>;
-  genre_ids?: Array<number>;
+  genre_ids: Array<number>;
 };
 
 type MovieProps = {
@@ -46,9 +46,11 @@ const MovieDetails = (props: MovieProps) => {
     movieData: movie,
     reviewData: { reviewsLength, mostRepeatedRating },
   };
+
   return (
     <Layout>
       <Card backdrop_path={movie.backdrop_path}>
+        {/* @ts-ignore */}
         <MovieDetailsCtx.Provider value={ctxValue}>
           <div className="flex flex-col 2xl:flex-row ">
             <Details movieTitle={movie.title} />
@@ -82,6 +84,7 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   } catch (error) {}
 
   if (reviews.length !== 0) mostRepeatedRating = getMostRepeatedRating(reviews);
+
 
   return {
     props: {

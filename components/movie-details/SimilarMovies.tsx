@@ -27,9 +27,11 @@ const SimilarMovies = ({
             genresDetails,
             1
           );
+          // @ts-ignore
           movie["genres"] = genresNames;
           if (movie.backdrop_path)
-            return <MovieGridItem movie={movie} key={movie.title} />;
+            // @ts-ignore
+            return <MovieGridItem movie={movie} key={movie.id} />;
         })}
       </div>
     </div>
