@@ -5,7 +5,7 @@ type GamesStatisticsProps = {
   favMoviesLength: number;
   wishlistMoviesLength: number;
 };
-const GamesStatistics = (props: GamesStatisticsProps) => {
+const MoviesStatistics = (props: GamesStatisticsProps) => {
   const { favMoviesLength, wishlistMoviesLength } = props;
   const totalGamesNum = favMoviesLength + wishlistMoviesLength;
   return (
@@ -30,4 +30,4 @@ const GamesStatistics = (props: GamesStatisticsProps) => {
   );
 };
 
-export default GamesStatistics;
+export default MoviesStatistics;

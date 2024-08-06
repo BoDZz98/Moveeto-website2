@@ -14,7 +14,7 @@ type favoriteProps = {
   movies: Array<userMovieObj>;
 };
 
-const favorite = ({ movies }: favoriteProps) => {
+const Favorite = ({ movies }: favoriteProps) => {
   const [moviesShown, setmoviesShown] = useState(movies);
   const { userFavMovies } = useMySession();
   const lastChange = useRef<number | null>();
@@ -50,7 +50,7 @@ const favorite = ({ movies }: favoriteProps) => {
   );
 };
 
-export default favorite;
+export default Favorite;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();

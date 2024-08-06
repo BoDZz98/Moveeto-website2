@@ -1,6 +1,6 @@
 import { reviewObj } from "@/models/reviewsModel";
 import React from "react";
-import ProfileReview from "./ProfileReview";
+import ProfileReview from "../ProfileReview";
 
 type RecentReviewsProps = {
   reviews: Array<reviewObj>;

@@ -14,7 +14,7 @@ type wishlistProps = {
   movies: Array<userMovieObj>;
 };
 
-const wishlist = ({ movies }: wishlistProps) => {
+const Wishlist = ({ movies }: wishlistProps) => {
   const [moviesShown, setmoviesShown] = useState(movies);
   const { userWishlistMovies } = useMySession();
   const lastChange = useRef<number | null>();
@@ -49,7 +49,7 @@ const wishlist = ({ movies }: wishlistProps) => {
   );
 };
 
-export default wishlist;
+export default Wishlist;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();

@@ -14,7 +14,7 @@ import UserCollection from "@/components/profile/UserCollection";
 type collectionsProps = {
   collections: Array<collectionObj>;
 };
-const collections = ({ collections }: collectionsProps) => {
+const Collections = ({ collections }: collectionsProps) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
 
   return (
@@ -52,7 +52,7 @@ const collections = ({ collections }: collectionsProps) => {
   );
 };
 
-export default collections;
+export default Collections;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();

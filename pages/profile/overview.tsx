@@ -1,5 +1,4 @@
 import Layout from "@/components/layout/layout";
-import Carousel from "@/components/profile/MyCarousel";
 import ProfileLayout from "@/components/profile/ProfileLayout";
 import React, { useEffect } from "react";
 import { GetServerSidePropsContext } from "next";
@@ -8,13 +7,14 @@ import User, { collectionObj, userMovieObj, userObj } from "@/models/userModel";
 import { getServerSession } from "next-auth";
 import authOptions from "../api/auth/[...nextauth]";
 import Review, { reviewObj } from "@/models/reviewsModel";
-import GamesStatistics from "@/components/profile/GamesStatistics";
-import ReviewsStatistics from "@/components/profile/ReviewsStatistics";
-import CollectionsStatistics from "@/components/profile/CollectionsStatistics";
-import RecentMovies from "@/components/profile/RecentMovies";
-import RecentReviews from "@/components/profile/RecentReviews";
+import ReviewsStatistics from "@/components/profile/overview/ReviewsStatistics";
+import CollectionsStatistics from "@/components/profile/overview/CollectionsStatistics";
+import RecentMovies from "@/components/profile/overview/RecentMovies";
+import RecentReviews from "@/components/profile/overview/RecentReviews";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import MoviesStatistics from "../../components/profile/overview/MoviesStatistics";
+import Carousel from "../../components/profile/overview/MyCarousel";
 
 type overviewProps = {
   favMovies: Array<userMovieObj>;
@@ -23,17 +23,16 @@ type overviewProps = {
   reviews: Array<reviewObj>;
 };
 
-const overview = (props: overviewProps) => {
+const Overview = (props: overviewProps) => {
   const { favMovies, wishlistMovies, collections, reviews } = props;
   const { data: session } = useSession();
-  
-  const router = useRouter();
-  useEffect(() => {
-    if (session) {
-      router.push("/profile/overview");
-    }
-  }, [session?.user]);
 
+  // const router = useRouter();
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/profile/overview");
+  //   }
+  // }, [session, router]);
 
   const reviewsStatistics: Array<{ rating: number; ctr: number }> = [];
   for (let i = 5; i >= 1; i--) {
@@ -55,7 +54,7 @@ const overview = (props: overviewProps) => {
           </div>
         </div>
         <div className="flex my-10 mt-20">
-          <GamesStatistics
+          <MoviesStatistics
             favMoviesLength={favMovies.length}
             wishlistMoviesLength={wishlistMovies.length}
           />
@@ -74,7 +73,7 @@ const overview = (props: overviewProps) => {
   );
 };
 
-export default overview;
+export default Overview;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();

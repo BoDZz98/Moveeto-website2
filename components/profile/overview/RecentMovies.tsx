@@ -2,7 +2,7 @@ import { baseImageURL } from "@/utils/api-utils";
 import Image from "next/image";
 import React from "react";
 import { userMovieObj } from "@/models/userModel";
-import MGIButtonGroup from "../ui/MGIButtonGroup";
+import MGIButtonGroup from "../../ui/MGIButtonGroup";
 
 type RecentMoviesProps = {
   movies: Array<userMovieObj>;

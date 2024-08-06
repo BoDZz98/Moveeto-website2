@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 type reviewsProps = {
   reviews: Array<reviewObj>;
 };
-const reviews = ({ reviews }: reviewsProps) => {
+const Reviews = ({ reviews }: reviewsProps) => {
   const [filterReviews, setFilterReviews] = useState(reviews);
   const [activeRating, setActiveRating] = useState(0);
   useEffect(() => {
@@ -73,7 +73,7 @@ const reviews = ({ reviews }: reviewsProps) => {
   );
 };
 
-export default reviews;
+export default Reviews;
 
 export async function getServerSideProps(ctx: GetServerSidePropsContext) {
   await connectDB();

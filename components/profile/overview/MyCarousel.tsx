@@ -2,10 +2,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import React from "react";
-import EmptyMovieCard from "./EmptyMovieCard";
 import { userMovieObj } from "@/models/userModel";
 import { Slider } from "@/utils/imports";
-import MovieGridItem from "../ui/MovieGridItem";
+import EmptyMovieCard from "./EmptyMovieCard";
+import MovieGridItem from "@/components/ui/MovieGridItem";
 
 type CarouselProps = {
   movies: Array<userMovieObj>;
