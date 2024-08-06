@@ -1,6 +1,6 @@
 import React from "react";
 import AddToButtons from "./AddToButtons";
-import MyBreadcrumb from "./Breadcrumb";
+import MyBreadcrumb from "./MyBreadcrumb";
 import Rating from "./Rating";
 import MovieDetails from "./MovieDetails";
 

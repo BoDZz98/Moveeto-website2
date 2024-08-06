@@ -15,22 +15,22 @@ import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 export type MovieObj = {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path?: string;
   backdrop_path: string;
-  vote_average?: number;
+  vote_average?: string;
   release_date: string;
   runtime?: string;
   overview?: string;
   youtubeTrailerKey?: string;
   revenue?: string;
   vote_count: number;
-  genres?: Array<{ name: string }>;
+  genres?: Array<string>;
   images?: Array<{ file_path: string }>;
   cast?: Array<{ name: string; profile_path: string; character: string }>;
   production_companies?: Array<{ name: string }>;
   production_countries?: Array<{ name: string }>;
   similarMovies?: Array<MovieObj>;
-  genre_ids: Array<number>;
+  genre_ids?: Array<number>;
 };
 
 type MovieProps = {
@@ -84,7 +84,6 @@ export async function getStaticProps(context: { params: { movieId: number } }) {
   } catch (error) {}
 
   if (reviews.length !== 0) mostRepeatedRating = getMostRepeatedRating(reviews);
-
 
   return {
     props: {

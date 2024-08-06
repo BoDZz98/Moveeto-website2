@@ -1,10 +1,10 @@
 import { fetchMovieDetails } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
-import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
 import { connectDB } from "@/utils/db-util";
 import Review, { reviewObj } from "@/models/reviewsModel";
 import MovieReview from "@/components/movie-details/MovieReview";
+import DetailsCard from "@/components/movie-details/DetailsCard";
 
 type MovieCommentsProps = {
   movie: MovieObj;
@@ -13,7 +13,7 @@ type MovieCommentsProps = {
 
 const MovieComments = ({ movie, reviews }: MovieCommentsProps) => {
   return (
-    <ScreenShotsCard
+    <DetailsCard
       titlePage="Reviews"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
@@ -21,16 +21,10 @@ const MovieComments = ({ movie, reviews }: MovieCommentsProps) => {
     >
       <div className="w-3/4  flex flex-col  p-10 ">
         {reviews.map((review) => (
-          <MovieReview
-            key={review._id}
-            username={review.username}
-            description={review.description}
-            rating={review.rating}
-            createdAt={review.createdAt}
-          />
+          <MovieReview key={review._id} {...review} />
         ))}
       </div>
-    </ScreenShotsCard>
+    </DetailsCard>
   );
 };
 

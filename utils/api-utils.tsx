@@ -68,7 +68,7 @@ export async function fetchMovieDetails(movieId: number) {
     production_companies: data.production_companies.slice(0, 5),
     production_countries: data.production_countries.slice(0, 5),
     cast: data.credits.cast.slice(0, 20),
-    similarMovies: data.similar.results,
+    similarMovies: data.similar.results.slice(0,21),
     revenue,
     youtubeTrailerKey,
     vote_count: data.vote_count,

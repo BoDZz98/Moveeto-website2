@@ -12,14 +12,17 @@ const MovieReview = (props: MovieReviewProps) => {
   const { username, rating, description, createdAt } = props;
 
   return (
-    <div className="flex flex-col gap-y-5 bg-gray-800 bg-opacity-70 p-10 rounded my-10">
+    <div
+      className="flex flex-col gap-y-5 bg-gray-800 bg-opacity-70 p-10 rounded my-10"
+      data-testid="review div"
+    >
       <div className="flex items-center gap-x-5 ">
         <span className="text-5xl font-bold text-white ">
           {ratingArray[parseInt(rating) - 1]}
         </span>
         <Image
           src={`/imgs/rating/${rating}.png`}
-          alt="Racing"
+          alt={ratingArray[parseInt(rating) - 1]}
           className="w-20 h-20 opacity-100 "
           width={50}
           height={50}

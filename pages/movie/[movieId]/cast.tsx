@@ -1,25 +1,26 @@
 import { fetchMovieDetails, fetchPopularMovies } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
-import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
 import ActorImage from "@/components/movie-details/images/ActorImage";
+import DetailsCard from "@/components/movie-details/DetailsCard";
 
 const Cast = (props: { movie: MovieObj }) => {
   const { movie } = props;
 
   return (
-    <ScreenShotsCard
+    <DetailsCard
       titlePage="Cast"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
       <div className="grid grid-cols-1  xl:grid-cols-2 2xl:grid-cols-3 w-3/4 gap-5 ">
-        {movie.cast.map(
-          (actor) => actor.profile_path && <ActorImage actor={actor} />
+        {movie.cast!.map(
+          (actor) =>
+            actor.profile_path && <ActorImage actor={actor} key={actor.name} />
         )}
       </div>
-    </ScreenShotsCard>
+    </DetailsCard>
   );
 };
 

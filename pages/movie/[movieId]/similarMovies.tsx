@@ -6,21 +6,21 @@ import {
 } from "@/utils/api-utils";
 import React from "react";
 import { MovieObj } from ".";
-import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
 import MoviesGrid from "@/components/ui/MoviesGrid";
+import DetailsCard from "@/components/movie-details/DetailsCard";
 
 const SimilarMovies = (props: { movie: MovieObj }) => {
   const { movie } = props;
 
   return (
-    <ScreenShotsCard
+    <DetailsCard
       titlePage="Similar Movies"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
       <MoviesGrid gridCols={3} movies={movie.similarMovies!} />
-    </ScreenShotsCard>
+    </DetailsCard>
   );
 };
 

@@ -27,7 +27,7 @@ const OneEmoji = ({
     >
       <Image
         src={`/imgs/rating/${image}.png`}
-        alt={name}
+        alt={name + " emoji"}
         className={isClicked ? activeImgStyle : imgStyle}
         width={50}
         height={50}

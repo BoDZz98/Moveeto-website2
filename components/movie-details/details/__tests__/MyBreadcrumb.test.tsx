@@ -3,7 +3,7 @@ import {
   screen,
   within,
 } from "@/utils/testing-utils/testing-library-utils";
-import MyBreadcrumb from "../Breadcrumb";
+import MyBreadcrumb from "../MyBreadcrumb";
 
 describe("testing MyBreadcrumb component", () => {
   test("renders the MyBreadcumb component correctly", () => {

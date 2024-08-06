@@ -6,26 +6,26 @@ import {
 import React from "react";
 import { MovieObj } from ".";
 import Image from "next/image";
-import ScreenShotsCard from "@/components/movie-details/ScreenShotsCard";
+import DetailsCard from "@/components/movie-details/DetailsCard";
 
 const Screenshots = (props: { movie: MovieObj }) => {
   const { movie } = props;
 
   return (
-    <ScreenShotsCard
+    <DetailsCard
       titlePage="Screenshots"
       title={movie.title}
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
       <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 2xl:w-3/4 gap-5  w-full">
-        {movie.images.map(
+        {movie.images!.map(
           (img) =>
             img.file_path && (
               <Image
-                id={img.file_path}
+                key={img.file_path}
                 src={baseImageURL + img.file_path}
-                alt={img.file_path}
+                alt={img.file_path + " movieImg"}
                 height={100}
                 width={150}
                 className="rounded w-full"
@@ -33,10 +33,9 @@ const Screenshots = (props: { movie: MovieObj }) => {
             )
         )}
       </div>
-    </ScreenShotsCard>
+    </DetailsCard>
   );
 };
-
 export default Screenshots;
 
 export async function getStaticProps(context: { params: { movieId: number } }) {
