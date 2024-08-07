@@ -7,13 +7,14 @@ import { reviewObj } from "@/models/reviewsModel";
 import { useRouter } from "next/router";
 type ProfileReviewProps = {
   review: reviewObj;
-  notEditable?: boolean;
+  editable?: boolean;
 };
 
 const ProfileReview = (props: ProfileReviewProps) => {
   const { movieName, rating, description, createdAt, _id } = props.review;
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const router = useRouter();
+
   async function deleteHandler() {
     const res = await fetch("/api/reviews", {
       method: "DELETE",
@@ -28,20 +29,24 @@ const ProfileReview = (props: ProfileReviewProps) => {
       router.push("/profile/reviews");
     }
   }
+
   return (
-    <div className="flex flex-col gap-y-5 bg-gray-800  p-10 my-10 rounded">
+    <div
+      className="flex flex-col gap-y-5 bg-gray-800  p-10 my-10 rounded"
+      data-testid="profile review"
+    >
       <div className="relative flex items-center gap-x-5 ">
         <span className="text-4xl font-bold text-gray-200 underline-offset-8 underline ">
           {movieName}
         </span>
         <Image
           src={`/imgs/rating/${rating}.png`}
-          alt="Racing"
+          alt={rating + " stars"}
           className="w-16 h-16  "
           width={50}
           height={50}
         />
-        {!props.notEditable && (
+        {props.editable && (
           <ReviewDropdown
             deleteHandler={deleteHandler}
             editHandler={() => setModalIsVisible(true)}

@@ -13,7 +13,7 @@ const RecentReviews = ({ reviews }: RecentReviewsProps) => {
       </p>
       <div className="grid grid-cols-2 gap-10">
         {reviews.map((review) => (
-          <ProfileReview key={review._id} review={review} notEditable={true} />
+          <ProfileReview key={review._id} review={review} />
         ))}
       </div>
     </>

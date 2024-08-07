@@ -12,8 +12,12 @@ const CollectionsStatistics = ({ collections }: CollectionsStatisticsProps) => {
         {collections.length}
         <span className="text-4xl font-normal ml-2">Collections</span>
       </span>
-      {collections.map((c, i) => (
-        <div className="flex items-end gap-x-4" key={i}>
+      {collections.map((c) => (
+        <div
+          className="flex items-end gap-x-4"
+          key={c._id}
+          data-testid={"coll div"}
+        >
           <span>{c.name}</span>
           <div className="w-3/4 border-b-2"></div>
           {collectionIcon}

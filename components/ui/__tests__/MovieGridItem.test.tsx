@@ -73,11 +73,13 @@ describe("testing Movie Grid Item", () => {
     const wishlistCont = screen.getByTestId("wishlistCont");
     const dropdownCont = screen.getByTestId("dropdown");
 
+
     // Adding movie to fav/wishlist
     await user.click(favCont);
     await user.click(wishlistCont);
     mockUseMySession.userFavMovies = [{ title: "Despicable Me 4" }];
     mockUseMySession.userWishlistMovies = [{ title: "Despicable Me 4" }];
+    
     // Adding movie to a user list
     await user.click(dropdownCont);
     const collectionBttn = screen.getByRole("button", {

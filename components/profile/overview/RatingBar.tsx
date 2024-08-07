@@ -12,9 +12,9 @@ type RatingBarProps = {
 const RatingBar = (props: RatingBarProps) => {
   const { label, image, count, color, progress } = props;
   return (
-    <div className="flex items-center gap-x-4">
+    <div className="flex items-center gap-x-4" data-testid="rating bar div">
       {label ? (
-        <span>{label}</span>
+        <p>{label}</p>
       ) : (
         <Image
           src={`/imgs/rating/${image}.png`}
@@ -27,7 +27,7 @@ const RatingBar = (props: RatingBarProps) => {
       <div className="w-full">
         <Progress progress={progress} color={color} />
       </div>
-      <span>{count}</span>
+      <p>{count}</p>
     </div>
   );
 };

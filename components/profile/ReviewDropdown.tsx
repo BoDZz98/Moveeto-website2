@@ -37,6 +37,7 @@ const optionsIcon = (
     strokeWidth={1.5}
     stroke="rgb(107 114 128)"
     className="w-10 h-10 hover:cursor-pointer bg-gray500 hover:stroke-white"
+    data-testid="review dropdown"
   >
     <path
       strokeLinecap="round"

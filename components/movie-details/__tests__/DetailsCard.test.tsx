@@ -108,13 +108,14 @@ describe("testing Details Card component", () => {
     expect(reviewsLink).toHaveAttribute("href", "/movie/519182/reviews");
 
     // expect the link to have the right style after clicking on it
-    await userEvent.click(castLink);
+    await user.click(castLink);
     expect(castLink).toHaveClass(activeLinkStyle);
 
     // expect the page title to be changed to cast
     const newPageTitle=screen.getByRole('heading', {
       name: /cast/i
     })
+    expect(newPageTitle).toBeInTheDocument()
   });
 });
 

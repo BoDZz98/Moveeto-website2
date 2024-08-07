@@ -24,6 +24,7 @@ const RecentMovies = ({ movies }: RecentMoviesProps) => {
             <div
               className="flex group rounded-lg p-4 h-52  bg-gray-800"
               key={m.id}
+              data-testid='recent movies div'
             >
               <Image
                 src={baseImageURL + m.backdrop_path}

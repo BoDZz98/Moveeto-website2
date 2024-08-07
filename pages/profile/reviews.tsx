@@ -57,7 +57,7 @@ const Reviews = ({ reviews }: reviewsProps) => {
         <div className="flex flex-col xl:flex-row">
           <div className="flex flex-col xl:w-2/3 order-2 xl:order-1 ">
             {filterReviews.map((review) => (
-              <ProfileReview review={review} key={review._id} />
+              <ProfileReview review={review} editable={true} key={review._id} />
             ))}
           </div>
           {/* -------------------- */}

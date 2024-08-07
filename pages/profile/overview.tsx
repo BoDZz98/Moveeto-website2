@@ -27,12 +27,14 @@ const Overview = (props: overviewProps) => {
   const { favMovies, wishlistMovies, collections, reviews } = props;
   const { data: session } = useSession();
 
-  // const router = useRouter();
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/profile/overview");
-  //   }
-  // }, [session, router]);
+  const router = useRouter();
+  useEffect(() => {
+    // if (session) {
+    router.push("/profile/overview");
+    // }
+  }, [session]);
+
+  // console.log("in here3");
 
   const reviewsStatistics: Array<{ rating: number; ctr: number }> = [];
   for (let i = 5; i >= 1; i--) {
@@ -92,6 +94,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     wishlistMovies = JSON.parse(JSON.stringify(user.wishlistMovies));
     collections = JSON.parse(JSON.stringify(user.userCollections));
   }
+  console.log(JSON.parse(JSON.stringify(reviews)));
 
   return {
     props: {

@@ -31,6 +31,7 @@ describe("testing movie grid item button group renders correctly", () => {
     vi.spyOn(sessionHook, "default").mockReturnValue(mockUseMySession);
   });
 
+  
   test("Testing button group render correctly", async () => {
     mockUseMySession.userFavMovies = [{ title: "Inside Out 2" }];
     mockUseMySession.userWishlistMovies = [{ title: "Inside Out 2" }];
