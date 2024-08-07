@@ -51,7 +51,7 @@ const genreDetails = [
   { id: 12, name: "Adventure" },
 ];
 
-export const mockMovie = {
+const mockMovie = {
   id: 519182,
   title: "Despicable Me 4",
   poster: "/wWba3TaojhK7NdycRhoQpsG0FaH.jpg",
