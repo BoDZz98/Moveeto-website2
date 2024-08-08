@@ -14,7 +14,7 @@ test("testing Similar Movies component render correctly", () => {
   });
   expect(title).toBeInTheDocument();
 
-  const movies = screen.getAllByTestId("movieGridItem");
+  const movies = screen.getAllByTestId(/movieGridItem/i);
   expect(movies).toHaveLength(3);
 });
 

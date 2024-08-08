@@ -24,17 +24,15 @@ const movies = [
   },
 ];
 
-describe("testing homecard component", () => {
-  test("renders homecard correctly", () => {
-    render(
-      <HomeCard title={data.title} subTitle={data.subTitle} movies={movies} />
-    );
-    const pageTitle = screen.getByRole("heading", {
-      name: /new and trending/i,
-    });
-    expect(pageTitle).toBeInTheDocument();
-    
-    const moviesItem = screen.getAllByTestId("movieGridItem");
-    expect(moviesItem.length).toBe(2); 
+test("testing homecard component", () => {
+  render(
+    <HomeCard title={data.title} subTitle={data.subTitle} movies={movies} />
+  );
+  const pageTitle = screen.getByRole("heading", {
+    name: /new and trending/i,
   });
+  expect(pageTitle).toBeInTheDocument();
+
+  const moviesItem = screen.getAllByTestId(/movieGridItem/i);
+  expect(moviesItem.length).toBe(2);
 });

@@ -29,7 +29,7 @@ describe("Testing the Home page", () => {
     });
     expect(movieTitle).toBeInTheDocument();
 
-    const moviesItem = screen.getAllByTestId("movieGridItem");
+    const moviesItem = screen.getAllByTestId(/movieGridItem/i);
     expect(moviesItem.length).toBe(2); // Asserts that YourComponent is rendered twice
   });
 });

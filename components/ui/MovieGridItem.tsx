@@ -14,10 +14,11 @@ const MovieGridItem = memo(function MovieGridItem({
 }: MovieGridItemProps) {
   // console.log(movie);
 
+  
   return (
     <div
       className="relative rounded-xl hover:rounded-b-none  h-fit w-full bg-gray-800 flex flex-col group transition-all ease-in-out duration-1000 "
-      data-testid="movieGridItem"
+      data-testid={movie.title + " movieGridItem"}
     >
       <Image
         src={baseImageURL + movie.backdrop_path}

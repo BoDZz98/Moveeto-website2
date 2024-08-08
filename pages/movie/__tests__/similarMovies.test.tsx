@@ -5,14 +5,14 @@ import {
 } from "@/utils/testing-utils/testing-library-utils";
 import SimilarMovies from "../[movieId]/similarMovies";
 
-test("testing cast page renders correctly", () => {
+test("testing similar movies page renders correctly", () => {
   const { container } = render(<SimilarMovies movie={mockMovie} />);
   //   logRoles(container);
 
   const pageTitle = screen.getByRole("heading", { name: /similar movies/i });
   expect(pageTitle).toBeInTheDocument();
 
-  const similarMovies = screen.getAllByTestId("movieGridItem");
+  const similarMovies = screen.getAllByTestId(/movieGridItem/i);
   expect(similarMovies).toHaveLength(3);
 });
 

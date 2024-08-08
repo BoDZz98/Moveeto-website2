@@ -20,7 +20,7 @@ const movies = [
   },
   {
     backdrop_path: "/xg27NrXi7VXCGUr7MG75UqLl6Vg.jpg",
-    id: "1022789",
+    id: "10227899",
     release_date: "2024-06-11",
     title: "Inside Out 2",
     vote_count: 1541,
@@ -28,7 +28,7 @@ const movies = [
   },
   {
     backdrop_path: "/fDmci71SMkfZM8RnCuXJVDPaSdE.jpg",
-    id: "519182",
+    id: "5191822",
     release_date: "2024-06-20",
     title: "Despicable Me 4",
     vote_count: 157,
@@ -36,10 +36,10 @@ const movies = [
   },
 ];
 
-describe("testing movies grid component", () => {
+
   test("renders movies grid correctly", () => {
     render(<MoviesGrid movies={movies} />);
-    const moviesItem = screen.getAllByTestId("movieGridItem");
+    const moviesItem = screen.getAllByTestId(/movieGridItem/i);
     expect(moviesItem).toHaveLength(4);
   });
-});
+
