@@ -33,8 +33,7 @@ export async function addMovieHandler(
   if (res.ok) update();
 }
 
-//-------------------------------------------------------------------------------------
-
+// Create or update review---------------------------------------------------------
 type inputsObj = { rating: { value: string }; description: { value: string } };
 type movieObj = { movieId: number; movieName: string };
 export async function manageReview(
@@ -70,6 +69,24 @@ export async function manageReview(
     return { invalidInputs: true, ratingIsValid, descriptionIsValid };
   }
 }
+// delete review--------------------------------------------------
+export async function deleteReview(reviewId: string) {
+  const res = await fetch("/api/reviews", {
+    method: "DELETE",
+    body: JSON.stringify({
+      _id: reviewId,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (res.ok) {
+    return { ok: true };
+  } else {
+    return { ok: false };
+  }
+}
+
 //-------------------------------------------------------------------------------------
 // export async function getMovieReviews(movieId: string) {
 //   const res = await fetch("/api/reviews", {

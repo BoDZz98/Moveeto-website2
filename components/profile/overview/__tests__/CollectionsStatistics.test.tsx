@@ -12,7 +12,7 @@ test("testing Collections Statistics renders correctly ", () => {
   expect(totalCollections).toBeInTheDocument();
 
   // Checking data in collection divs
-  const collections = screen.getAllByTestId("coll div");
+  const collections = screen.getAllByTestId("collection div");
   within(collections[0]).getByText("coll 1");
   within(collections[0]).getByText("3"); // movies number
 

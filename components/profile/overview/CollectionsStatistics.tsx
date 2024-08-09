@@ -16,7 +16,7 @@ const CollectionsStatistics = ({ collections }: CollectionsStatisticsProps) => {
         <div
           className="flex items-end gap-x-4"
           key={c._id}
-          data-testid={"coll div"}
+          data-testid={"collection div"}
         >
           <span>{c.name}</span>
           <div className="w-3/4 border-b-2"></div>

@@ -29,9 +29,7 @@ const Overview = (props: overviewProps) => {
 
   const router = useRouter();
   useEffect(() => {
-    // if (session) {
     router.push("/profile/overview");
-    // }
   }, [session]);
 
   // console.log("in here3");
@@ -94,7 +92,7 @@ export async function getServerSideProps(ctx: GetServerSidePropsContext) {
     wishlistMovies = JSON.parse(JSON.stringify(user.wishlistMovies));
     collections = JSON.parse(JSON.stringify(user.userCollections));
   }
-  console.log(JSON.parse(JSON.stringify(reviews)));
+  // console.log(wishlistMovies);
 
   return {
     props: {

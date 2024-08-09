@@ -49,19 +49,21 @@ const Carousel = ({ movies }: CarouselProps) => {
   };
   const myArray = ["1", "2", "3", "4", "5", "6"];
   return (
-    <Slider {...settings}>
-      {myArray.map((k, i) => {
-        if (i < movies.length) {
-          return (
-            <div key={k} className="p-4 h-[650px] ">
-              <MovieGridItem movie={movies[i]} />
-            </div>
-          );
-        } else {
-          return <EmptyMovieCard key={k} />;
-        }
-      })}
-    </Slider>
+    <div data-testid='carousal div'>
+      <Slider {...settings}>
+        {myArray.map((k, i) => {
+          if (i < movies.length) {
+            return (
+              <div key={k} className="p-4 h-[650px] ">
+                <MovieGridItem movie={movies[i]} />
+              </div>
+            );
+          } else {
+            return <EmptyMovieCard key={k} />;
+          }
+        })}
+      </Slider>
+    </div>
   );
 };
 

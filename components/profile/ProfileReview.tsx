@@ -5,6 +5,7 @@ import ReviewDropdown from "./ReviewDropdown";
 import ManageRating from "./ManageRating";
 import { reviewObj } from "@/models/reviewsModel";
 import { useRouter } from "next/router";
+import { deleteReview } from "@/utils/db-util";
 type ProfileReviewProps = {
   review: reviewObj;
   editable?: boolean;
@@ -16,15 +17,7 @@ const ProfileReview = (props: ProfileReviewProps) => {
   const router = useRouter();
 
   async function deleteHandler() {
-    const res = await fetch("/api/reviews", {
-      method: "DELETE",
-      body: JSON.stringify({
-        _id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res =await deleteReview(_id);
     if (res.ok) {
       router.push("/profile/reviews");
     }
