@@ -1,8 +1,8 @@
 import { render, screen } from "@/utils/testing-utils/testing-library-utils";
-import ManageRating from "../ManageRating";
 import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/router";
+import ManageRating from "./ManageRating";
 
 describe("Testing manage rating modale", () => {
   const mockFn = vi.fn();

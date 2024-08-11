@@ -1,17 +1,18 @@
 import React, { useContext, useState } from "react";
-import MyModalCard from "../ui/MyModalCard";
 import { Label, Textarea } from "flowbite-react";
-import OneEmoji from "../movie-details/OneEmoji";
-import { ratingData } from "../movie-details/details/Rating";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import { useRouter } from "next/router";
 import { manageReview } from "@/utils/db-util";
+import MyModalCard from "@/components/ui/MyModalCard";
+import { ratingData } from "@/components/movie-details/details/Rating";
+import OneEmoji from "@/components/movie-details/OneEmoji";
 
 type ManageRatingProps = {
   title: string;
   oldValue?: { _id: string; rating: string; description: String | any };
   onClose: () => void;
 };
+
 const ManageRating = ({ title, oldValue, onClose }: ManageRatingProps) => {
   const router = useRouter();
   const { title: movieName, id: movieId } =

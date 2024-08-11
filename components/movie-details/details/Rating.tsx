@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import OneEmoji from "../OneEmoji";
-import ManageRating from "../../profile/ManageRating";
 import { useRouter } from "next/router";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
+import ManageRating from "@/components/profile/reviews/ManageRating";
 
 const Rating = () => {
   const router = useRouter();

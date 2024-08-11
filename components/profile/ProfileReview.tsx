@@ -2,10 +2,10 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { formatDate } from "@/utils/functions-utils";
 import ReviewDropdown from "./ReviewDropdown";
-import ManageRating from "./ManageRating";
 import { reviewObj } from "@/models/reviewsModel";
 import { useRouter } from "next/router";
 import { deleteReview } from "@/utils/db-util";
+import ManageRating from "./reviews/ManageRating";
 type ProfileReviewProps = {
   review: reviewObj;
   editable?: boolean;

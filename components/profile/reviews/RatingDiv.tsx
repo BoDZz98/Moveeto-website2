@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 type ratingDivProps = {
-  rating: number; // to prvent error compiler
+  rating: number;
   reviewsNumber: number;
   isActive: boolean;
   onClickHandler: (rating: number) => void;
@@ -10,6 +10,8 @@ type ratingDivProps = {
 
 const RatingDiv = (props: ratingDivProps) => {
   const { rating, reviewsNumber, isActive, onClickHandler } = props;
+  // console.log("is active ->", isActive);
+
   const cont =
     "flex relative w-fit p-4 items-center rounded-full bg-transparent ring-2 ring-gray-500 text-white hover:bg-white  hover:cursor-pointer group transition ease-in-out delay-150";
   const activeCont =
@@ -18,10 +20,11 @@ const RatingDiv = (props: ratingDivProps) => {
     <div
       onClick={onClickHandler.bind(null, rating)}
       className={isActive ? activeCont : cont}
+      data-testid="rating div"
     >
       <Image
         src={`/imgs/rating/${rating}.png`}
-        alt="Racing"
+        alt={ratingArray[rating - 1]}
         className="w-12 h-12  "
         width={40}
         height={40}
