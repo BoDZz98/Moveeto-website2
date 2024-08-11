@@ -45,15 +45,16 @@ export const handlers = [
     return HttpResponse.json({}, { status: 201 });
   }),
   http.post("/api/reviews", async () => {
-    // await delay(400);
     return HttpResponse.json({}, { status: 201 });
   }),
 
   http.delete("/api/reviews", async () => {
-    // await delay(400);
     return HttpResponse.json({}, { status: 201 });
   }),
-  
+
+  http.post("/api/collections", async () => {
+    return HttpResponse.json({}, { status: 201 });
+  }),
 
   http.post("http://localhost:3030/order", async () => {
     await delay(400);

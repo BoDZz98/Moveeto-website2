@@ -1,5 +1,4 @@
 import Layout from "@/components/layout/layout";
-import Card from "@/components/movie-details/Card";
 import { connectDB, deleteCollection } from "@/utils/db-util";
 import { getServerSession } from "next-auth";
 import React, { useState } from "react";
@@ -9,9 +8,10 @@ import User, { collectionObj, userObj } from "@/models/userModel";
 import { formatDate } from "@/utils/functions-utils";
 import MoviesGrid from "@/components/ui/MoviesGrid";
 import Dropdown from "@/components/ui/Dropdown";
-import ManageCollection from "@/components/profile/ManageCollection";
 import { useRouter } from "next/router";
 import useMySession from "@/hooks/useMySession";
+import Card from "@/components/layout/Card";
+import ManageCollection from "@/components/profile/collections/ManageCollection";
 
 type CollectionMoviesProps = {
   userCollection: collectionObj;
@@ -20,13 +20,8 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
   const [modalIsVisible, setModalIsVisible] = useState(false);
   const router = useRouter();
 
-  // In order to update the page if a change  occured (movie removed, collection name updated)
-  const { update, userCollections } = useMySession();
-  if (userCollections) {
-    userCollection = userCollections.find(
-      (c) => c._id === userCollection._id
-    ) as collectionObj;
-  }
+  // In order to update the page if a change occured (movie removed, collection name updated)
+  const { update } = useMySession();
 
   const lastMovieIndex = userCollection.movies.length - 1;
   const background =
@@ -51,7 +46,7 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
               </div>
               {modalIsVisible && (
                 <ManageCollection
-                  title="Edit Rating"
+                  title="Edit Collection"
                   oldValue={{
                     _id: userCollection._id,
                     name: userCollection.name,

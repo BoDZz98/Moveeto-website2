@@ -7,9 +7,9 @@ import { GetServerSidePropsContext } from "next";
 import User, { collectionObj, userObj } from "@/models/userModel";
 import EmptyPage from "@/components/profile/EmptyPage";
 import { useState } from "react";
-import ManageCollection from "@/components/profile/ManageCollection";
 import { baseImageURL } from "@/utils/api-utils";
-import UserCollection from "@/components/profile/UserCollection";
+import UserCollection from "@/components/profile/collections/UserCollection";
+import ManageCollection from "@/components/profile/collections/ManageCollection";
 
 type collectionsProps = {
   collections: Array<collectionObj>;
@@ -21,7 +21,7 @@ const Collections = ({ collections }: collectionsProps) => {
     <Layout>
       <ProfileLayout pageTitle="Collections">
         {collections.length === 0 ? (
-          <EmptyPage collectionPage />
+          <EmptyPage pageTitle="" collectionPage />
         ) : (
           <>
             <div className="flex justify-end">
