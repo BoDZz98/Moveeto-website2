@@ -38,12 +38,12 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
               {userCollection.name}
             </h1>
             <div className="flex gap-x-4">
-              <div
+              <button
                 onClick={() => setModalIsVisible(true)}
                 className="h-fit z-10 py-4 px-8 rounded text-3xl font-semibold bg-white bg-opacity-20 hover:bg-opacity-100  hover:cursor-pointer hover:text-black transition-all ease-in-out duration-300"
               >
                 Edit
-              </div>
+              </button>
               {modalIsVisible && (
                 <ManageCollection
                   title="Edit Collection"
@@ -55,14 +55,14 @@ const CollectionMovies = ({ userCollection }: CollectionMoviesProps) => {
                   onClose={() => setModalIsVisible(false)}
                 />
               )}
-              <div
+              <button
                 onClick={() =>
                   deleteCollection(userCollection._id, router, update)
                 }
                 className="h-fit z-10 py-4 px-8 rounded text-3xl font-semibold bg-white bg-opacity-20 hover:bg-opacity-100  hover:cursor-pointer hover:text-red-500 transition-all ease-in-out duration-300"
               >
                 Delete
-              </div>
+              </button>
             </div>
           </div>
           <span className="text-gray-400 text-2xl font-semibold mb-5">

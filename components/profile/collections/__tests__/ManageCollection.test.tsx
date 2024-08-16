@@ -126,8 +126,6 @@ describe("Testing Manage Collection modale ", () => {
     });
     await user.click(submitBttn);
 
-    // Submitting data
-    await user.click(submitBttn);
     expect(mockCloseHandler).toHaveBeenCalled();
     expect(pushMock).toHaveBeenCalledWith("/profile/collectionMovies/id1");
   });

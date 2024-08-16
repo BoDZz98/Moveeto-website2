@@ -123,13 +123,13 @@ export const mockCollections = [
     name: "coll 1",
     description: "first coll",
     movies: mockCollectionMovies,
-    createdAt: "1-8-2024",
+    createdAt: "2024-05-14T13:29:34.878Z",
   },
   {
     _id: "id2",
     name: "coll 2",
     description: "second coll",
     movies: mockCollectionMovies.slice(0, 1),
-    createdAt: "1-8-2024",
+    createdAt: "2024-05-14T13:29:34.878Z",
   },
 ];

@@ -56,6 +56,10 @@ export const handlers = [
     return HttpResponse.json({}, { status: 201 });
   }),
 
+  http.delete("/api/collections", async () => {
+    return HttpResponse.json({}, { status: 201 });
+  }),
+
   http.post("http://localhost:3030/order", async () => {
     await delay(400);
     return HttpResponse.json({ orderNumber: 12345 }, { status: 201 });
