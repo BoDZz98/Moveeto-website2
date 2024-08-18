@@ -1,13 +1,24 @@
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
-import { logRoles, render, screen } from "@testing-library/react";
 import Rating from "../Rating";
 import { useRouter } from "next/router";
 import { vi } from "vitest";
 import userEvent from "@testing-library/user-event";
+import { render, screen } from "@/utils/testing-utils/testing-library-utils";
+import * as session from "next-auth/react";
 
 const activeImgStyle = "w-20 h-20 opacity-100 -translate-y-2 scale-125 ";
 
 describe("Testing rating component", () => {
+  let mockUseMySession: any;
+  beforeEach(() => {
+    // Initialize the mock data
+    mockUseMySession = {
+      status: "authenticated",
+    };
+    // Mock the return value of useMySession
+    vi.spyOn(session, "useSession").mockReturnValue(mockUseMySession);
+  });
+  //-----------------------------------------------------------------------
   // Provider props is used if we want to pass different data to our context , in each test case
   const movieData = { vote_average: 7.2, vote_count: 485 };
   const reviewData = { mostRepeatedRating: "Recommended", reviewsLength: 2 };
@@ -25,6 +36,7 @@ describe("Testing rating component", () => {
       </MovieDetailsCtx.Provider>
     );
   };
+
   //---------------------------------------------------------------------------------
   test("render rating component correctly if the modal is not opened initially (query.showModal = false)", () => {
     // Mock the useRouter hook with the desired behavior
@@ -86,7 +98,7 @@ describe("Testing rating component", () => {
     expect(textBox).toHaveValue("");
   });
 
-  test("testing the open modale functionality", async () => {
+  test("testing the open modal functionality", async () => {
     (useRouter as jest.Mock).mockReturnValue({
       query: { showModal: false },
     });

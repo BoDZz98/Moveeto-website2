@@ -3,12 +3,16 @@ import OneEmoji from "../OneEmoji";
 import { useRouter } from "next/router";
 import { MovieDetailsCtx } from "@/utils/movie-details-ctx";
 import ManageRating from "@/components/profile/reviews/ManageRating";
+import { useSession } from "next-auth/react";
 
 const Rating = () => {
   const router = useRouter();
   const { query } = router;
+  const { status } = useSession();
 
   const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [errorMssg, setErrorMssg] = useState(false);
+
   useEffect(() => {
     setModalIsVisible(!!query.showModal);
   }, [query.showModal]);
@@ -45,11 +49,13 @@ const Rating = () => {
           />
         ))}
       </div>
-      <div>
+      <div className="flex items-center gap-x-12">
         <button
           className="bg-gray-800 rounded-lg text-gray-500 text-xl font-semibold w-fit flex gap-x-2 px-8 py-6 items-center hover:bg-white hover:text-black transition ease-in-out duration-300"
           onClick={() => {
-            setModalIsVisible(true);
+            status === "unauthenticated"
+              ? setErrorMssg(true)
+              : setModalIsVisible(true);
           }}
         >
           {plusIcon}
@@ -61,6 +67,7 @@ const Rating = () => {
             title="Write a review"
           />
         )}
+        {errorMssg && <p className="text-red-500 font-bold">login first</p>}
       </div>
     </div>
   );

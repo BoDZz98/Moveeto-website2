@@ -19,11 +19,17 @@ const MovieComments = ({ movie, reviews }: MovieCommentsProps) => {
       backdrop_path={movie.backdrop_path}
       movieId={movie.id}
     >
-      <div className="w-3/4  flex flex-col  p-10 ">
-        {reviews.map((review) => (
-          <MovieReview key={review._id} {...review} />
-        ))}
-      </div>
+      {reviews.length === 0 ? (
+        <div className="w-3/4 flex items-center justify-center">
+          <p className="text-5xl font-bold">No reviews yet</p>
+        </div>
+      ) : (
+        <div className="w-3/4  flex flex-col  p-10 ">
+          {reviews.map((review) => (
+            <MovieReview key={review._id} {...review} />
+          ))}
+        </div>
+      )}
     </DetailsCard>
   );
 };

@@ -30,13 +30,13 @@ const MovieReview = (props: MovieReviewProps) => {
       </div>
       <p className="text-gray-400 text-xl font-semibold">{description}</p>
       <div className="flex items-center gap-x-5">
-        <Image
+        {/* <Image
           src={`/imgs/rating/5.png`}
           alt="User Img"
           className="w-20 h-20 opacity-100 "
           width={50}
           height={50}
-        />
+        /> */}
         <div>
           <p className="text-xl font-bold">{username}</p>
           <p className="text-gray-500 text-lg font-semibold">

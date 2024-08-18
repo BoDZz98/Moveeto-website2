@@ -19,7 +19,7 @@ export default async function handler(
   const email = session?.user?.email;
   const user: userObj | null = await User.findOne({ email });
   const { list, movie, collectionId }: reqData = await req.body;
-  // console.log(list);
+  // console.log(user);
 
   // Adding movies to fav and wishlist --------------------------------------------------
   if ((list === "favMovies" || list === "wishlistMovies") && user) {
@@ -73,5 +73,11 @@ export default async function handler(
         .status(500)
         .json({ message: "error while add/remove movie in collection" });
     }
+  }
+
+  // If the user is not signed in
+  if (!user) {
+    console.log("User is not signed in");
+    res.status(500).json({ message: "User is not signed in" });
   }
 }
